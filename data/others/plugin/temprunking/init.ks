@@ -1,0 +1,1 @@
+[loadjs storage="plugin/temprunking/temprunking.js"][return]

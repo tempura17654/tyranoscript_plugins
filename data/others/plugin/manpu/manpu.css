@@ -1,0 +1,80 @@
+/* tyrano.ex.css */
+/* [manpu] */
+@-webkit-keyframes manpuKururinDon {
+	  0% { -webkit-transform: scale( 3 ) rotate( -360deg ); opacity: 0; }
+	 70% { -webkit-transform: scale( 1 ) rotate(    0deg ); opacity: 1; }
+	 75% { -webkit-transform: translate( -8px, -3px ); }
+	 80% { -webkit-transform: translate(  9px,  3px ); }
+	 85% { -webkit-transform: translate(  2px, -6px ); }
+	 90% { -webkit-transform: translate( -7px, -9px ); }
+	 95% { -webkit-transform: translate( -1px,  8px ); }
+	100% { -webkit-transform: translate(  0px,  0px ); }
+}
+@keyframes manpuKururinDon {
+	  0% { transform: scale( 3 ) rotate( -360deg ); opacity: 0; }
+	 70% { transform: scale( 1 ) rotate(    0deg ); opacity: 1; }
+	 75% { transform: translate( -8px, -3px ); }
+	 80% { transform: translate(  9px,  3px ); }
+	 85% { transform: translate(  2px, -6px ); }
+	 90% { transform: translate( -7px, -9px ); }
+	 95% { transform: translate( -1px,  8px ); }
+	100% { transform: translate(  0px,  0px ); }
+}
+.manpuKururinDon {
+	-webkit-animation-name: manpuKururinDon;
+	animation-name: manpuKururinDon;
+}
+@-webkit-keyframes manpuLeftUp {
+	  0% { opacity: 0; }
+	 50% { opacity: 1; }
+	100% { -webkit-transform: translate( -25px, -25px ); opacity: 0; }
+}
+@keyframes manpuLeftUp {
+	  0% { opacity: 0; }
+	 50% { opacity: 1; }
+	100% { transform: translate( -25px, -25px ); opacity: 0; }
+}
+.manpuLeftUp {
+	-webkit-animation-name: manpuLeftUp;
+	animation-name: manpuLeftUp;
+}
+@-webkit-keyframes manpuLeftDown {
+	  0% { opacity: 0; }
+	 50% { opacity: 1; }
+	100% { -webkit-transform: translate( -25px, 25px ); opacity: 0; }
+}
+@keyframes manpuLeftDown {
+	  0% { opacity: 0; }
+	 50% { opacity: 1; }
+	100% { transform: translate( -25px, 25px ); opacity: 0; }
+}
+.manpuLeftDown {
+	-webkit-animation-name: manpuLeftDown;
+	animation-name: manpuLeftDown;
+}
+@-webkit-keyframes manpuKiran {
+	  0% { -webkit-transform: rotate( 720deg ) scale( 0 ); opacity: 0; }
+	 50% { opacity: 1; }
+	100% { -webkit-transform: rotate(   0deg ) scale( 1 ); opacity: 0; }
+}
+@keyframes manpuKiran {
+	  0% { transform: rotate( 720deg ) scale( 0 ); opacity: 0; }
+	 50% { opacity: 1; }
+	100% { transform: rotate(   0deg ) scale( 1 ); opacity: 0; }
+}
+.manpuKiran {
+	-webkit-animation-name: manpuKiran;
+	animation-name: manpuKiran;
+}
+@-webkit-keyframes manpuHidden {
+	  0% { opacity: 0; }
+	100% { opacity: 0; }
+}
+@keyframes manpuHidden {
+	  0% { opacity: 0; }
+	100% { opacity: 0; }
+}
+.manpuHidden {
+	-webkit-animation-name: manpuHidden;
+	animation-name: manpuHidden;
+}

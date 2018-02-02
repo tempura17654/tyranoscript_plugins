@@ -1,0 +1,78 @@
+(function(){
+
+var master_tag = {};
+master_tag["[$addClass]"] = {
+    desc: "クラスの追加",
+    view: [
+        "操作対象のオブジェクトにクラスを追加します。",
+    ],
+    param: {
+        "class": "追加するクラス名。半角スペースの代用記号で区切ることで、複数指定できます。"
+    },
+    sample: [
+        "[$addClass name=akane class=hoge;fuga]",
+    ],
+};
+master_tag["[$removeClass]"] = {
+    desc: "クラスの削除",
+    view: [
+        "操作対象のオブジェクトからクラスを削除します。",
+    ],
+    param: {
+        "class": "削除するクラス名。半角スペースの代用記号で区切ることで、複数指定できます。"
+    },
+    sample: [
+        "[$removeClass name=akane class=hoge]",
+    ],
+};
+master_tag["[$attr]"] = {
+    desc: "アトリビュート（属性）の追加または変更",
+    view: [
+        "操作対象のオブジェクトのアトリビュート（属性）を書き換えます。",
+        "アトリビュートというのは、たとえば <img src=\"hoge.png\" title=\"hoge\"> という要素でいえば",
+        "src とか title になります。",
+        "任意の属性値を書き換えることができますが、",
+      	"layer や name など、操作対象を特定するためのパラメータは書き換えることができません。",
+    ],
+    param: {
+        "任意の属性名": "書き換えたい任意の属性値を指定できます。",
+    },
+    sample: [
+        "[$attr name=akane src=./data/fgimage/chara/akane/angry.png]",
+    ],
+};
+
+$.get("./text.txt", function (BASE_TEXT_TAG) {
+    var export_master = "";
+    var NL = "\n    ";
+    var BASE_TEXT_PARAM = "・{{param_name}} : {{param_desc}}";
+    for (var key in master_tag) {
+        var tag = master_tag[key];
+        var export_tag = BASE_TEXT_TAG;
+        var export_param_master = [];
+        for (var _key in tag.param) {
+            var export_param = BASE_TEXT_PARAM;
+            var param_name = (_key + "        ").slice(0, 8);
+            var param_desc = tag.param[_key];
+            export_param = export_param.replace("{{param_name}}", param_name);
+            export_param = export_param.replace("{{param_desc}}", param_desc);
+            export_param_master.push(export_param);
+        }
+        export_tag = export_tag.replace("{{tag_name}}", key);
+        export_tag = export_tag.replace("{{tag_desc}}", tag.desc);
+        export_tag = export_tag.replace("{{tag_view}}", tag.view.join(NL));
+        export_tag = export_tag.replace("{{tag_param}}", export_param_master.join(NL));
+        export_tag = export_tag.replace("{{tag_sample}}", tag.sample.join(NL));
+        export_master += export_tag;
+    }
+    console.log(export_master);
+});
+
+}());
+
+
+window.copy = function (text) {
+    var gui = require('nw.gui');
+    var clipboard = gui.Clipboard.get();
+    clipboard.set(text, 'text');
+};

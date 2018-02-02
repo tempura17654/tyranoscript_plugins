@@ -1,0 +1,50 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #141417;
+}
+#iframe {
+  float: left;
+  width: 960px;
+  height: 640px;
+  box-shadow: none;
+  border: none;
+}
+#editor_area {
+  background: #25282c;
+  float: left;
+  width: 640px;
+  height: 640px;
+  position: relative;
+}
+#editor {
+  width: 640px;
+  height: 600px;
+}
+#button_area {
+  position: absolute;
+  display: inline;
+  right: 0;
+  height: 40px;
+}
+button {
+  background: #3e434a;
+  border: none;
+  color: #c5c8c6;
+  font-size: 14px;
+  width: 100px;
+  height: 40px;
+  transition: background 120ms;
+  cursor: pointer;
+  outline: 0;
+  margin: 0;
+  border-left: 1px solid #25282c;
+}
+button:hover {
+  background: #697688;
+}
+button:active {
+  transition: background 0;
+  background: #b7c9e2;
+}

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>説明書</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script type="text/javascript" src="./files/jquery-2.0.3.min.js"></script>
+		<style>
+			body, div, p, span, h1, h2, h3, table, tr, td, ol, ul, li {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				color: #555;
+				padding: 50px;
+				line-height: 200%;
+				background: white;
+				font-size: 16px;
+				font-family: Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
+			}
+			#header {
+				color: #0072ff;
+				text-align: right;
+			}
+			h1 {
+				color: #0072ff;
+				border-left: 2px solid #0072ff;
+				padding: 30px;
+				padding-left: 15px;
+				font-size: 40px;
+				font-weight: 100;
+				font-family: "游ゴシック Light";
+				margin-top: 0;
+			}
+			h2 {
+				color: #ff8d00;
+				border-left: 2px solid #ff8d00;
+				padding: 15px;
+				margin: 50px 0;
+				font-family: "游ゴシック Light";
+			}
+			h3 {
+				color: #ff0069;
+				border-left: 2px solid #ff0069;
+				padding: 10px;
+				padding-left: 15px;
+				margin: 50px 0 30px;
+				font-family: "游ゴシック Light";
+			}
+			b {
+				color: #ff0069;
+			}
+			div>ul {
+				margin: 20px;
+			}
+			ul li {
+				list-style-type: disc;
+				margin-left: 40px;
+			}
+			input {
+				border: none;
+				box-shadow: none;
+				width: 100%;
+				border-radius: 10px;
+				text-align: center;
+				cursor: pointer;
+			}
+			img {
+				width: 20px;
+				height: 20px;
+				margin: 0;
+				padding: 0;
+				-webkit-transform: translate(0,5px);
+				   -moz-transform: translate(0,5px);
+				    -ms-transform: translate(0,5px);
+				     -o-transform: translate(0,5px);
+				        transform: translate(0,5px);
+			}
+			.space {
+				height: 0;
+				padding: 15px;
+			}
+			span.code {
+				color: #ff0069;
+			}
+			span.code_ {
+				color: yellow;
+				font-weight: bold;
+				padding: 5px;
+				text-shadow:
+					-2px -2px 2px black, 
+					 2px -2px 2px black, 
+					-2px  2px 2px black, 
+					 2px  2px 2px black;
+			}
+			div.code {
+				white-space: pre-wrap;
+				color: #DDD;
+				background: #555;
+				padding: 30px;
+				line-height: 120%;
+				margin-bottom: 40px;
+				overflow-x: hidden;
+			}
+			.link {
+				width: 200px;
+				height: 40px;
+				text-align: center;
+				line-height: 40px;
+				border: 1px solid black;
+				border-color: #ff8d00;
+				background: white;
+				color: #ff8d00;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				-webkit-transition: all 500ms;
+				   -moz-transition: all 500ms;
+				    -ms-transition: all 500ms;
+				     -o-transition: all 500ms;
+				        transition: all 500ms;
+			}
+			.link:hover {
+				background: #ff8d00;
+				color: white;
+			}
+			a {
+				text-decoration: none;
+			}
+			#wrap {
+				position: absolue;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+				margin-top: 50px;
+				max-width: 800px;
+				background: white;
+				padding: 50px;
+				box-shadow: 7px 7px 47px #E9E9E9;
+			}
+				#test_message_area {
+					max-width: 760px;
+					height: 90px;
+					padding: 20px;
+					background: #555;
+					color: #fff;
+					font-size: 21px;
+					margin: 32px 0 0;
+					overflow: hidden;
+				}
+				#chSpeed,
+				#autoSpeedWithText,
+				#autoSpeed {
+					cursor: pointer;
+					width: 100%;
+				}
+				#config {
+					background: #fff;
+					color: #555;
+					margin-top: 40px;
+				}
+					#config table {
+						color: #555;
+						width: 800px;
+					}
+					#config tr {
+						height: 60px;
+					}
+				
+				
+				#shuuroku {
+				
+				}
+					#shuuroku ul li {
+						list-style-type:none !important;
+						list-style-image:none !important;
+					}
+					
+				#tejun {
+				}
+					#tejun ol {
+						counter-reset: section;
+						margin-top: 20px;
+					}
+					#tejun li {
+						list-style: none;
+						padding-left: 16px;
+						text-indent: -16px;
+						margin-bottom: 20px;
+						margin-left: 40px;
+					}
+					#tejun ol>li:before {
+						content : counters(section, '-') '. ';
+						counter-increment : section;
+					}
+					#tejun li li {
+						padding-left: 32px;
+						text-indent: -32px;
+					}
+			#menu {
+				position: fixed;
+				top: 0;
+				left: 0;
+				background: white;
+				height: 45px;
+				width: 100%;
+				box-shadow: 0px 0px 14px #E9E9E9;
+				box-shadow: 0px 0px 14px rgba(0,0,0,.3);
+				border-bottom: 1px solid #DDD;
+				z-index: 9999999;
+			}
+				#menu #menu_wrap {
+					position: absolue;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					margin: auto;
+					max-width: 900px;
+					height: 40px;
+				}
+					#menu_wrap div {
+						float: left;
+						width: 11.1%;
+						height: 40px;
+						text-align: center;
+						-webkit-transition: all 300ms;
+						   -moz-transition: all 300ms;
+						    -ms-transition: all 300ms;
+						     -o-transition: all 300ms;
+						        transition: all 300ms;
+						color: #555;
+						background: white;
+						padding-top: 5px;
+						overflow: hidden;
+						border-bottom: 0px solid white;
+					}
+					#menu_wrap div:hover {
+						color: #0072ff;
+						height: 36px;
+						border-bottom: 4px solid #0072ff;
+						/*
+						color: white;
+						background: #0072ff;
+						padding-top: 10px;
+						height: 50px;
+						-webkit-transform: translate(0,10px);
+						   -moz-transform: translate(0,10px);
+						    -ms-transform: translate(0,10px);
+						     -o-transform: translate(0,10px);
+						        transform: translate(0,10px);
+						*/
+					}
+					#menu_wrap .clear {
+						clear: both;
+					}
+			.rireki td {
+				vertical-align: top;
+				min-width: 100px
+			}
+		</style>
+	</head>
+	<body><div id="wrap">
+		<div id="menu"><div id="menu_wrap">
+			<a href="#A"><div>これは何？</div></a>
+			<a href="#C"><div>収録内容</div></a>
+			<a href="#D"><div>導入方法</div></a>
+			<a href="#E"><div>改造例</div></a>
+			<a href="#I"><div>その他</div></a>
+			<a href="#F"><div>免責事項</div></a>
+			<a href="#G"><div>連絡先</div></a>
+			<a href="#H"><div>更新履歴</div></a>
+			<span class="clear"></span>
+		</div></div>
+		<div id="header">
+			最終更新：2017/05/27
+		</div>
+		<h1>mouseGesture</h1>
+		<div id="A" class="space"></div>
+		<h2>これは何？</h2>
+		<p>
+			このファイルは、ティラノスクリプトに<b>マウスジェスチャー機能</b>を実装するプラグイン<br />
+			<b>「mouseGesture」</b>の説明書です。<br />
+			このプラグインを導入すると、マウスのボタン３つ（左/ホイール/右）に対してそれぞれ、<br />
+			次の５つのケースのアクションを設定できます。<br />
+			<ul>
+			<li style="list-style:none;">一度ボタンを押し込んだあと････
+				<ul>
+				<li><b>上</b>に一定量動かしたときのアクション
+				</li><li><b>右</b>に一定量動かしたときのアクション
+				</li><li><b>下</b>に一定量動かしたときのアクション
+				</li><li><b>左</b>に一定量動かしたときのアクション
+				</li><li><b>どの方向にも一定量動かさず</b>に結局ボタンを離したときのアクション
+				</li></ul>
+			</li></ul>
+			３ボタン×５ケースで１５個のアクションを設定可能です。<br />
+		</p>
+		<p>
+			さらに、同梱しているコンフィグファイルを導入すれば、<br />
+			ユーザーにカスタマイズしてもらうこともできます。<br />
+		</p>
+		<p style="margin-top:30px;">
+			<b>注意！</b>：ボタンにジェスチャーを設定する場合、
+			<b>そのボタンをクリックした瞬間のアクション<br />
+			（data/system/KeyConfig.jsで定義しているもの）は
+			お切りいただきますよう</b>、お願いします。<br />
+			（"right" : "hidemessage" などとなっているところを "right" : "" のようにすればＯＫです。）
+		</p>
+		<div id="C" class="space"></div>
+		<h2>収録内容</h2>
+		<div id="shuuroku">
+			<p>
+				このパッケージには以下のファイルが収録されています。<br />
+				プラグイン導入に必要なものは<img src="./files/folder.png" />mouseGesture 以下のファイルだけです。<br />
+			</p>
+			<ul>
+			<li><img src="./files/folder.png" />マウスジェスチャー実装プラグイン
+				<ul>
+				<li><img src="./files/folder.png" />scenario
+					<ul>
+					<li><img src="./files/text.png" />first.ks
+					</li><li><img src="./files/text.png" />config.ks
+					</li><li><img src="./files/text.png" />configMouseGesture.ks
+					</li></ul>
+				</li>
+				<li><img src="./files/folder.png" />system
+					<ul>
+					<li><img src="./files/text.png" />KeyConfig.ks
+					</li></ul>
+				</li>
+				<li><img src="./files/folder.png" />others
+					<ul>
+					<li><img src="./files/folder.png" />plugin
+						<ul>
+						<li><img src="./files/folder.png" />mouseGesture
+							<ul>
+							<li><img src="./files/other.png" />config_title.png
+							</li><li><img src="./files/other.png" />config_button.png
+							</li><li><img src="./files/other.png" />config_map.png
+							</li><li><img src="./files/other.png" />config_left.png
+							</li><li><img src="./files/other.png" />config_center.png
+							</li><li><img src="./files/other.png" />config_right.png
+							</li><li><img src="./files/text.png" />init.ks
+							</li><li><img src="./files/text.png" />init.js
+							</li><li><img src="./files/text.png" />config.css
+							</li><li><img src="./files/text.png" />config.js
+							</li></ul>
+						</li></ul>
+					</li></ul>
+				</li>
+				<li><img src="./files/folder.png" />説明書
+					<ul>
+					<li><img src="./files/folder.png" />files
+						<ul>
+						<li><img src="./files/other.png" />html.png
+						</li><li>……(省略)……
+						</li></ul>
+					</li><li><img src="./files/html.png" />説明書.html
+					</li></ul>
+				</li></ul>
+			</li></ul>
+		</div>
+		<div id="D" class="space"></div>
+		<h2>導入方法</h2>
+		<div id="tejun">
+			<p>
+				このプラグインを導入するには、次の操作をおこなってください。<br />
+				なお、バージョンはスタンダードパッケージ ver4.53 を想定しています。
+			</p>
+			<ol>
+			<li>収録されている<img src="./files/folder.png" />mouseGesture を、
+			   <br />プロジェクトフォルダの data/others/plugin に配置する。
+			   <br />（<img src="./files/folder.png" />others ごとドラッグ＆ドロップして統合すればＯＫです。）
+			</li><li><img src="./files/text.png" />first.ks の適当なところに
+			         <span class="code"> [plugin name=mouseGesture] </span>を記述する。
+			</li><li>コンフィグもあわせて導入する場合は、次の操作を行う。
+				<ol>
+				<li><img src="./files/text.png" />configMouseGesture.ks を
+				   <br />プロジェクトフォルダの data/scenario に配置する。
+				</li><li>data/scenario にある<img src="./files/text.png" />config.ks を下の例のように改造する。
+				</li></ol>
+			</li></ol>
+		</div>
+		<div id="E" class="space"></div>
+		<h2>改造例</h2>
+		<img src="./files/text.png" />first.ks<br />
+		<div class="code">;一番最初に呼び出されるファイル
+
+[title name="ティラノスクリプト解説"]
+
+;ティラノスクリプトが標準で用意している便利なライブラリ群
+;コンフィグ、CG、回想モードを使う場合は必須
+@call storage="tyrano.ks"
+
+;ゲームで必ず必要な初期化処理はこのファイルに記述するのがオススメ
+<span class="code_">@plugin name=mouseGesture</span>
+
+;メッセージボックスは非表示
+@layopt layer="message" visible=false
+
+;最初は右下のメニューボタンを非表示にする
+[hidemenubutton]
+
+;タイトル画面へ移動
+@jump storage="title.ks"
+
+[s]</div>
+		<img src="./files/text.png" />config.ks<br />
+		<div class="code">; ティラノスクリプト標準テーマプラグイン
+
+;=========================================
+; コンフィグ モード　画面作成
+;=========================================
+
+;	メッセージレイヤ０を不可視に
+	[layopt layer=message0 visible=false]
+;	fixボタン消し
+	[clearfix]
+	
+;　イメージ消去
+
+[iscript]
+$(".layer_camera").empty();
+[endscript]
+
+;	メニューボタン非表示
+	[hidemenubutton]
+
+[iscript]
+
+	tf.current_bgm_vol = parseInt(TG.config.defaultBgmVolume);
+	tf.current_se_vol = parseInt(TG.config.defaultSeVolume);
+	
+	tf.current_ch_speed = parseInt(TG.config.chSpeed);
+	tf.current_auto_speed = parseInt(TG.config.autoSpeed);
+	
+	tf.text_skip ="ON";
+	
+	if(TG.config.unReadTextSkip != true){
+		tf.text_skip ="OFF";
+	} 
+
+[endscript]
+
+;	レイヤ1を可視に
+	[layopt layer=1 visible=true]
+
+[cm]
+
+;	コンフィグ用の背景を読み込んでトランジション
+	[bg storage="../../tyrano/images/system/bg_config.jpg" time=100]
+
+;	画面右上の「Back」ボタン
+	[button graphic="config/c_btn_back.png" enterimg="config/c_btn_back2.png" target="*backtitle" x=840 y=20]
+<span class="code_">
+;	画面右上の「→」ボタン
+	[button name="button_back" graphic="config/arrow_next.png" target="*go_config_gesture" x=740 y=30]
+</span>
+[jump target="*config_page"]
+
+*config_page
+
+;かなり横長なスクリプトになってしまったのでマクロにしたほうがスッキリします
+;c_btn.png は 4×4px の完全透明な画像です。width.heightを使って拡大しています
+;一部のスマホブラウザでは音量変更に対応していないのでご留意ください
+
+;------------------------------------------------------------------------------------------------------
+;▼BGM音量
+;------------------------------------------------------------------------------------------------------
+;BGM音量-1０
+[button name="bgmvol,bgmvol_10"  fix="true" target="*vol_bgm_change" graphic="config/c_btn.png" width=35 height=35 x=300 y=170 exp="tf.current_bgm_vol = 10"]
+;BGM音量-20
+[button name="bgmvol,bgmvol_20"  fix="true" target="*vol_bgm_change" graphic="config/c_btn.png" width=35 height=35 x=340 y=170 exp="tf.current_bgm_vol = 20"]
+;BGM音量-30
+[button name="bgmvol,bgmvol_30"  fix="true" target="*vol_bgm_change" graphic="config/c_btn.png" width=35 height=35 x=380 y=170 exp="tf.current_bgm_vol = 30"]
+;BGM音量-40
+[button name="bgmvol,bgmvol_40"  fix="true" target="*vol_bgm_change" graphic="config/c_btn.png" width=35 height=35 x=420 y=170 exp="tf.current_bgm_vol = 40"]
+;BGM音量-50
+[button name="bgmvol,bgmvol_50"  fix="true" target="*vol_bgm_change" graphic="config/c_btn.png" width=35 height=35 x=460 y=170 exp="tf.current_bgm_vol = 50"]
+;BGM音量-60
+[button name="bgmvol,bgmvol_60"  fix="true" target="*vol_bgm_change" graphic="config/c_btn.png" width=35 height=35 x=500 y=170 exp="tf.current_bgm_vol = 60"]
+;BGM音量-70
+[button name="bgmvol,bgmvol_70"  fix="true" target="*vol_bgm_change" graphic="config/c_btn.png" width=35 height=35 x=540 y=170 exp="tf.current_bgm_vol = 70"]
+;BGM音量-80
+[button name="bgmvol,bgmvol_80"  fix="true" target="*vol_bgm_change" graphic="config/c_btn.png" width=35 height=35 x=580 y=170 exp="tf.current_bgm_vol = 80"]
+;BGM音量-90
+[button name="bgmvol,bgmvol_90"  fix="true" target="*vol_bgm_change" graphic="config/c_btn.png" width=35 height=35 x=620 y=170 exp="tf.current_bgm_vol = 90"]
+;BGM音量-100
+[button name="bgmvol,bgmvol_100" fix="true" target="*vol_bgm_change" graphic="config/c_btn.png" width=35 height=35 x=660 y=170 exp="tf.current_bgm_vol = 100"]
+
+;BGM音量-ミュート（音量=0）
+[button name="bgmvol,bgmvol_0"    fix="true" target="*vol_bgm_change" graphic="config/c_btn.png" width=35 height=35 x=780 y=170 exp="tf.current_bgm_vol = 0"]
+
+
+;------------------------------------------------------------------------------------------------------
+;▼SE音量
+;------------------------------------------------------------------------------------------------------
+[button name="sevol,sevol_10"   fix="true" target="*vol_se_change" graphic="config/c_btn.png" width=35 height=35 x=300 y=220 exp="tf.current_se_vol = 10"]
+[button name="sevol,sevol_20"   fix="true" target="*vol_se_change" graphic="config/c_btn.png" width=35 height=35 x=340 y=220 exp="tf.current_se_vol = 20"]
+[button name="sevol,sevol_30"   fix="true" target="*vol_se_change" graphic="config/c_btn.png" width=35 height=35 x=380 y=220 exp="tf.current_se_vol = 30"]
+[button name="sevol,sevol_40"   fix="true" target="*vol_se_change" graphic="config/c_btn.png" width=35 height=35 x=420 y=220 exp="tf.current_se_vol = 40"]
+[button name="sevol,sevol_50"   fix="true" target="*vol_se_change" graphic="config/c_btn.png" width=35 height=35 x=460 y=220 exp="tf.current_se_vol = 50"]
+[button name="sevol,sevol_60"   fix="true" target="*vol_se_change" graphic="config/c_btn.png" width=35 height=35 x=500 y=220 exp="tf.current_se_vol = 60"]
+[button name="sevol,sevol_70"   fix="true" target="*vol_se_change" graphic="config/c_btn.png" width=35 height=35 x=540 y=220 exp="tf.current_se_vol = 70"]
+[button name="sevol,sevol_80"   fix="true" target="*vol_se_change" graphic="config/c_btn.png" width=35 height=35 x=580 y=220 exp="tf.current_se_vol = 80"]
+[button name="sevol,sevol_90"   fix="true" target="*vol_se_change" graphic="config/c_btn.png" width=35 height=35 x=620 y=220 exp="tf.current_se_vol = 90"]
+[button name="sevol,sevol_100" fix="true" target="*vol_se_change" graphic="config/c_btn.png" width=35 height=35 x=660 y=220 exp="tf.current_se_vol = 100"]
+
+;SEミュート
+[button name="sevol,sevol_0"     fix="true" target="*vol_se_change" graphic="config/c_btn.png" width=35 height=35 x=780 y=220 exp="tf.current_se_vol = 0"]
+
+;------------------------------------------------------------------------------------------------------
+;▼テキスト速度
+;------------------------------------------------------------------------------------------------------
+[button name="ch,ch_100" fix="true" target="*ch_speed_change" exp="tf.set_ch_speed=100" graphic="config/c_btn.png" width=35 height=35 x=300 y=290]
+[button name="ch,ch_80" fix="true" target="*ch_speed_change" exp="tf.set_ch_speed=80"    graphic="config/c_btn.png" width=35 height=35 x=340 y=290]
+[button name="ch,ch_50" fix="true" target="*ch_speed_change" exp="tf.set_ch_speed=50"    graphic="config/c_btn.png" width=35 height=35 x=380 y=290]
+[button name="ch,ch_40" fix="true" target="*ch_speed_change" exp="tf.set_ch_speed=40"    graphic="config/c_btn.png" width=35 height=35 x=420 y=290]
+[button name="ch,ch_30" fix="true" target="*ch_speed_change" exp="tf.set_ch_speed=30"    graphic="config/c_btn.png" width=35 height=35 x=460 y=290]
+[button name="ch,ch_25" fix="true" target="*ch_speed_change" exp="tf.set_ch_speed=25"    graphic="config/c_btn.png" width=35 height=35 x=500 y=290]
+[button name="ch,ch_20" fix="true" target="*ch_speed_change" exp="tf.set_ch_speed=20"    graphic="config/c_btn.png" width=35 height=35 x=540 y=290]
+[button name="ch,ch_11" fix="true" target="*ch_speed_change" exp="tf.set_ch_speed=11"    graphic="config/c_btn.png" width=35 height=35 x=580 y=290]
+[button name="ch,ch_8" fix="true" target="*ch_speed_change" exp="tf.set_ch_speed=8"       graphic="config/c_btn.png" width=35 height=35 x=620 y=290]
+[button name="ch,ch_5" fix="true" target="*ch_speed_change" exp="tf.set_ch_speed=5"       graphic="config/c_btn.png" width=35 height=35 x=660 y=290]
+
+;------------------------------------------------------------------------------------------------------
+;▼オート速度
+;------------------------------------------------------------------------------------------------------
+[button fix="true" name="auto,auto_5000" target="*auto_speed_change" exp="tf.set_auto_speed=5000;tf.text_auto=0" graphic="config/c_btn.png" width=35 height=35 x=300 y=340]
+[button fix="true" name="auto,auto_4500" target="*auto_speed_change" exp="tf.set_auto_speed=4500;tf.text_auto=1" graphic="config/c_btn.png" width=35 height=35 x=340 y=340]
+[button fix="true" name="auto,auto_4000" target="*auto_speed_change" exp="tf.set_auto_speed=4000;tf.text_auto=2" graphic="config/c_btn.png" width=35 height=35 x=380 y=340]
+[button fix="true" name="auto,auto_3500" target="*auto_speed_change" exp="tf.set_auto_speed=3500;tf.text_auto=3" graphic="config/c_btn.png" width=35 height=35 x=420 y=340]
+[button fix="true" name="auto,auto_3000" target="*auto_speed_change" exp="tf.set_auto_speed=3000;tf.text_auto=4" graphic="config/c_btn.png" width=35 height=35 x=460 y=340]
+[button fix="true" name="auto,auto_2500" target="*auto_speed_change" exp="tf.set_auto_speed=2500;tf.text_auto=5" graphic="config/c_btn.png" width=35 height=35 x=500 y=340]
+[button fix="true" name="auto,auto_2000" target="*auto_speed_change" exp="tf.set_auto_speed=2000;tf.text_auto=6" graphic="config/c_btn.png" width=35 height=35 x=540 y=340]
+[button fix="true" name="auto,auto_1000" target="*auto_speed_change" exp="tf.set_auto_speed=1000;tf.text_auto=7" graphic="config/c_btn.png" width=35 height=35 x=580 y=340]
+[button fix="true" name="auto,auto_800"   target="*auto_speed_change" exp="tf.set_auto_speed=800;tf.text_auto=8"  graphic="config/c_btn.png" width=35 height=35 x=620 y=340]
+[button fix="true" name="auto,auto_500"   target="*auto_speed_change" exp="tf.set_auto_speed=500;tf.text_auto=9"  graphic="config/c_btn.png" width=35 height=35 x=660 y=340]
+
+;------------------------------------------------------------------------------------------------------
+;▼未読スキップ
+;------------------------------------------------------------------------------------------------------
+; 未読スキップ-OFF
+[button name="unread_off" fix="true" target="*skip_off" graphic="config/c_btn.png" width=125 height=35  x=300 y=420]
+; 未読スキップ-ON
+[button name="unread_on" fix="true" target="*skip_on" graphic="config/c_btn.png" width=125 height=35 x=435 y=420]
+
+;------------------------------------------------------------------------------------------------------
+;▼コンフィグ起動時の画面更新
+;------------------------------------------------------------------------------------------------------
+; BGM音量・SE音量・テキスト速度・オート速度・未読スキップの順
+; $(セレクタ).attr("src","画像ファイルの場所");
+
+;※画像差し替え版を使用するときは c_set.gif を c_set.png に書き換えてね
+
+[iscript]
+	$(".bgmvol_"+tf.current_bgm_vol).attr("src","data/image/config/c_set.png");
+
+	$(".sevol_"+tf.current_se_vol).attr("src","data/image/config/c_set.png");
+
+	$(".ch_"+tf.current_ch_speed).attr("src","data/image/config/c_set.png");
+
+	$(".auto_"+tf.current_auto_speed).attr("src","data/image/config/c_set.png");
+
+	if(tf.text_skip == 'OFF'){
+		$(".unread_off").attr("src","data/image/config/c_uts_off.png");
+		}else{
+			$(".unread_on").attr("src","data/image/config/c_uts_on.png");
+			}
+[endscript]
+
+[s]
+<span class="code_">
+;--------------------------------------------------------------------------------
+; ジェスチャーコンフィグへ
+;--------------------------------------------------------------------------------
+*go_config_gesture
+[cm]
+[layopt layer=message1 visible=false]
+[freeimage layer=1]
+[clearfix]
+[jump storage=configMouseGesture.ks]
+</span>
+;--------------------------------------------------------------------------------
+; タイトルに戻る
+;--------------------------------------------------------------------------------
+*backtitle
+[cm]
+[layopt layer=message1 visible=false]
+[freeimage layer=1]
+[clearfix]
+;コンフィグの呼び出しに sleepgame を使っているので、必ず awakegame で戻してやってください
+[awakegame]
+
+;===================================================
+
+;★ボタンクリック時の処理
+
+;===================================================
+;--------------------------------------------------------------------------------
+;▼BGM音量
+;--------------------------------------------------------------------------------
+*vol_bgm_change
+[iscript]
+	$(".bgmvol").attr("src","data/image/config/c_btn.png");
+	$(".bgmvol_"+tf.current_bgm_vol).attr("src","data/image/config/c_set.png");
+[endscript]
+[bgmopt volume="&tf.current_bgm_vol"]
+[return]
+
+;--------------------------------------------------------------------------------
+;▼SE音量
+;--------------------------------------------------------------------------------
+*vol_se_change
+[iscript]
+	$(".sevol").attr("src","data/image/config/c_btn.png");
+	$(".sevol_"+tf.current_se_vol).attr("src","data/image/config/c_set.png");
+[endscript]
+[seopt volume="&tf.current_se_vol"]
+[return]
+
+;---------------------------------------------------------------------------------
+;▼テキスト速度
+;--------------------------------------------------------------------------------
+*ch_speed_change
+[iscript]
+	$(".ch").attr("src","data/image/config/c_btn.png");
+	$(".ch_"+tf.set_ch_speed).attr("src","data/image/config/c_set.png");
+[endscript]
+[configdelay speed="&tf.set_ch_speed"]
+
+;	テキスト速度サンプル
+	[position layer=message1 left=40 top=490 width=880 height=110 page=fore visible=true opacity=0]
+	[layopt layer=message1 visible=true]
+	[current layer=message1]
+	[font color="0x454D51"]
+	このスピードで表示されます
+
+		[iscript]
+		tf.system.backlog.pop(); // 上の「このスピードで表示されます」のテキストを履歴から削除
+		[endscript]
+
+	[wait time=2000]
+	[er]
+	[layopt layer=message1 visible=false]
+	[return]
+
+;--------------------------------------------------------------------------------
+;▼オート速度
+;--------------------------------------------------------------------------------
+*auto_speed_change
+[iscript]
+	$(".auto").attr("src","data/image/config/c_btn.png");
+	$(".auto_"+tf.set_auto_speed).attr("src","data/image/config/c_set.png");
+[endscript]
+[autoconfig speed="&tf.set_auto_speed"]
+[return]
+
+;--------------------------------------------------------------------------------
+;▼スキップ処理-OFF
+;--------------------------------------------------------------------------------
+*skip_off
+[iscript]
+	$(".unread_off").attr("src","data/image/config/c_uts_off.png");
+	$(".unread_on").attr("src","data/image/config/c_btn.png");
+	tf.text_skip = "OFF";
+[endscript]
+[config_record_label skip=false]
+[return]
+
+;--------------------------------------------------------------------------------
+;▼スキップ処理-ON
+;--------------------------------------------------------------------------------
+*skip_on
+[iscript]
+	$(".unread_off").attr("src","data/image/config/c_btn.png");
+	$(".unread_on").attr("src","data/image/config/c_uts_on.png");
+	tf.text_skip = "ON";
+[endscript]
+[config_record_label skip=true]
+[return]</div>
+		
+		<img src="./files/text.png" />KeyConfig.ks<br />
+		<div class="code">/*
+Ver4.50以降で有効
+ティラノスクリプトの装置入出力に関する設定を行うファイルです。
+
+
+<設定できるアクション> 
+    save:セーブ画面を開きます
+    load:ロード画面を開きます
+    next:次の文章に移ります。左クリックの操作
+    menu:メニュー画面を表示します。
+    title:タイトルへ戻ります
+    skip:スキップを開始します
+    backlog:バックログを表示します
+    fullscreen:フルスクリーン切り替え
+    qsave:クイックセーブ実行
+    qload:クイックロード実行
+    auto:オートモード開始
+    hidemessage:メッセージ消去
+    関数を指定することもできます。
+    例えば、コンフィグ画面の表示などは、関数の中にsleepgameでコンフィグ画面のシナリオファイルを指定してください
+    function(){
+            //config呼び出し
+            TYRANO.kag.ftag.startTag("sleepgame", {storage:"config.ks"});
+    }
+    
+<キーボード指定方法> 
+    
+    キーコードと、そのキーが押されたときのアクションを配置します。
+    キーコードの調べ方は
+    http://shanabrian.com/web/javascript/keycode.php
+    上記サイトで実際にキーを押すことで対応する数字を取得できます。
+    
+    ノベルゲームでよく利用すると思わえるキーコードを書いておきます。
+    32:space 13:Enter 17:Ctrl 
+    
+<マウス操作>
+    
+    right:右クリック
+    center:センターボタンをクリック
+    wheel_up:マウスホイールを上に上げたときの動作
+    wheel_down:マウスホイールを下に下げたときの動作
+    
+
+<ジェスチャー>
+
+    スマホやタブレット限定です。フリック操作などに対応して、システムを呼び出すことができます。
+    swipe_up_1 は例えば、画面の上方向にフリックした時の動作を指定できます。
+    この _1 の数字は指の数をしていできます。
+    
+    なので、１本でのスワイプと２本でのスワイプの動作を分けたい場合にはそれぞれ
+    swipe_up_1 とswipe_up_2 を分けて定義すれば良いということです。
+    
+    holdは 画面を一定時間タッチし続けたときに発動します。 
+    
+*/
+
+var __tyrano_key_config = {
+
+    //キーボード操作 
+    "key" : {
+    
+        "32" : "hidemessage", //Space
+        "13" : "next", // Enter
+        "91" : "skip", //Command(Mac)  
+        "17" : "skip", //Ctrl (Windows)
+        "67":function(){ // c ボタン
+            //config呼び出し例 コメント化
+            /*
+            if (TYRANO.kag.tmp.sleep_game != null) {
+                return false;
+            }
+            TYRANO.kag.ftag.startTag("sleepgame", {storage:"config.ks"});
+            */
+        }
+        
+    },
+
+    //マウス操作
+    "mouse" : {
+        "right" : <span class="code_">"",//</span>"hidemessage", //右クリックの動作
+        "center": "menu", //センターボタンをクリック
+        "wheel_up" : "load", // ホイールをアップした時の動作
+        "wheel_down" : "save" //ホイールをダウンした時の動作
+    },
+    
+    //ジェスチャー
+    "gesture" : {
+        "swipe_up_1" : {
+            "action" : "backlog"
+        },
+        "swipe_left_1" : {
+            "action" : "auto"
+        },
+        "swipe_right_1" : {
+            "action" : "menu"
+        },
+        "swipe_down_1" : {
+            "action" : "load"
+        },
+        
+        "hold" : {
+            "action" : "skip",
+        }
+    }
+
+};</div>
+		<div id="I" class="space"></div>
+		<h2>その他</h2>
+		<h3>初期設定</h3>
+		<p>
+			各ジェスチャーのアクション、ジェスチャー感度などについて、<br />
+			ユーザーの設定を読み込む前にあらかじめ決定しておく初期値を変更したい場合<br />
+			<img src="./files/text.png" />init.js を編集してください。<br />
+		</p>
+		<h3>[mgesture_tmp_on], [mgesture_tmp_off]</h3>
+		<p>
+			このプラグインを導入することで使えるようになるタグです。<br>
+		</p>
+		<p>
+			[mgesture_tmp_on]タグを使うと、一時的にマウスジェスチャーの設定が<br>
+			『あらかじめ定義しておいた別の設定』に切り替わります。<br>
+			こちらの設定はプレイヤーが設定することはできません。<br>
+		</p>
+		<p>
+			[mgesture_tmp_off]タグでもとにもどります。<br>
+		</p>
+		<p>
+			なお、両タグともlog属性を持ち、log=trueを指定すると通知を出します。<br>
+		</p>
+		<div id="F" class="space"></div>
+		<h2>免責事項</h2>
+		<p>
+			このプラグインを利用したことで生じた一切の損害について、<br />
+			製作者は責任を負わないものとします。<br />
+		</p>
+		<div id="G" class="space"></div>
+		<h2>連絡先</h2>
+		<p>
+			アラートやコンソールで警告が出てプログラムが止まる、<br />
+			意図した動作をしない、といった症状が出た場合や、<br />
+			何か要望がある場合はこちらのTwitterアカウントまでお知らせください。<br />
+		</p>
+		<a href="https://twitter.com/tempura17654" target="_blank"><div class="link">
+			@tempura17654
+		</div></a>
+		<div id="H" class="space"></div>
+		<h2>更新履歴</h2>
+		<table class="rireki">
+			<tr>
+				<td>2017/07/09</td>
+				<td>[mgesture_tmp_on][mgesture_tmp_off]タグを追加しました。</td>
+			</tr>
+			<tr>
+				<td>2017/05/27</td>
+				<td>説明書の記述の一部誤りを修正。また、コンフィグ画面においてデバッグ用のコンソール出力が残っていたのを削除。</td>
+			</tr>
+			<tr>
+				<td>2017/05/27</td>
+				<td>配布開始</td>
+			</tr>
+		</table>
+	
+	</div></body>
+	<script type="text/javascript">
+		function resize() {
+			var width, heiht;
+			if (self.innerHeight) {
+				// all except Explorer
+				width = self.innerWidth;
+				height = self.innerHeight;
+			} else if (document.documentElement && document.documentElement.clientHeight) {
+				// Explorer 6 Strict Mode
+				width = document.documentElement.clientWidth;
+				height = document.documentElement.clientHeight;
+			} else if (document.body) {
+				// other Explorers
+				width = document.body.clientWidth;
+				height = document.body.clientHeight;
+			}
+			var s = 1030 - width;
+			if ( s > 0 ) {
+				var w = Math.max( 100, 620 - s );
+				console.log( w );
+				$( 'table' ).css( 'width', (w + 150) + 'px' );
+				$( 'td.range' ).attr( 'width', w );
+			}
+			var h = height - 300;
+			$( '#wrap' ).css( 'margin-bottom', h + 'px' );
+		}
+		var timer = false;
+		$( window ).resize(function() {
+			if ( timer !== false ) {
+				clearTimeout(timer);
+			}
+			timer = setTimeout(function() {
+				resize();
+			}, 150);
+		});
+		resize();
+	</script>
+</html>

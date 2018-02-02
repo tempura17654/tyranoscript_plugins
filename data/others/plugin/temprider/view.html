@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script type="text/javascript" src="../../../../tyrano/libs/jquery-2.0.3.min.js"></script>
+		<style>
+			body, div, p, span, button, input {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				font-size: 14px;
+				padding: 20px;
+			}
+			body, input, button {
+				font-family: メイリオ, sans-serif;
+			}
+			.btn {
+				font-family: メイリオ, sans-serif;
+				width: 200px;
+				height: 30px;
+				margin-bottom: 5px;
+				position: relative;
+				display: inline-block;
+				padding: 0.25em 0.5em;
+				text-decoration: none;
+				color: #FFF;
+				background: #03A9F4;
+				border: solid 1px #0f9ada;
+				border-radius: 4px;
+				box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+				text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+				cursor: pointer;
+			}
+			.btn:hover {
+				background: #13B9F4;
+			}
+			.btn:active {
+				background: #0299E4;
+			}
+			.ipt {
+				width: 196px;
+				height: 22px;
+				margin-bottom: 5px;
+			}
+			.ipt_p {
+				width: 93px;
+				height: 22px;
+				margin-bottom: 5px;
+			}
+			.plus {
+				width: 30px;
+				margin-left: 30px;
+			}
+			.minus {
+				width: 30px;
+			}
+			.cleaript {
+				width: 80px;
+			}
+			.checkbox01-input{
+				display: none;
+			}
+			.checkbox01-parts{
+				cursor: pointer;
+				padding-left: 20px;
+				position:relative;
+				margin-right: 20px;
+			}
+			.checkbox01-parts:hover{
+				color: #aaa;
+			}
+			.checkbox01-parts::before{
+				content: "";
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 15px;
+				height: 15px;
+				border: 1px solid #999;
+				border-radius: 4px;
+			}
+			.checkbox01-parts:hover::before{
+				border: 1px solid #aaa;
+			}
+			
+			.checkbox01-input:checked + .checkbox01-parts{
+				color: #03A9F4;
+			}
+			.checkbox01-input:checked + .checkbox01-parts::after{
+				content: "";
+				display: block;
+				position: absolute;
+				top: -5px;
+				left: 5px;
+				width: 7px;
+				height: 14px;
+				transform: rotate(40deg);
+				border-bottom: 3px solid #03A9F4;
+				border-right: 3px solid #03A9F4;
+			}
+			label {
+				margin-left: 28px;
+			}
+		</style>
+	</head>
+	<body>
+		<button class="btn free_layermode">合成レイヤーをクリア</button><br>
+		<button class="btn free_filter"   >フィルターをクリア</button><br>
+		<button class="btn reset_camera"  >カメラをリセット</button><br>
+		<button class="btn freeimage_base">ベースレイヤーをクリア</button><br>
+		<button class="btn freeimage_0"   >レイヤー０をクリア</button><br>
+		<button class="btn freeimage_1"   >レイヤー１をクリア</button><br>
+		<button class="btn freeimage_2"   >レイヤー２をクリア</button><br>
+		<button class="btn cm"            >ボタンをクリア    </button><br>
+		<button class="btn clearfix"      >FIXボタンをクリア </button><br>
+		<form onsubmit="return false" class="frm_free">
+			<input class="btn free" type="submit" value="下記のnameをクリア"></input><br>
+			<input class="ipt ipt_free" placeholder="クリアするnameを入力"></input><br>
+		</form><br>
+		<form onsubmit="return false" class="frm_do">
+			<input class="btn do" type="submit" value="下記のタグを実行＆コピー"></input><br>
+			<button class="btn prev">処理を戻す</button><br>
+			<button class="btn plus" >＋</button>
+			<button class="btn minus" >－</button>
+			<button class="btn cleaript">clear</button><br>
+			<input class="ipt ipt_do" placeholder="タグ名(Tabキーで入力位置移動)"></input><br>
+			<span class="ipt_span">
+				<input class="ipt_p ipt_pa ipt_pa1" placeholder="属性名1"></input>
+				<input class="ipt_p ipt_pb ipt_pb1" placeholder="属性値1"></input><br>
+			</span>
+			<span class="ipt_span">
+				<input class="ipt_p ipt_pa ipt_pa2" placeholder="属性名2"></input>
+				<input class="ipt_p ipt_pb ipt_pb2" placeholder="属性値2"></input><br>
+			</span>
+			<span class="ipt_span">
+				<input class="ipt_p ipt_pa ipt_pa3" placeholder="属性名3"></input>
+				<input class="ipt_p ipt_pb ipt_pb3" placeholder="属性値3"></input><br>
+			</span>
+			<span class="ipt_span">
+				<input class="ipt_p ipt_pa ipt_pa4" placeholder="属性名4"></input>
+				<input class="ipt_p ipt_pb ipt_pb4" placeholder="属性値4"></input><br>
+			</span>
+		</form>
+		<label>
+			<input type="checkbox" name="checkbox01[]" class="checkbox01-input onebyone">
+			<span class="checkbox01-parts">入力のたびに実行</span>
+		</label><br>
+		<label>
+			<input type="checkbox" name="checkbox01[]" class="checkbox01-input prevdo">
+			<span class="checkbox01-parts">実行の直前に一回戻す</span>
+		</label><br>
+		<label>
+			<input type="checkbox" name="checkbox01[]" class="checkbox01-input time_0">
+			<span class="checkbox01-parts">time=0を上書き</span>
+		</label>
+		<button class="btn pause" >ゲームを停止</button><br>
+		<button class="btn play"  >ゲームを再開</button><br><br>
+		<button class="btn save"  >セーブ</button><br>
+		<button class="btn load"  >ロード</button><br>
+		<button class="btn reload">更新</button><br>
+		<button class="btn reload2">更新＋ロード</button><br><br>
+		<button class="btn devtool">開発者ツールを開く</button><br><br>
+		<button class="btn scshot">スクリーンショットを撮る</button><br>
+		<button class="btn writevar">変数リストを書き出す</button><br>
+		<button class="btn open">保存先を開く</button><br><br>
+		<label>
+			<input type="checkbox" name="checkbox01[]" class="checkbox01-input notime">
+			<span class="checkbox01-parts">強制ノータイム</span>
+		</label>
+	</body>
+	<script>
+	</script>
+</html>

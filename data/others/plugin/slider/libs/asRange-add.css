@@ -1,0 +1,23 @@
+/*
+**  .asRange-selected             .asRange
+**          ↓                       ↓
+**     ＿＿＿＿＿＿＿／////＼＿＿＿＿＿＿＿
+**   ／::::::::::::::|//////|              ＼
+**   ＼::::::::::::::|//////|              ／
+**     ￣￣￣￣￣￣￣＼////／￣￣￣￣￣￣￣
+**                      ↑
+**               .asRange-pointer
+**
+*/
+.asRange {
+  position: absolute;
+  cursor: pointer;
+  background-repeat: no-repeat;
+}
+.asRange .asRange-selected {
+  background-repeat: no-repeat;
+}
+.asRange .asRange-pointer {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
