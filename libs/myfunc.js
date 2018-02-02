@@ -264,6 +264,11 @@ $(function(){
     storage_url = "./data/others/plugin/" + vars.plugin + "/_SAMPLE.ks";
   }
   
+  // editor.html?koneta=...
+  else if (vars.koneta) {
+    storage_url = "./data/scenario/koneta" + vars.koneta + ".ks";
+  }
+  
   // editor.html?storage=...
   else if (vars.storage) {
     storage_url = vars.storage;
