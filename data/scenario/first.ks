@@ -1,5 +1,5 @@
-[plugin name=temprider]
 [jump storage="scene1.ks"]
+[jump storage="koneta/fadetext.ks"]
 [jump storage="../others/plugin/special_char              /_SAMPLE.ks"]
 [jump storage="../others/plugin/temprunking               /_SAMPLE.ks"]
 [jump storage="../others/plugin/tempura_autosave          /_SAMPLE.ks"]

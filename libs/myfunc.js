@@ -266,7 +266,7 @@ $(function(){
   
   // editor.html?koneta=...
   else if (vars.koneta) {
-    storage_url = "./data/scenario/koneta" + vars.koneta + ".ks";
+    storage_url = "./data/scenario/koneta/" + vars.koneta + ".ks";
   }
   
   // editor.html?storage=...
