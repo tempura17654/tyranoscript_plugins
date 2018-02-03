@@ -1,3 +1,4 @@
+[jump storage="koneta/ronpa.ks"]
 [jump storage="koneta/screenshot.ks"]
 [jump storage="koneta/indent.ks"]
 [jump storage="scene1.ks"]
