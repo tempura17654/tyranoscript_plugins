@@ -13,6 +13,10 @@ if(vars.storage){
   mp.storage = $.replaceAll(vars.storage, "www", "/") + ".ks";
   tf.flag = true;
 }
+else if (vars.koneta) {
+  mp.storage = "koneta/" + vars.koneta + ".ks";
+  tf.flag = true;
+}
 else if (vars.plugin) {
   mp.storage = "../others/plugin/" + vars.plugin + "/_SAMPLE.ks";
   tf.flag = true;

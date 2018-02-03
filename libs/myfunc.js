@@ -277,7 +277,7 @@ $(function(){
   
   // editor.html
   else {
-    storage_url = "./libs/first.ks";
+    storage_url = "./libs/first.ks?201802040351";
   }
   
   // Get storage
