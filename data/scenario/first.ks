@@ -1,3 +1,5 @@
+[jump storage="koneta/screenshot.ks"]
+[jump storage="koneta/indent.ks"]
 [jump storage="scene1.ks"]
 [jump storage="koneta/fadetext.ks"]
 [jump storage="../others/plugin/special_char              /_SAMPLE.ks"]
