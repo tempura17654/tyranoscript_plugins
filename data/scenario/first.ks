@@ -1,3 +1,38 @@
+[plugin name=ruby type=justify]
+[iscript]
+var addRuby = function (a,b) {
+  TYRANO.kag.stat.ruby_dic = TYRANO.kag.stat.ruby_dic || {};
+  TYRANO.kag.stat.ruby_dic[a] = {
+    ruby: b,
+    count: 0
+  };
+}
+setTimeout(function () {
+  addRuby("伸縮自在の愛", "バンジーガム");
+  addRuby("こんにちは", "こんにちは");
+  addRuby("こ", "こ");
+  addRuby("スクリプト", "すくりぷと");
+  addRuby("荻原", "おぎはら");
+  addRuby("F5", "えふご");
+  addRuby("再実行", "さいじっこう");
+}, 100);
+[endscript]
+[wait time=100]
+[iscript]
+tf.face = "ＭＳ ゴシック";
+[endscript]
+[font face=&tf.face]
+[delay speed=30]
+あいつの伸縮自在の愛はよーくできてる…。[l][r]
+こんにちは。[l][r]
+ああああああああああああああああああああああああああああああああああああこんにちは。[l][r]
+ここにスクリプトを書いてから、[r]
+右下にある「再実行」をクリックするか、[r]
+もしくはキーボードの「F5」キーを押すと、[r]
+そのスクリプトでゲームがスタートします。[l][r]
+バージョンはティラノスクリプトV461です。[l][r]
+荻原制作のプラグインのほぼすべてがここで読み込めます。
+[s]
 [jump storage="koneta/ronpa.ks"]
 [jump storage="koneta/screenshot.ks"]
 [jump storage="koneta/indent.ks"]
