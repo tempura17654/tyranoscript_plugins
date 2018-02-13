@@ -190,11 +190,13 @@ TYRANO.kag.ruby.createRubyTag = {
         }
         // ルビの幅が本文の幅よりデカイ場合は調整
         if (conf.ruby_width > conf.str_width) {
+            // 変形が有効なら
             if (this.kag.stat.ruby_config.enable_transform) {
                 conf.ruby_x = 0;
                 conf.ruby_scale = conf.str_width / conf.ruby_width;
                 return this.justifyTransform.call(this, conf, str, text);
             }
+            // マージンが有効なら
             else if (this.kag.stat.ruby_config.enable_margin) {
                 conf.str_x = (conf.ruby_width - conf.str_width) / 2;
                 conf.str_width = conf.ruby_width;
@@ -212,29 +214,31 @@ TYRANO.kag.ruby.createRubyTag = {
         if (conf.ruby_len === 1 || conf.str_len === 1) {
             return this.center.call(this, conf, str, text);
         }
+        // B-b) 
         if (conf.ruby_len === conf.str_len && this.kag.stat.ruby_config.enable_onetoone) {
             return this.onetoone.call(this, conf, str, text);
         }
-        // B-b) ルビの幅が本文の幅よりデカイ場合
+        // B-c) ルビの幅が本文の幅よりデカイ場合
         if (conf.ruby_width > conf.str_width) {
-            // B-b-1) 本文のマージン付けが無効な場合
+            // B-c-1) 本文のマージン付けが無効な場合
             if (! this.kag.stat.ruby_config.enable_margin) {
                 return this.center.call(this, conf, str, text);
             }
+            // B-c-2) ルビの変形が有効な場合
             else if (this.kag.stat.ruby_config.enable_transform) {
                 conf.ruby_x = 0;
                 conf.ruby_scale = conf.str_width / conf.ruby_width;
                 return this.justifyTransform.call(this, conf, str, text);
             }
-            // B-b-2) 本文のマージン付けが有効な場合
-            else{
+            // B-c-3) 本文のマージン付けが有効な場合
+            else {
                 conf.ruby_x = 0;
                 conf.width_dif = conf.ruby_width - conf.str_width;
                 conf.letter_spacing = conf.width_dif / (conf.str_len - 1);
                 return this.justifyInvert.call(this, conf, str, text);
             }
         }
-        // B-c) ルビの幅が本文の幅より小さい場合
+        // B-d) ルビの幅が本文の幅より小さい場合
         else {
             conf.ruby_x = 0;
             var margin = parseInt(this.kag.stat.ruby_config.justify_margin);
@@ -247,7 +251,6 @@ TYRANO.kag.ruby.createRubyTag = {
             conf.width_dif = conf.str_width - conf.ruby_width;
             conf.letter_spacing = conf.width_dif / (conf.ruby_len - 1);
             conf.ruby_x /= 2;
-            
             this.kag.ruby.convertConf(conf, false);
             return ''
             + '<span class="ruby_str'  + this.kag.stat.ruby_no + '" style="display:inline-block;position:relative;white-space:nowrap;line-height:' + conf.line_height + '; width:' + conf.str_width + '; font-size:' + conf.str_size + ';">' + str
@@ -264,7 +267,7 @@ TYRANO.kag.ruby.createRubyTag = {
         + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;width:100%;white-space:nowrap;letter-spacing:0; font-size:' + conf.ruby_size + '; top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';">' + text
         + '</span></span>';
     },
-    // D)
+    // D) ルビ変形
     justifyTransform: function (conf, str, text) {
         this.kag.ruby.convertConf(conf, false);
         return ''
@@ -272,7 +275,7 @@ TYRANO.kag.ruby.createRubyTag = {
         + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;white-space:nowrap;transform-origin:left top;transform:scaleX(' + conf.ruby_scale + ');letter-spacing:' + conf.letter_spacing + ';width:100%;font-size:' + conf.ruby_size + '; top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';">' + text
         + '</span></span>';
     },
-    // E) 一対一対応
+    // E) ルビと本文が一対一対応
     onetoone: function (conf, str, text) {
         conf.ruby_x = (conf.str_size - conf.ruby_size) / 2;
         var len = conf.str_len - 1;
@@ -381,17 +384,22 @@ TYRANO.kag.ruby.convertRuby = function (c, index) {
     }
     else {
         var ruby = this.ruby_target[this.ruby_target.length - 1];
+        
         // いま表示する1文字がまさにルビの開始位置だった場合、新規ルビ
         if (ruby.pos === index) {
             if (! ruby.key) ruby.key = c;
+            // 新規津ルビ用HTMLを取得
             ret.str  = this.getRubyTag(c, ruby);
+            // 1) ルビ用HTMLに変換されなかった場合
             if (ret.str.length == 1) {
                 ret.c = c;
                 delete ret.str;
             }
+            // 2) 無事ルビ用HTMLに変換された、かつスキップ中ではない
             else if (this.isSkip()) {
                 ret.ruby = this.getAdditionalRuby(c);
             }
+            // 3) 無事ルビ用HTMLに変換された、かつスキップ中
             else {
                 ret.ruby = {
                     str: ruby.key,
@@ -409,11 +417,13 @@ TYRANO.kag.ruby.convertRuby = function (c, index) {
         else {
             ret.c = c;
         }
+        // 新規ルビ用HTMLがあるならログを作る
         if (ret.str) {
             var conf = this.getRubySetting(ruby.key, ruby.value, this.kag.stat.default_font.face);
             var type = this.kag.stat.ruby_config.type;
             if (this.kag.stat.ruby_config.enable_backlog) ret.log  = this.createRubyTag[type](conf, ruby.key, ruby.value);
         }
+        // 1文字表示の場合もログを作る
         if (ret.c && this.kag.stat.ruby_config.enable_backlog) {
             ret.log = ret.c;
         }
