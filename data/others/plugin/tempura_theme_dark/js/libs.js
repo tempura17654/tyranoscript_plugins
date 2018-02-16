@@ -69,7 +69,14 @@ $.tConfirm = function (is_confirm, title, callback) {
 //# $.tReload
 // リロードする
 $.tReload = function () {
-    location.href="./index.html";
+    $(window).off("beforeunload");
+    var href = location.href;
+    if (href.indexOf("index.html") > -1) {
+        location.href = "./index.html";
+    }
+    else {
+        location.href = href.split("#")[0];
+    }
 };
 
 //# $.tLog
@@ -97,7 +104,8 @@ $.tExitApp = function () {
         gui.Window.get().close(true);
     }
     else {
-        window.close();
+        $(window).off("beforeunload");
+        window.open('about:blank','_self').close();
     }
 };
 

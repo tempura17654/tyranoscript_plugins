@@ -38,10 +38,10 @@ TYRANO.kag.menu.setEventConfig = function (j_body) {
     // タイトルに戻るボタン
     j_body.find(".menu_title").click(function(e) {
         if ($.tIsSaved()) {
-            $.confirm($.tData("title"), $.tExitApp);
+            $.confirm($.tData("title"), $.tReload);
         }
         else {
-            $.confirm($.tData("nosavetitle"), $.tExitApp);
+            $.confirm($.tData("nosavetitle"), $.tReload);
         }
     });
     // クローズボタン

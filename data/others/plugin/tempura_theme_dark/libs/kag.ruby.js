@@ -23,7 +23,7 @@ $.extend(TYRANO.kag.stat, {
 
 //# TYRANO.kag.stat.ruby_dic
 // ルビ辞書オブジェクト
-if (mp.dic !== "none") {
+if (false && mp.dic !== "none") {
     $.getJSON(mp.dic || "./data/others/plugin/tempura_ruby/dic.json", function (data) {
         for (var key in data) {
             TYRANO.kag.stat.ruby_dic[key] = {
