@@ -1,3 +1,4 @@
+[jump storage="../others/plugin/tempura_theme_dark        /_SAMPLE.ks"]
 [jump storage="../others/plugin/tempura_ruby              /_SAMPLE.ks"]
 [jump storage="koneta/ronpa.ks"]
 [jump storage="koneta/screenshot.ks"]

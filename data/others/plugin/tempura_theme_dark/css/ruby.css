@@ -1,0 +1,86 @@
+/* ======================================== */
+/* ルビ設定(参考:http://roheisen.net/)
+=========================================== */
+
+/* ruby（ルビ文字組み全体のインライン領域）
+------------------------------------------- */
+/* Firefox、Safari、Opera用指定 */
+ruby {
+  display       : inline-table;
+  text-align    : center;
+  text-indent   : 0px;
+  white-space   : nowrap;
+  border        : none;
+  margin        : 0px;
+  padding       : 0px;
+  line-height   : 1;
+  height        : 1em;
+  vertical-align: 0.9em;      /* 要調整 */
+/*vertical-align: text-bottom;*/
+/*transform     : translateY(-0.25em);*/
+}
+/* IE7用指定 */
+*:first-child+html ruby {
+  white-space   : normal;
+}
+/* IE6用指定 */
+* html body ruby {
+  white-space   : normal;
+  display       : inline-table;
+  vertical-align: baseline;
+}
+
+/* rb（本文）
+------------------------------------------- */
+/* Firefox、Safari、Opera用指定 */
+rb {
+  display       : table-row-group;
+  line-height   : 1;
+  text-align    : center;
+  border        : none;
+  margin        : 0px;
+  padding       : 0px;
+  white-space   : nowrap;
+}
+/* IE7用指定 */
+*:first-child+html rb {
+  white-space   : normal;
+}
+/* IE6用指定 */
+* html body ruby rb {
+  display       : table-row-group;
+  vertical-align: bottom;
+  white-space   : normal;
+}
+
+/* rt（フリガナ）
+------------------------------------------- */
+/* Firefox、Safari、Opera用指定 */
+rt {
+  display     : table-header-group;
+  font-size   : 0.45em; /* 要調整 */
+  line-height : 0;      /* 要調整 */
+  text-align  : center;
+  white-space : nowrap;
+  border      : none;
+  margin      : 0px;
+  padding     : 0px;
+}
+/* IE7用指定 */
+*:first-child+html rt {
+  white-space  : normal;
+}
+/* IE6用指定 */
+* html body ruby rt {
+  white-space  : normal;
+  line-height  : 1em;
+  display      : table-header-group;
+  position     : static;
+  top          : 0em;
+}
+
+/* rp（CSS OFF状態での区切り文字、通常不可視）
+------------------------------------------- */
+rp {
+  display      : none;
+}

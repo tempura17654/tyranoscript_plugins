@@ -231,6 +231,11 @@ $(function(){
     vars[array[0]] = array[1];
   }
   
+  // editor.html?width=...
+  if (vars.width) {
+    $("#iframe").css("width", vars.width);
+  }
+  
   // editor.html?share=...
   if (vars.share) {
     var hash = vars.share;

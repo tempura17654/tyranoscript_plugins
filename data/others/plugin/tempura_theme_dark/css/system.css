@@ -1,0 +1,363 @@
+
+/* ======================================== */
+/* システム系の画面共通
+=========================================== */
+.system_base {
+  color          : white;
+  font-size      : 21px;
+  font-weight    : normal;
+  position       : absolute;
+  top            : 3%;
+  left           : 3%;
+  width          : 94%;
+  height         : 94%;
+  margin         : 0;
+  padding        : 0;
+  background     : #050505;
+  background     : rgba(0, 0, 0, 0.85);
+  border-radius  : 4px;
+}
+.system_area {
+  position       : absolute;
+  background     : #151515;
+  background     : rgba(255, 255, 255, 0.05);
+  border-radius  : 4px;
+  overflow       : hidden;
+}
+.system_base p._menu_item {
+  position       : absolute;
+  top            : 91%;
+  cursor         : pointer;
+}
+.system_base p._menu_item:hover {
+  text-shadow: 0px 0px 5px #F00, 0px 0px 5px #F00, 0px 0px 5px #F00;
+}
+.system_base p.menu_upmax {
+  left           : 20%;
+}
+.system_base p.menu_up {
+  left           : 39%;
+}
+.system_base p.menu_down {
+  left           : 54%;
+}
+.system_base p.menu_downmax {
+  left           : 70%;
+}
+.system_base p.menu_close {
+  left           : 91%;
+}
+.system_base p.menu_exit {
+  left           : 52%;
+}
+.system_base p.menu_title {
+  left           : 72%;
+}
+
+
+
+/* ======================================== */
+/* コンフィグ画面
+=========================================== */
+.config_base h2 {
+  font-size      : 100%;
+  text-align     : left;
+}
+.config_base > div,
+.config_base > table {
+  padding        : 2%;
+  box-sizing     : border-box;
+  border-collapse: separate;
+}
+
+/* 1) 左テーブル
+------------------------------------------- */
+.config_base .left-table {
+  top            : 2%;
+  left           : 2%;
+  width          : 46%;
+  height         : 66%;
+}
+.config_base tr {
+  font-size      : 100%;
+}
+.config_base tr.small td {
+  font-size      : 80%;
+}
+
+.config_base td {
+  cursor         : default;
+  color          : white;
+  text-align     : center;
+  font-size      : 80%;
+}
+.config_base .on:hover,
+.config_base .off:hover
+{
+  cursor         : pointer;
+}
+.config_base td:first-child {
+  text-align     : left;
+  font-size      : 100%;
+}
+.config_base td.selected {
+  color          : #FCC;
+  text-shadow    : 0px 0px 5px #F00,
+                   0px 0px 5px #F00,
+                   0px 0px 5px #F00;
+  font-weight    : bold;
+}
+.left-table td:nth-child(1) { width: 45%; }
+.left-table td:nth-child(2) { width: 10%; }
+.left-table td:nth-child(3) { width: 35%; }
+.left-table td:nth-child(4) { width: 10%; }
+
+/* 2) 右テーブル
+------------------------------------------- */
+.config_base .right-table {
+  top            : 2%;
+  left           : 50%;
+  width          : 48%;
+  height         : 80%;
+}
+.right-table td:nth-child(1) { width: 55%; }
+.right-table td:nth-child(2) { width: 15%; }
+.right-table td:nth-child(3) { width: 15%; }
+.right-table td:nth-child(4) { width: 15%; }
+
+/* 3) サンプルテキスト
+------------------------------------------- */
+.config_base .text_sample {
+  cursor         : default;
+  left           : 2%;
+  top            : 70%;
+  width          : 46%;
+  height         : 28%;
+}
+.config_base .text_sample .text_area,
+.config_base .text_sample .text_area_outer {
+  position       : absolute;
+  top            : 40%;
+  left           : 5%;
+  width          : 90%;
+  height         : 55%;
+  margin         : 0;
+  padding        : 0;
+  font-size      : 100%;
+  line-height    : 150%;
+  text-align     : left;
+  background-image : url('src/bg.png');
+  background-size  : 100% 100%;
+  background-repeat: no-repeat;
+}
+.config_base .text_sample .text_area_outer {
+  width          : 100%;
+  height         : 100%;
+  top            : 0;
+  left           : 0;
+  margin         : 0;
+  background-image : url('src/frame.png');
+  background-size  : 100% 100%;
+  background-repeat: no-repeat;
+}
+.config_base .text_sample .text_area_inner {
+  position       : absolute;
+  top            : 0;
+  left           : 0;
+  width          : 90%;
+  padding        : 4%;
+  font-size      : 80%;
+  line-height    : 150%;
+}
+
+/* ======================================== */
+/* セーブ画面
+=========================================== */
+
+/* 1) ページ選択ボタンスペース
+------------------------------------------- */
+.page_btn_space {
+  top          : 2%;
+  left         : 2%;
+  width        : 12%;
+  height       : 96%;
+}
+.page_btn_space tr {
+  height       : 16%;
+}
+.page_btn_space td {
+  cursor       : pointer;
+  width        : 100%;
+  color        : white;
+  text-align   : center;
+  font-size    : 1em;
+}
+.page_btn_space td:hover {
+  background-color: #222;
+}
+.page_btn_space .selected {
+  background-color: #333;
+}
+.page_btn_space .selected:hover {
+  background-color: #444;
+}
+
+/* 2) セーブアイテムリストスペース
+------------------------------------------- */
+.save_list_area {
+  top          : 2%;
+  left         : 15%;
+  width        : 40%;
+  height       : 96%;
+}
+.save_list {
+  display      : inline;
+  text-align   : left;
+  border       : none;
+}
+.save_list_item {
+  display      : none;
+  height       : 20%;
+  box-sizing   : border-box;
+  padding      : 4%;
+}
+.save_list_item:hover {
+  background   : #222;
+}
+/* NEW!! */
+.save_list_item.new {
+  background   : #411;
+}
+.save_list_item.new:hover {
+  background   : #522;
+}
+.save_list_item.new .save_list_item_date:after {
+  content      : "NEW!!";
+  margin-left  : 5%;
+  color        : #F44;
+}
+/* セーブデータの日付の設定 */
+.save_list_item_header {
+  display      : block;
+  margin-bottom: 2%;
+}
+.save_list_item_name {
+  display      : inline;
+}
+.save_list_item_date {
+  margin-left  : 6%;
+  display      : inline;
+  padding      : 0;
+  color        : inherit;
+}
+/* セーブデータのテキスト部分の設定 */
+.save_list_item_area {
+  width        : 340px;
+  text-align   : left;
+  border       : none;
+}
+.save_list_item_text {
+  display      : inline;
+  color        : white;
+  word-break   : break-all;
+}
+/* セーブデータのサムネイル部分の設定 */
+.save_list_item_thumb {
+  display      : inline;
+  border       : none;
+}
+.save_list_item_thumb_img {
+  display      : inline;
+  float        : left;
+  margin-right : 10px;
+  margin-bottom: 2px;
+  border-radius: 0;
+  border       : 1px solid rgba(200,200,200,0.3);
+  width        : 24%;
+  height       : auto;
+}
+
+/* 2) ビッグサムネイルスペース
+------------------------------------------- */
+.big_thumb_area {
+  top          : 2%;
+  left         : 56%;
+  width        : 42%;
+  height       : 80%;
+  box-sizing   : border-box;
+  padding      : 2%;
+  color        : white;
+  text-align   : left;
+}
+.big_thumb_area img {
+  margin-bottom: 30px;
+  max-height   : 300px;
+  width        : 100%;
+  border       : 1px solid #555;
+}
+
+/* ======================================== */
+/* バックログ画面
+=========================================== */
+
+.log_body {
+  position   : absolute;
+  top        : 2%;
+  left       : 2%;
+  width      : 96%;
+  height     : 80%;
+  overflow-y : scroll;
+}
+.log_body table {
+  width          : 100%;
+  border-collapse: separate;
+  border-spacing : 2px 2px;
+}
+.log_body tr {
+  min-height   : 90px;
+  height       : 90px;
+}
+.log_body td {
+  border-radius: 4px;
+}
+.log_body td.serif {
+  text-indent  : -22px;
+  padding-left : 22px;
+}
+.log_body td.left {
+  width        : 25%;
+  padding-left : 20px;
+  background   : #151515;
+  background   : rgba(255, 255, 255, 0.07);
+}
+.log_body td.right {
+  width        : 75%;
+  padding      : 20px 40px;
+  background   : #151515;
+  background   : rgba(255, 255, 255, 0.07);
+}
+/* スクロールバー全体 */
+.log_body::-webkit-scrollbar {
+  width        : 30px;
+}
+/* スクロールボタン */
+.log_body::-webkit-scrollbar-button {
+  width        : 30px;
+  height       : 30px;
+  background   : #252525;
+  background   : rgba( 255, 255, 255, 0.3 );
+  border-radius: 2px;
+}
+/* スクロールバー */
+.log_body::-webkit-scrollbar-thumb {
+  background   : #252525;
+  background   : rgba( 255, 255, 255, 0.2 );
+  border-radius: 15px;
+  min-height   : 100px;
+}
+/* スクロールバーの背景部分 */
+.log_body::-webkit-scrollbar-track-piece {
+  background   : #151515;
+  background   : rgba(255, 255, 255, 0.07);
+  border-radius: 2px;
+}

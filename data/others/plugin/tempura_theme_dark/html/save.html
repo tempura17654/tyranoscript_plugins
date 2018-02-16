@@ -1,0 +1,35 @@
+<div class="system_base">
+  
+  <p class="menu_close _menu_item">閉じる</p>
+  
+  <table class="page_btn_space system_area">
+    <tr><td class="next_page" >Save 1</td></tr>
+    <tr><td class="next_page" >Save 2</td></tr>
+    <tr><td class="next_page" >Save 3</td></tr>
+    <tr><td class="next_page" >Save 4</td></tr>
+    <tr><td class="next_page" >Save 5</td></tr>
+    <tr><td class="next_page" >Quick & Auto</span></td></tr>
+  </table>
+  
+  <div class="save_list_area system_area">
+    <ul class='save_list'>
+      {{for array_save}}
+        <li class='save_display_area save_list_item' data-num='{{:num}}' data-kind='{{:kind}}'>
+          <span class='save_list_item_header'>
+            <span class='save_list_item_name'>SAVEDATA -{{:name}}-</span>
+            <span class='save_list_item_date'>{{:save_date}}</span>
+          </span>
+          <img src="{{:img_data}}" class='save_list_item_thumb_img'>
+          <span class='save_list_item_area'><span class='save_list_item_text'>{{:title}}</span></span>
+          <br style="clear:both">
+        </li>
+      {{/for}}
+    </ul>
+  </div>
+  
+  <div class="big_thumb_area system_area">
+    <img src="./data/others/plugin/tempura_theme_dark/img/nodata.png"><br>
+    <p></p>
+  </div>
+
+</div>
