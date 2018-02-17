@@ -282,12 +282,12 @@ $(function(){
   
   // editor.html
   else {
-    storage_url = "./libs/first.ks?201802040351";
+    storage_url = "./libs/first.ks";
   }
   
   // Get storage
   if (storage_url) {
-    $.get(storage_url, function (text) {
+    $.get(storage_url + "?" + Math.floor(Math.random()*1E7), function (text) {
       editor.setValue(text);
       for (var i = 0; i < 999; i++) {
         editor.gotoLine(0);

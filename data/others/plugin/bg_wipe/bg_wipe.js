@@ -57,7 +57,10 @@ window.cancelAnimationFrame =
             var that = this;
             pm.preloads = [];
             var base = "./data/others/plugin/bg_wipe/";
-            if ( undefined != pm.storage       ) { pm.preloads.push(pm.storageFromRoot  = "./data/bgimage/" + pm.storage);        };
+            if ( undefined != pm.storage       ) {
+                if ($.isHTTP(pm.storage)) pm.preloads.push(pm.storageFromRoot = pm.storage);
+                else pm.preloads.push(pm.storageFromRoot  = "./data/bgimage/" + pm.storage);
+            };
             if ( undefined != pm.i_name        ) { pm.preloads.push(pm.storageFromRoot2 = base + "timage/" + pm.i_name + ".png")  };
             if ( undefined != pm.s_name        ) { pm.preloads.push(pm.storageFromRoot3 = base + "simage/" + pm.s_name + ".png")  };
             if ( undefined == pm.wait          ) { pm.wait    = CfW.getDefOption().wait;   };
@@ -86,7 +89,10 @@ window.cancelAnimationFrame =
             pm.preloads = [];
             var CfW = TEMPURA.canvasForWipe;
             var base = "./data/others/plugin/bg_wipe/";
-            if ( undefined != pm.storage       ) { pm.preloads.push(pm.storageFromRoot  = "./data/bgimage/" + pm.storage);        };
+            if ( undefined != pm.storage       ) {
+                if ($.isHTTP(pm.storage)) pm.preloads.push(pm.storageFromRoot = pm.storage);
+                else pm.preloads.push(pm.storageFromRoot  = "./data/bgimage/" + pm.storage);
+            };
             if ( undefined != pm.i_name        ) { pm.preloads.push(pm.storageFromRoot2 = base + "timage/" + pm.i_name + ".png")  };
             if ( undefined != pm.s_name        ) { pm.preloads.push(pm.storageFromRoot3 = base + "simage/" + pm.s_name + ".png")  };
             if ( undefined == pm.preload       ) { pm.preload = CfW.getDefOption().preload;};

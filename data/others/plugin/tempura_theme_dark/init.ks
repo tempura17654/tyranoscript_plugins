@@ -127,7 +127,6 @@
 [_JS  F= libs/rangeslider  ]
 [_CSS F= libs/rangeslider  ]
 [_JS  F= libs/kag.ruby     ]
-[_CSS F= css/ruby          ]
 [_CSS F= css/system        ]
 [_CSS F= css/others        ]
 [_JS  F= js/libs           ]

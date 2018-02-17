@@ -40,13 +40,16 @@ $.tData = function (key) {
     return constants[key];
 };
 
-//# $.tSaveLastData
+//# $.tIsSaved
+// 最後のプレイ状態をセーブしたか？
+// セーブせずにゲームを終了しようとしたときなどを検知するために用いる
 $.tIsSaved = function () {
     return sf.last_save_order_index === TYRANO.kag.ftag.current_order_index && 
     sf.last_save_scenario === TYRANO.kag.stat.current_scenario;
 };
 
 //# $.tSaveLastData
+// 最後のプレイ状態を記憶するための処理
 $.tSaveLastData = function (slot) {
     if (slot) sf.last_save_slot = slot;
     sf.last_save_order_index = TYRANO.kag.ftag.current_order_index;
@@ -82,6 +85,7 @@ $.tReload = function () {
 //# $.tLog
 // 画面上部に通知ログを出す
 $.tLog = function(str) {
+    $(".notification").remove();
     $('<div class="notification">' + str + '</div>')
     .setTyranoFont()
     .appendTo("body")
@@ -158,30 +162,19 @@ $.tScreenFull = function (bool) {
     }
 };
 
-//# $.confirm
-// 既存関数の上書き：ダイアログを開いている間はキーコンフィグを無効にする
-$.confirm = function (str, cb_ok, cb_cancel) {
-    TYRANO.kag.tempKeyConfig();
-    $(".remodal_title").html(str);
-    $(".remodal").find(".remodal-cancel").show();
-    $(".remodal").find(".remodal-confirm").show();
-    var inst = $('[data-remodal-id=modal]').remodal();
-    inst.open();
-    $(document).off('closed', '.remodal');        
-    $(document).off('confirmation', '.remodal');        
-    $(document).on('confirmation', '.remodal', function (e) {
-        TYRANO.kag.restKeyConfig();
-        if(typeof cb_ok == "function"){
-            cb_ok();
-        }
-    });
-    $(document).off('cancellation', '.remodal');        
-    $(document).on('cancellation', '.remodal', function (e) {
-        TYRANO.kag.restKeyConfig();
-        if(typeof cb_cancel == "function"){
-            cb_cancel();
-        }
-    });
+TYRANO.kag.key_mouse.canShowMenu = function () {
+    /*[追加]==================================================================*/
+    if (this.kag.layer.layer_remodal.css("display") !== "none") {
+        return false;
+    }
+    /*========================================================================*/
+    if (this.kag.layer.layer_event.css("display") == "none" && this.kag.stat.is_strong_stop != true) {
+        return false;
+    }
+    if(this.kag.stat.is_wait == true){
+        return false;
+    }
+    return true;
 };
 
 //# $.getNowDate

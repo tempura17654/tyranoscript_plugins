@@ -6,8 +6,6 @@ var AUTO_SAVE_SLOT     = $.tData("auto_save_index");
 var SAVE_SLOT_PER_PAGE = $.tData("slot_count_per_page");
 var SAVE_PAGE_MAX      = $.tData("save_page_count");
 
-TYRANO.kag.configSaveSlotNum = SAVE_SLOT;
-
 //# SaveData
 // 新規セーブデータオブジェクトを作るコンストラクタ
 var SaveData = function () {
@@ -445,31 +443,6 @@ TYRANO.kag.menu.closeMenuLayer = function () {
     });
     if (TYRANO.kag.stat.visible_menu_button == true) {
         $(".button_menu").show();
-    }
-};
-
-
-// tmp_key_map
-var tmp_key_map = {
-    map_ges: null,
-    map_key: null,
-    map_mouse: null
-};
-
-//# kag.tempKeyConfig
-// 一時的にすべてのキーコンフィグを無効にする
-TYRANO.kag.tempKeyConfig = function () {
-    for (var key in tmp_key_map) {
-        tmp_key_map[key] = this.key_mouse[key];
-        this.key_mouse[key] = {};
-    }
-};
-
-//# kag.restKeyConfig
-// 一時的に無効にしていたすべてのキーコンフィグを復元する
-TYRANO.kag.restKeyConfig = function () {
-    for (var key in tmp_key_map) {
-        this.key_mouse[key] = tmp_key_map[key];
     }
 };
 

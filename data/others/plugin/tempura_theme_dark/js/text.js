@@ -1,6 +1,105 @@
 (function($, TYRANO, sf, tf){
 
-//# TYRANO.kag.tag.skipstart
+//# kag.ftag.showNextImg
+// クリック待ちグリフのソース変更
+TYRANO.kag.ftag.showNextImg = function(){
+    if (this.kag.stat.flag_glyph == "false") {
+        $(".img_next").remove();
+        var jtext = this.kag.getMessageInnerLayer()
+        jtext.find("p").append("<img class='img_next' src='" + $.tData("theme_dir") + "/img/nextpage.gif' />");
+    } else {
+        $(".glyph_image").show();
+    }
+};
+
+//# kag.menu.displayLog
+// バックログ画面表示
+TYRANO.kag.menu.displayLog = function() {
+    var that = this;
+    this.kag.stat.is_skip = false;
+    this.kag.html("backlog", {
+        "novel" : $.novel
+    }, function(html_str) {
+        var j_menu = $(html_str);
+        var layer_menu = that.kag.layer.getMenuLayer();
+        layer_menu.empty();
+        layer_menu.append(j_menu);
+        layer_menu.find(".menu_close").click(function() {
+            layer_menu.fadeOut(300,function(){
+                layer_menu.empty();
+                });
+            if (that.kag.stat.visible_menu_button === true) {
+                $(".button_menu").show();
+            }
+        });
+        /*[削除]================================================================
+        //スマホの場合はボタンの上下でスクロールできるようにする
+        layer_menu.find(".button_smart").hide();
+        if($.userenv()!="pc"){
+            layer_menu.find(".button_smart").show();
+            layer_menu.find(".button_arrow_up").click(function(){
+                var now = layer_menu.find(".log_body").scrollTop();
+                var pos = now - 60;
+                layer_menu.find(".log_body").animate({scrollTop:pos},{queue:false});
+            });
+            layer_menu.find(".button_arrow_down").click(function(){
+                var now = layer_menu.find(".log_body").scrollTop();
+                var pos = now + 60;
+                layer_menu.find(".log_body").animate({scrollTop:pos},{queue:false});
+            });
+        }
+        var log_str = "";
+        var array_log = that.kag.variable.tf.system.backlog;
+        for (var i = 0; i < array_log.length; i++) {
+            log_str += array_log[i] + "<br />";
+        }
+        [代替]----------------------------------------------------------------*/
+        var MAX = 1<<30;
+        var SMALL = 94;
+        // スクロール関数
+        var scroll = function (y) {
+            var now = layer_menu.find(".log_body").scrollTop();
+            var pos = now + y;
+            layer_menu.find(".log_body").animate({scrollTop:pos}, 0, {queue:false});
+        };
+        // スクロール関数を内包するイベントハンドラをセットしていく
+        layer_menu.find(".menu_up").click(function(){
+            scroll(-SMALL);
+        });
+        layer_menu.find(".menu_down").click(function(){
+            scroll(+SMALL);
+        });
+        layer_menu.find(".menu_upmax").click(function(){
+            scroll(-MAX);
+        });
+        layer_menu.find(".menu_downmax").click(function(){
+            scroll(+MAX);
+        });
+    		var log_str = "<table>";
+    		var array_log = that.kag.variable.tf.system.backlog;
+    		for (var i = 0; i < array_log.length; i++) {
+    		    log_str += "<tr>" + array_log[i] + "</td></tr>";
+    		}
+    		log_str += "</table>";
+        /*====================================================================*/
+        layer_menu.find(".log_body").html(log_str);
+        layer_menu.find(".log_body").css("font-family", that.kag.config.userFace);
+        $.preloadImgCallback(layer_menu,function(){
+            layer_menu.fadeIn(300);
+            //一番下固定させる
+            layer_menu.find(".log_body").scrollTop(9999999999);
+            //[追加]============================================================
+            // フォントをセット
+            j_menu.setTyranoFont();
+            //==================================================================
+        },that);
+        $(".button_menu").hide();
+    });
+};
+
+//# [skipstart]
+// 文字追加中もスキップできるようにしたい
+// なんかバグるだろうか
 TYRANO.kag.tag.skipstart.start = function (pm) {
     /*[削除]====================================================================
     //文字追加中は、スキップしない。
@@ -13,7 +112,7 @@ TYRANO.kag.tag.skipstart.start = function (pm) {
     this.kag.ftag.nextOrder();
 };
 
-//# TYRANO.kag.tag.ruby
+//# [ruby]
 TYRANO.kag.tag.ruby.pm.str = "";
 TYRANO.kag.tag.ruby.start = function(pm) {
     pm.val = pm.str;
@@ -22,18 +121,7 @@ TYRANO.kag.tag.ruby.start = function(pm) {
     else this.kag.ftag.nextOrder();
 };
 
-//# kag.ftag.showNextImg
-TYRANO.kag.ftag.showNextImg = function(){
-    if (this.kag.stat.flag_glyph == "false") {
-        $(".img_next").remove();
-        var jtext = this.kag.getMessageInnerLayer()
-        jtext.find("p").append("<img class='img_next' src='" + $.tData("theme_dir") + "/img/nextpage.gif' />");
-    } else {
-        $(".glyph_image").show();
-    }
-};
-
-//# kag.tag.text.start
+//# [text]
 // キャラクターネームエリアが空でない（→セリフである→カギカッコつきである）ならば
 // 2行目以降の字下げを行う
 $.tAppendFunction(TYRANO.kag.ftag.master_tag.text, "start", function () {
@@ -46,7 +134,8 @@ $.tAppendFunction(TYRANO.kag.ftag.master_tag.text, "start", function () {
     }
 });
 
-//# kag.tag.text.makeBacklog
+//# [text] makeBacklog
+// バックログを作成する
 TYRANO.kag.ftag.master_tag.text.makeBacklog = {
     kag: TYRANO.kag,
     add: function (chara_name, message_str) {
@@ -58,9 +147,8 @@ TYRANO.kag.ftag.master_tag.text.makeBacklog = {
     join: function (chara_name, message_str) {
     		this.kag.pushBackLog(message_str, "join");
     },
-    start: function (message_str, pm) {
-        var is_first_char = this.kag.getMessageInnerLayer().find(".current_span").size() === 0;
-        var chara_name    = $.isNull($(".chara_name_area").html());
+    start: function (is_first_char, message_str, pm) {
+        var chara_name　= $.isNull($(".chara_name_area").html());
     		if (chara_name !== "")
       			if (this.kag.stat.log_join == "true" && !is_first_char)
       			    this.join(chara_name, message_str);
@@ -73,7 +161,7 @@ TYRANO.kag.ftag.master_tag.text.makeBacklog = {
     }
 };
 
-//# kag.tag.text.showMessage
+//# [text] showMessage
 TYRANO.kag.ftag.master_tag.text.showMessage = function (message_str, pm) {
     var that = this;
     //特定のタグが直前にあった場合、ログの作り方に気をつける
@@ -98,7 +186,10 @@ TYRANO.kag.ftag.master_tag.text.showMessage = function (message_str, pm) {
         }
     }
     [代替]--------------------------------------------------------------------*/
+    // ルビターゲットの初期化
     this.kag.ruby.initRubyTarget(message_str);
+    // メッセージウィンドウをクリアしてから初めて文字をぶち込むときか？
+    var is_first_char = this.kag.getMessageInnerLayer().find(".current_span").size() === 0;
     /*========================================================================*/
     //テキスト表示時に、まず、画面上の次へボタンアイコンを抹消
     that.kag.ftag.hideNextImg();
@@ -186,6 +277,7 @@ TYRANO.kag.ftag.master_tag.text.showMessage = function (message_str, pm) {
             if (ret.c) {
                 that.kag.ruby.fadeIn(c, j_span);
             }
+            // ログが返ってきた
             if (ret.log) {
                 log_str += ret.log;
             }
@@ -226,8 +318,9 @@ TYRANO.kag.ftag.master_tag.text.showMessage = function (message_str, pm) {
                 }
             } else {
                 /*[追加]======================================================*/
-                if (that.kag.stat.ruby_config.enable_backlog) that.makeBacklog.start(log_str, pm);
-                else that.makeBacklog.start(message_str, pm);
+                // ここでバックログを追加する
+                if (that.kag.stat.ruby_config.enable_backlog) that.makeBacklog.start(is_first_char, log_str, pm);
+                else that.makeBacklog.start(is_first_char, message_str, pm);
                 /*============================================================*/
                 that.kag.stat.is_adding_text = false;
                 that.kag.stat.is_click_text = false;
@@ -251,88 +344,8 @@ TYRANO.kag.ftag.master_tag.text.showMessage = function (message_str, pm) {
     })(this.kag.getMessageInnerLayer());
 };
 
-//# kag.menu.displayLog
-// バックログ画面表示
-TYRANO.kag.menu.displayLog = function() {
-    var that = this;
-    this.kag.stat.is_skip = false;
-    this.kag.html("backlog", {
-        "novel" : $.novel
-    }, function(html_str) {
-        var j_menu = $(html_str);
-        var layer_menu = that.kag.layer.getMenuLayer();
-        layer_menu.empty();
-        layer_menu.append(j_menu);
-        layer_menu.find(".menu_close").click(function() {
-            layer_menu.fadeOut(300,function(){
-                layer_menu.empty();
-                });
-            if (that.kag.stat.visible_menu_button === true) {
-                $(".button_menu").show();
-            }
-        });
-        /*[削除]================================================================
-        //スマホの場合はボタンの上下でスクロールできるようにする
-        layer_menu.find(".button_smart").hide();
-        if($.userenv()!="pc"){
-            layer_menu.find(".button_smart").show();
-            layer_menu.find(".button_arrow_up").click(function(){
-                var now = layer_menu.find(".log_body").scrollTop();
-                var pos = now - 60;
-                layer_menu.find(".log_body").animate({scrollTop:pos},{queue:false});
-            });
-            layer_menu.find(".button_arrow_down").click(function(){
-                var now = layer_menu.find(".log_body").scrollTop();
-                var pos = now + 60;
-                layer_menu.find(".log_body").animate({scrollTop:pos},{queue:false});
-            });
-        }
-        var log_str = "";
-        var array_log = that.kag.variable.tf.system.backlog;
-        for (var i = 0; i < array_log.length; i++) {
-            log_str += array_log[i] + "<br />";
-        }
-        [代替]----------------------------------------------------------------*/
-        var MAX = 1<<30;
-        var scroll = function (y) {
-            var now = layer_menu.find(".log_body").scrollTop();
-            var pos = now + y;
-            layer_menu.find(".log_body").animate({scrollTop:pos}, 0, {queue:false});
-        };
-        layer_menu.find(".menu_up").click(function(){
-            scroll(-94);
-        });
-        layer_menu.find(".menu_down").click(function(){
-            scroll(+94);
-        });
-        layer_menu.find(".menu_upmax").click(function(){
-            scroll(-MAX);
-        });
-        layer_menu.find(".menu_downmax").click(function(){
-            scroll(+MAX);
-        });
-    		var log_str = "<table>";
-    		var array_log = that.kag.variable.tf.system.backlog;
-    		for (var i = 0; i < array_log.length; i++) {
-    		    log_str += "<tr>" + array_log[i] + "</td></tr>";
-    		}
-    		log_str += "</table>";
-        /*====================================================================*/
-        layer_menu.find(".log_body").html(log_str);
-        layer_menu.find(".log_body").css("font-family", that.kag.config.userFace);
-        $.preloadImgCallback(layer_menu,function(){
-            layer_menu.fadeIn(300);
-            //一番下固定させる
-            layer_menu.find(".log_body").scrollTop(9999999999);
-            //[追加]============================================================
-            j_menu.setTyranoFont();
-            //==================================================================
-        },that);
-        $(".button_menu").hide();
-    });
-};
-
-//# TYRANO.kag.tag.text.r
+//# [r]
+// 改行処理の変更
 TYRANO.kag.tag.r.start = function() {
     var that = this;
     //クリックするまで、次へすすまないようにする
@@ -353,6 +366,7 @@ TYRANO.kag.tag.r.start = function() {
 
 var newtag = {};
 
+//# [rubydic]
 newtag.rubydic = {
     vital: ["str", "text"],
     pm: {
@@ -368,6 +382,7 @@ newtag.rubydic = {
     }
 }
 
+//# [rubyconfig]
 newtag.rubyconfig = {
     start: function (pm) {
         var val;

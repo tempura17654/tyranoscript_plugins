@@ -11,12 +11,15 @@ TYRANO.kag.config.scWidth = W;
 TYRANO.kag.config.scHeight = H;
 TYRANO.kag.config.configSaveSlotNum = "25";
 TYRANO.kag.config.autoRecordLabel = "true";
+TYRANO.kag.config.defaultLineSpacing = "10";
 $(".tyrano_base").add(".layer").css({
   width: W,
   height: H
 });
 TYRANO.base.fitBaseSize(W, H);
 [endscript]
+[deffont size=26 color=0xFFFFFF]
+[resetfont]
 ;===========================================================
 
 ; プラグイン
@@ -30,7 +33,7 @@ TYRANO.base.fitBaseSize(W, H);
 
 *title
 [layopt layer=message0 visible=false]
-[bg_wipe method=image i_name=spiral storage=b_rouka.png time=800]
+[bg_wipe method=image i_name=spiral storage=http://tempura.html.xdomain.jp/tyranoscript/data/bgimage/b_rouka.png time=800]
 [pushglink text=はじめから target=start]
 [pushglink text=つづきから target=continue]
 [showglink]
@@ -49,7 +52,7 @@ TYRANO.base.fitBaseSize(W, H);
 [glink_after]
 [makewindow]
 [playbgm storage=http://tempura.html.xdomain.jp/tyranoscript/data/bgm/b_music.ogg]
-[bg_wipe method=custom c_name=myWipe storage=b_room.png time=800]
+[bg_wipe method=custom c_name=myWipe storage=http://tempura.html.xdomain.jp/tyranoscript/data/bgimage/b_room.png time=800]
 [showwindow]
 #
 俺の名前は鈴木太郎。[p]
@@ -171,6 +174,6 @@ TYRANO.base.fitBaseSize(W, H);
 ありがとよ、と言って俺は教室を出た。[p]
 [freeimage layer=0 time=800]
 [hidewindow]
-[bg_wipe direction=left grad_width=1 storage=b_rouka.png time=800]
+[bg_wipe direction=left grad_width=1 storage=http://tempura.html.xdomain.jp/tyranoscript/data/bgimage/b_rouka.png time=800]
 [showwindow]
 サンプルシナリオはここまでです。[s]
