@@ -51,7 +51,7 @@ $.tIsSaved = function () {
 //# $.tSaveLastData
 // 最後のプレイ状態を記憶するための処理
 $.tSaveLastData = function (slot) {
-    if (slot) sf.last_save_slot = slot;
+    if (typeof slot !== "undefined") sf.last_save_slot = slot;
     sf.last_save_order_index = TYRANO.kag.ftag.current_order_index;
     sf.last_save_scenario = TYRANO.kag.stat.current_scenario;
     TYRANO.kag.saveSystemVariable();
