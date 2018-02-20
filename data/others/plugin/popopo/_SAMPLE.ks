@@ -8,8 +8,8 @@
 
 
 [delay speed=150]
-; 音量は50、タイプはノイズ、サンプルレートは3000
-[popopo volume=50 type=noise samplerate=3000]
+; 音量は50、タイプはノイズ、サンプルレートは5000
+[popopo volume=50 type=noise samplerate=5000]
 #
 _　　２月２０日　午前９時３０分　　[r]
 _東京ティラノスクリプト専門学校一室[p]
@@ -18,7 +18,7 @@ _東京ティラノスクリプト専門学校一室[p]
 [resetfont]
 [delay speed=60]
 ; タイプは三角波、音程はA(ラ)
-[popopo type=triangle frequency=A]
+[popopo type=triangle frequency=A octave=0]
 #鈴木
 さて、ゲームが簡単に作れるというから、来てみたものの[p]
 誰もいねぇじゃねぇか。[p]
@@ -27,19 +27,19 @@ _東京ティラノスクリプト専門学校一室[p]
 
 
 ; タイプは正弦波、音程はE(ミ)
-[popopo type=sine frequency=E]
+[popopo type=sine frequency=E octave=0]
 #？？？
 ちょっとまったーーーーー[p]
 
 
-; 名前欄の操作と併せてマクロ化しておくと楽でよい
-[popopo type=triangle frequency=A]
+; タイプはのこぎり波、音程はA(ラ)、オクターブ1つ下
+[popopo type=sawtooth frequency=A octave=-1]
 #
 誰だ！？[p]
 
 
 [chara_show name=akane width=440]
-[popopo type=sine frequency=E]
+[popopo type=sine frequency=E octave=0]
 #？？？
 こんにちは。[p]
 私の名前はあかね。[p]
