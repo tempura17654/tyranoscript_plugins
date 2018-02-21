@@ -129,6 +129,11 @@ window.reset = function(){
     child.location.reload();
 };
 
+window.quickReset = function(){
+    child.TYRANO.kag.stat.is_strong_stop = false;
+    child.TYRANO.kag.menu.loadGameData($.extend(true, {}, parent.startSnap), {"bgm_over": "false", "auto_next": "yes"});
+};
+
 window.share = function(){
   alertify.confirm("このスクリプトをシェアしますか？", function(){
     var value = editor.getValue();
@@ -255,7 +260,7 @@ window.afterLoadingTyrano = function () {
   
   $window1.add($window2).on("keydown", function (e) {
   	if (e.keyCode == 116) {
-  		reset();
+  		quickReset();
   		e.keyCode = null;
   		return false;
   	}
@@ -268,7 +273,6 @@ $(function(){
   window.parent = window;
   window.child = document.getElementById("preview_frame").contentWindow;
   window.aspectRate = 2 / 3;
- 
   
   // create editor
   window.editor = ace.edit("editor");

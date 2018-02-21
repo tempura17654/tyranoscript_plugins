@@ -17,7 +17,7 @@
     <script src="./libs/ace.js"></script>
     <script src="./libs/mode-kag.js"></script>
     <script src="./libs/mode-javascript.js"></script>
-    <script src="./libs/myfunc.js?20180221"></script>
+    <script src="./libs/myfunc.js?20180222"></script>
   </head>
   <body>
     <table id="main_table" border="0">
@@ -79,13 +79,14 @@
       <tr>
         <th id="preview_area_header" class="header">▼ゲームウィンドウ　　
           <ul class="dropmenu" style="z-index: 1;">
-            <li><a href="JavaScript:void(0)" onclick="reset()">再実行(F5)</a></li>
+            <li><a href="JavaScript:void(0)" onclick="quickReset()">高速再実行(F5)</a></li>
+            <li><a href="JavaScript:void(0)" onclick="reset()">強制再実行</a></li>
           </ul>
         </th>
         <th id="editor_area_header" class="header">▼シナリオエディタ</th>
       </tr>
       <tr>
-        <td id="preview_area"><iframe id="preview_frame" src="for_editor_view.html?20180221"></iframe></td>
+        <td id="preview_area"><iframe id="preview_frame" src="for_editor_view.html?20180222"></iframe></td>
         <td id="editor_area"><div class="editor" id="editor"></div></td>
       </tr>
       <tr>
