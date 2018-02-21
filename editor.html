@@ -11,18 +11,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="./libs/alertify.css" rel="stylesheet" type="text/css"/>
     <link href="./libs/semantic.css" rel="stylesheet" type="text/css"/>
-    <link href="./libs/mystyle.css?20180221" rel="stylesheet" type="text/css"/>
+    <link href="./libs/mystyle.css?20180225" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="./libs/alertify.min.js"></script>
     <script src="./libs/jquery.js"></script>
     <script src="./libs/ace.js"></script>
-    <script src="./libs/mode-kag.js"></script>
-    <script src="./libs/mode-javascript.js"></script>
-    <script src="./libs/myfunc.js?20180222"></script>
+    <script src="./libs/mode-kag.js?20180223"></script>
+    <script src="./libs/mode-javascript.js?20180223"></script>
+    <script src="./libs/myfunc.js?20180225"></script>
   </head>
   <body>
     <table id="main_table" border="0">
       <tr>
-        <td id="header_area" class="header" colspan="2">▼ティラノスクリプト動作チェッカー　　
+        <td id="header_area" class="header noselect" colspan="2">▼ティラノスクリプト動作チェッカー　　
           <ul class="dropmenu" style="z-index: 2;">
             <li><a href="JavaScript:void(0)">プラグインサンプル</a>
               <ul>
@@ -55,6 +55,7 @@
             </li>
             <li><a href="JavaScript:void(0)">小ネタ</a>
               <ul>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&koneta=charapart"        target="_self">キャラクターパーツが実装されたぞ!!</a></li>
                 <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&koneta=fadetext"         target="_self">メッセージをフェードイン挿入する</a></li>
                 <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&koneta=indent"           target="_self">2行目以降にインデントをつける</a></li>
                 <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&koneta=ronpa"            target="_self">ダンガンロ〇パ風の演出をする</a></li>
@@ -77,16 +78,16 @@
         </td>
       </tr>
       <tr>
-        <th id="preview_area_header" class="header">▼ゲームウィンドウ　　
+        <th id="preview_area_header" class="header noselect">▼ゲームウィンドウ　　
           <ul class="dropmenu" style="z-index: 1;">
             <li><a href="JavaScript:void(0)" onclick="quickReset()">高速再実行(F5)</a></li>
             <li><a href="JavaScript:void(0)" onclick="reset()">強制再実行</a></li>
           </ul>
         </th>
-        <th id="editor_area_header" class="header">▼シナリオエディタ</th>
+        <th id="editor_area_header" class="header noselect">▼シナリオエディタ</th>
       </tr>
       <tr>
-        <td id="preview_area"><iframe id="preview_frame" src="for_editor_view.html?20180222"></iframe></td>
+        <td id="preview_area"><iframe id="preview_frame" src="for_editor_view.html?20180223"></iframe></td>
         <td id="editor_area"><div class="editor" id="editor"></div></td>
       </tr>
       <tr>

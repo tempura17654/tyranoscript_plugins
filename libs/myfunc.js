@@ -127,11 +127,13 @@ window.execCopy = function (string) {
 
 window.reset = function(){
     child.location.reload();
+    $("#preview_frame").focus();
 };
 
 window.quickReset = function(){
     child.TYRANO.kag.stat.is_strong_stop = false;
     child.TYRANO.kag.menu.loadGameData($.extend(true, {}, parent.startSnap), {"bgm_over": "false", "auto_next": "yes"});
+    $("#preview_frame").focus();
 };
 
 window.share = function(){
@@ -222,18 +224,7 @@ window.afterLoadingTyrano = function () {
     var that = this;
     var j_this = $(this);
     j_this.css("position", "relative");
-    var j_grip = $("<div> </div>")
-    j_grip.css({
-      "top": 0,
-      "right": 0,
-      "bottom": 0,
-      "width": 5,
-      "position": "absolute",
-      "cursor": "col-resize",
-      "border-left": "1px solid #595959",
-      "border-right": "1px solid #595959",
-      "z-index": 99999999
-    });
+    var j_grip = $("<div class='td_glip'></div>");
     j_grip.on("mousedown", function (e) {
       thElm = that;
       startOffset = that.offsetWidth - e.pageX;
