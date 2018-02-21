@@ -182,6 +182,7 @@ TYRANO.kag.tag.text.showMessage = function(message_str, pm) {
             if (ret.c) {
                 that.kag.ruby.fadeIn(c, j_span);
             }
+            // ログが返ってきた
             if (ret.log) {
                 log_str += ret.log;
             }
@@ -199,6 +200,11 @@ TYRANO.kag.tag.text.showMessage = function(message_str, pm) {
             // index調整
             if (ret.index) {
                 index += ret.index;
+            }
+            // 文章の途中でスキップが開始された
+            if (!that.kag.ruby.is_skip_start && that.kag.ruby.isSkip()) {
+                that.kag.ruby.is_skip_start = true;
+                j_span.find(".fadein_char").finish();
             }
             // index増加
             index++;

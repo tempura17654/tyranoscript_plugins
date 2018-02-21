@@ -41,6 +41,7 @@ TYRANO.kag.ruby = {
     ruby_target: [],
     ruby_text_cnt: -1,
     ch_speed: -1,
+    is_skip_start: false,    
     rate: {
         ruby_size     : 0.44,
         ruby_offset   : 0.25,
@@ -97,7 +98,7 @@ TYRANO.kag.ruby.fadeIn = function (str, j_target) {
         j_target.append(str);
     }
     else {
-        $("<span>" + str + "</span>").fadeIn(this.kag.stat.ruby_config.time, function(){
+        $("<span class=\"fadein_char\">" + str + "</span>").fadeIn(this.kag.stat.ruby_config.time, function(){
             var self = $(this);
             self.replaceWith(self.html());
         }).appendTo(j_target);
@@ -344,6 +345,7 @@ TYRANO.kag.ruby.getRubyTag = function (c, ruby) {
 TYRANO.kag.ruby.initRubyTarget = function (message_str) {
     this.ruby_target   = [];
     this.ruby_text_cnt = -1;
+    this.is_skip_start = this.isSkip();    
     // ルビ辞書のキーの数だけぶん回す
     var ruby_dic = this.kag.stat.ruby_dic, key, match, pos;
     for (key in ruby_dic) {
