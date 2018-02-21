@@ -16,10 +16,10 @@
 
 ;シナリオファイルを読み込み直すためのJavaScript処理(難しい)
 [iscript]
-tf.a = 1                                //プラグイン読み込んだよ
-TYRANO.kag.cache_scenraio = {}          //シナリオのキャッシュを削除
-tf.b = TYRANO.kag.stat.current_scenario //現在のシナリオファイルを控える
-TYRANO.kag.stat.current_scenario = ""   //現在のシナリオファイルを消去
+tf.a = 1; //プラグイン読み込んだよ
+TYRANO.kag.cache_scenraio = {};
+tf.b = "../others/plugin/special_char/_SAMPLE.ks";
+TYRANO.kag.stat.current_scenario = "";
 [endscript]
 ;このシナリオファイルを解析するとこから読み込みなおし
 [jump storage=&tf.b]

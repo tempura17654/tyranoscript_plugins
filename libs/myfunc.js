@@ -70,6 +70,9 @@ window.checkLimit = function (limit) {
 };
 
 // getFile (opt)
+// opt.fileName
+//    .success
+//    .error
 window.getFile = function (opt) {
   var that = this;
   $.ajax({
@@ -78,6 +81,7 @@ window.getFile = function (opt) {
         "fileName": opt.fileName
     }
   }).done(function (data, textStatus, jqXHR) {
+    if (typeof data === "string") data = unescape(data);
     if (opt.success) opt.success(data);
   }).fail(function (jqXHR, textStatus, errorThrown) {
     if (opt.error) opt.error();
@@ -85,13 +89,17 @@ window.getFile = function (opt) {
 };
 
 // putFile (opt)
+// opt.fileName
+//    .contents
+//    .success
+//    .error
 window.putFile = function (opt) {
   var that = this;
   $.ajax({
     "url": URL2 + "_put.php",
     "data": {
         "fileName": opt.fileName,
-        "contents": JSON.stringify(opt.contents)
+        "contents": escape(JSON.stringify(opt.contents))
     },
     beforeSend : function (xhr) {
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -117,91 +125,150 @@ window.execCopy = function (string) {
   return result;
 }
 
-// After loading
-$(function(){
-  
-  // parent
-  window.parent = window;
-  
-  // child
-  window.child = document.getElementById("iframe").contentWindow;
-  
-  // reset ()
-  window.reset = function(){
-      child.location.reload();
-  };
-  
-  // share ()
-  window.share = function(){
-    alertify.confirm("このスクリプトをシェアしますか？", function(){
-      var value = editor.getValue();
-      if (value.length < 10000) {
-        var hash = encodeLimit();
-        putFile({
-          "fileName": hash,
-          "contents": value,
-          "success": function () {
-            setTimeout(function(){
-              var url = URL1 + "editor.html?share=";
-              url += hash;
-              url_html = "<span id=\"share_url\">" + url + "</span>";
-              var str = "共有用のURLは以下の通りです。期限は1週間です。<br>";
-              str += url_html;
-              alertify.alert(str, function(){
-                if (execCopy(url)) {
-                  setTimeout(function(){
-                    alertify.alert("クリップボードに共有URLをコピーしました。", function(){return true;});
-                  }, 200);
-                }
-              });
-              var count = 0;
-              var timer;
-              var select = function () {
-                timer = setTimeout(select, 100);
-                var selection = getSelection();
-                var is_selected = selection && selection.focusNode && selection.focusNode.id == "share_url";
-                if (is_selected || count > 20) {
-                  clearTimeout(timer);
-                }
+window.reset = function(){
+    child.location.reload();
+};
+
+window.share = function(){
+  alertify.confirm("このスクリプトをシェアしますか？", function(){
+    var value = editor.getValue();
+    if (value.length < 10000) {
+      var hash = encodeLimit();
+      putFile({
+        "fileName": hash,
+        "contents": value,
+        "success": function () {
+          setTimeout(function(){
+            var url = URL1 + "editor.html?share=";
+            url += hash;
+            url_html = "<span id=\"share_url\">" + url + "</span>";
+            var str = "共有用のURLは以下の通りです。期限は1週間です。<br>";
+            str += url_html;
+            alertify.alert(str, function(){
+              if (execCopy(url)) {
+                setTimeout(function(){
+                  alertify.alert("クリップボードに共有URLをコピーしました。", function(){return true;});
+                }, 200);
+              }
+            });
+            var count = 0;
+            var timer;
+            var select = function () {
+              timer = setTimeout(select, 100);
+              var selection = getSelection();
+              var is_selected = selection && selection.focusNode && selection.focusNode.id == "share_url";
+              if (is_selected || count > 20) {
+                clearTimeout(timer);
+              }
+              var element = document.getElementById("share_url");
+              if (element) {
                 var element = document.getElementById("share_url");
-                if (element) {
-                  var element = document.getElementById("share_url");
-                  var range = document.createRange();
-                  range.selectNodeContents(element);
-                  var selection = getSelection();
-                  selection.removeAllRanges();
-                  selection.addRange(range);
-                }
-                count++;
-              };
-              select();
-            }, 200);
-          },
-          "error": function () {
-            var str = "なんか失敗しました(´･ω･`)ごめんなさい。。。";
-            alertify.alert(str);
-          }
-        });
-      }
-      else {
-        alertify.alert("10000文字を超える文章はシェアできないのです(´･ω･`)すみません。。。");
-      }
-      return;
-    }, function(){return true;});
-  };
+                var range = document.createRange();
+                range.selectNodeContents(element);
+                var selection = getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+              }
+              count++;
+            };
+            select();
+          }, 200);
+        },
+        "error": function () {
+          var str = "なんか失敗しました(´･ω･`)ごめんなさい。。。";
+          alertify.alert(str);
+        }
+      });
+    }
+    else {
+      alertify.alert("10000文字を超える文章はシェアできないのです(´･ω･`)すみません。。。");
+    }
+    return;
+  }, function(){return true;});
+};
+
+
+window.setStorage = function (key, val) {
+    val = JSON.stringify(val);
+    localStorage.setItem(key, escape(val));
+};
+
+window.getStorage = function (key) {
+    try {
+        var gv = "null";
+        if (localStorage.getItem(key)) {
+            gv = unescape(localStorage.getItem(key));
+        }
+        if (gv == "null") {
+            return null;
+        }
+    } catch (e) {
+        alert("この環境はセーブ機能を利用できません。ローカルで実行している場合などに発生します");
+        $.confirmSaveClear();
+    }
+    return gv;
+};
+
+window.afterLoadingTyrano = function () {
+  var timer;
+  var thElm;
+  var startOffset;
+  $("#preview_area_header").each(function () {
+    var that = this;
+    var j_this = $(this);
+    j_this.css("position", "relative");
+    var j_grip = $("<div> </div>")
+    j_grip.css({
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "width": 5,
+      "position": "absolute",
+      "cursor": "col-resize",
+      "border-left": "1px solid #595959",
+      "border-right": "1px solid #595959",
+      "z-index": 99999999
+    });
+    j_grip.on("mousedown", function (e) {
+      thElm = that;
+      startOffset = that.offsetWidth - e.pageX;
+    });
+    j_this.append(j_grip);
+  });
   
-  // Function called when pressing F5 key
-  var fn_f5 = function (e) {
+  var $window1 = $(window);
+  var $window2 = $("#preview_frame").contents();
+  
+  $window1.on("mousemove", function (e) {
+    if (thElm) {
+      $(thElm).css("width", startOffset + e.pageX);
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        onResize();
+      }, 50);
+    }
+  });
+  
+  $window1.add($window2).on("mouseup", function (e) {
+    thElm = undefined;
+  });
+  
+  $window1.add($window2).on("keydown", function (e) {
   	if (e.keyCode == 116) {
   		reset();
   		e.keyCode = null;
   		return false;
   	}
-  };
+  });
+};
+
+// After loading
+$(function(){
   
-  // set keydown event
-  $(parent).on("keydown", fn_f5);
-  $(child).on("keydown", fn_f5);
+  window.parent = window;
+  window.child = document.getElementById("preview_frame").contentWindow;
+  window.aspectRate = 2 / 3;
+ 
   
   // create editor
   window.editor = ace.edit("editor");
@@ -232,8 +299,8 @@ $(function(){
   }
   
   // editor.html?width=...
-  if (vars.width) {
-    $("#iframe").css("width", vars.width);
+  if (vars.width && vars.height) {
+    aspectRate = parseInt(vars.height) / parseInt(vars.width);
   }
   
   // editor.html?share=...
@@ -297,4 +364,29 @@ $(function(){
       }, 100);
     });
   }
+  
+  $("#preview_area_header").css({
+      "width": 800
+  });
+  
+  var j_preview_area = $("#preview_area");
+  var j_preview_frame = $("#preview_frame");
+  window.onResize = function (e) {
+    var w = j_preview_area.width();
+    var h = j_preview_area.height();
+    var _h = w * aspectRate;
+    if (_h < h) {
+        _w = "100%";
+        _h += "px";
+    }
+    else {
+        _h = "100%";
+        _w = h / aspectRate + "px";
+    }
+    j_preview_frame.css({
+        "height": _h,
+        "width": _w
+    });
+  };
+  onResize();
 });

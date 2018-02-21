@@ -1,9 +1,9 @@
 [iscript]
 var child = window;
 var parent = window.parent;
+parent.afterLoadingTyrano();
 var TEXT_ID = "first.ks";
 var getText = function () {
-    //return parent.document.getElementById("editor").value;
     var editor = parent.ace.edit("editor");
     return editor.getValue();
 };

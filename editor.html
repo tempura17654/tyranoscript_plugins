@@ -11,15 +11,88 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="./libs/alertify.css" rel="stylesheet" type="text/css"/>
     <link href="./libs/semantic.css" rel="stylesheet" type="text/css"/>
-    <link href="./libs/mystyle.css?201801300043" rel="stylesheet" type="text/css"/>
+    <link href="./libs/mystyle.css?20180221" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="./libs/alertify.min.js"></script>
     <script src="./libs/jquery.js"></script>
     <script src="./libs/ace.js"></script>
-    <script src="./libs/mode-javascript.js"></script>
     <script src="./libs/mode-kag.js"></script>
-    <script src="./libs/myfunc.js?201802170352"></script>
+    <script src="./libs/mode-javascript.js"></script>
+    <script src="./libs/myfunc.js?20180221"></script>
   </head>
   <body>
+    <table id="main_table" border="0">
+      <tr>
+        <td id="header_area" class="header" colspan="2">▼ティラノスクリプト動作チェッカー　　
+          <ul class="dropmenu" style="z-index: 2;">
+            <li><a href="JavaScript:void(0)">プラグインサンプル</a>
+              <ul>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=tempura_theme_dark&width=16&height=9" target="_self">てんぷらテーマ「ダーク」</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=popopo"                     target="_self">ポポポ音を鳴らす</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=anim_filter"                target="_self">フィルターアニメーション</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=bg_tile"                    target="_self">背景のタイル状チェンジ</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=bg_wipe"                    target="_self">HTML5Canvasを用いた背景チェンジ</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=manpu"                      target="_self">キャラクターの周りに漫符を出す</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=celanim"                    target="_self">セルアニメを再生する</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=glink_show"                 target="_self">glinkの位置を自動で調整・表示する</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=for"                        target="_self">for文</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=switch"                     target="_self">switch文</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=jquery_with_tyrano"         target="_self">jQuery操作</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=monitor_stat"               target="_self">スキップ中・オート中画像を表示する</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=slider"                     target="_self">コンフィグ用のスライダーを出す</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=role_button_auto_hide"      target="_self">ロールボタンを自動で隠す</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=quake_ex"                   target="_self">画面揺らし拡張</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=tempura_ruby"               target="_self">ルビ拡張</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=trim"                       target="_self">トリミング</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=special_char"               target="_self">シナリオ特殊置換</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=unit_sentence_already_read" target="_self">文単位既読管理</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=tempura_autosave"           target="_self">オートセーブ複数管理</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&plugin=temprunking"                target="_self">オンラインランキング</a></li>
+                <!--
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?plugin=ruby"                       target="_self">(黒豆)ルビ拡張</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?plugin=chat_story"                 target="_self">(公式)チャットストーリー</a></li>
+                -->
+              </ul>
+            </li>
+            <li><a href="JavaScript:void(0)">小ネタ</a>
+              <ul>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&koneta=fadetext"         target="_self">メッセージをフェードイン挿入する</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&koneta=indent"           target="_self">2行目以降にインデントをつける</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&koneta=ronpa"            target="_self">ダンガンロ〇パ風の演出をする</a></li>
+                <li><a href="http://tempura.html.xdomain.jp/tyranoscript/editor.html?u=1&koneta=screenshot"       target="_self">スクリーンショットを保存する</a></li>
+              </ul>
+            </li>
+            <li><a href="JavaScript:void(0)">ファイル</a>
+              <ul>
+                <li><a href="JavaScript:void(0)" onclick="share()">共有用サーバーに保存する</a></li>
+              </ul>
+            </li>
+            <li><a href="JavaScript:void(0)">リンク</a>
+              <ul>
+                <li><a href="https://tyrano.jp/tag/" target="_blank">タグリファレンス</a></li>
+                <li><a href="http://tyrano.bbs.fc2.com/" target="_blank">交流掲示板</a></li>
+                <li><a href="http://tempura9357.blog.fc2.com/" target="_blank">てんぷらたべたい</a></li>
+              </ul>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <th id="preview_area_header" class="header">▼ゲームウィンドウ　　
+          <ul class="dropmenu" style="z-index: 1;">
+            <li><a href="JavaScript:void(0)" onclick="reset()">再実行(F5)</a></li>
+          </ul>
+        </th>
+        <th id="editor_area_header" class="header">▼シナリオエディタ</th>
+      </tr>
+      <tr>
+        <td id="preview_area"><iframe id="preview_frame" src="for_editor_view.html?20180221"></iframe></td>
+        <td id="editor_area"><div class="editor" id="editor"></div></td>
+      </tr>
+      <tr>
+        <td id="footer_area" class="footer" colspan="2"></td>
+      </tr>
+    </table>
+    <!--
     <iframe id="iframe" src="for_editor_view.html"></iframe>
     <div id="editor_area">
       <div id="editor"></div>
@@ -28,5 +101,6 @@
       </div>
     </div>
     <span style="clear: left"></span>
+    -->
   </body>
 </html>

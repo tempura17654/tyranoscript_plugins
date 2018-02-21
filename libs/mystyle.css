@@ -1,27 +1,77 @@
-
 body {
   margin: 0;
   padding: 0;
-  background: #141417;
+  background: #111111;
+  color: #dddddd;
+  width: 100%;
+  height: 100%;
 }
-#iframe {
-  float: left;
-  width: 960px;
-  height: 640px;
-  box-shadow: none;
+div,table,tr,td,th,p,span,ul,li{
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  text-align: left;
+}
+
+tr {
+  vertical-align: middle;
+}
+td {
   border: none;
 }
-#editor_area {
-  background: #25282c;
-  float: left;
-  width: 640px;
-  height: 640px;
-  position: relative;
+table {
+  position: absolute;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-width: 0;
 }
-#editor {
-  width: 640px;
-  height: 600px;
+
+#main_table {
+  width: 100%;
+  height: 100%;
 }
+  #header_area {
+  }
+  #left_area_header {
+  }
+  #preview_area_header {
+  }
+  #editor_area_header {
+  }
+  
+  #left_area {
+  }
+  #preview_area {
+      text-align: center;
+      background: url("iframe_bg.png");
+      background-repeat: repeat;
+      background-size: 100px 100px;
+  }
+    #preview_frame {
+      width: 100%;
+      border-width: 0;
+    }
+  #editor_area {
+    height: 100%;
+  }
+    .editor {
+      width: 100%;
+      height: 100%;
+    }
+    
+.footer,
+.header {
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 14px;
+  height: 26px;
+  line-height: 26px;
+  background: #292929;
+  color: #c5c8c6;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+    
 #button_area {
   position: absolute;
   display: inline;
@@ -47,4 +97,81 @@ button:hover {
 button:active {
   transition: background 0;
   background: #b7c9e2;
+}
+
+
+
+.dropmenu{
+  list-style-type: none;
+  position: absolute;
+  display: inline-block;
+  z-index: 1;
+}
+.dropmenu:before, .dropmenu:after{
+  content: "";
+  display: table;
+}
+.dropmenu:after{
+  clear: both;
+}
+.dropmenu li{
+  position: relative;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+.dropmenu li a{
+  background: #292929;
+  color: #c5c8c6;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: block;
+  font-size: 14px;
+  height: 26px;
+  line-height: 26px;
+  text-decoration: none;
+}
+.dropmenu li ul{
+  background: #f9f9f9;
+  list-style: none;
+  position: absolute;
+  z-index: 9999;
+  top: 100%;
+  left: 0;
+}
+.dropmenu li ul li{
+  width: 100%;
+}
+.dropmenu li ul li a{
+  background: #f9f9f9;
+  color     : #090909;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-bottom: 1px solid #d9d9d9;
+}
+.dropmenu li:hover>a,
+.dropmenu li>a:hover{
+  background: #f9f9f9;
+  color: #090909;
+}
+.dropmenu li>ul>li>a:hover{
+  background: #2929e9;
+  color: #e9e9e9;
+}
+.dropmenu li:hover {
+  z-index: 99999999999;
+}
+.dropmenu li:hover ul{
+  padding-bottom: 10px;
+  z-index: 99999999999;
+}
+
+.dropmenu li ul li{
+  overflow: hidden;
+  height: 0;
+  transition: .2s;
+}
+.dropmenu li:hover ul li{
+  overflow: visible;
+  height: 27px;
 }
