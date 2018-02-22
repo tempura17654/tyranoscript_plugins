@@ -1,0 +1,118 @@
+.chara_part_form {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 99999999;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  font-size: 14px;
+  line-height: 26px;
+  display: inline-block;
+  border-radius: 1px;
+  min-width: 22px;
+  min-height: 22px;
+  transform-origin: left top;
+    background: rgba(255, 255, 255, 0.7);
+}
+  .chara_part_bar {
+    position: relative;
+    background: rgba(255, 255, 255, 1);
+    cursor: default;
+    height: 22px;
+    padding-left: 22px;
+    font-size: 12px;
+    line-height: 22px;
+  }
+    .chara_part_icon {
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAo0lEQVQoz2NgwAJ4eHiUvby8foMwiM2AD8jKykaIiIjYgtiKiopp3t7e/0EYyE4HiYHkQGowNAEV/QNhOzu7U0D6L0wjiA0VA8ujaAaZBpX4TwD/g7kKDqCm4tUIUoMSEFA/ITvvv6Oj4w0QRtP8F6SWl5dXlQEUcugmgzQwMTGxgjAWzWADyNdItlPJDhyKooPsBEB2kkMHIM9Dbf2LEhBIAACgjd67cUQdRQAAAABJRU5ErkJggg==');
+      background-size: 60% 60%;
+      background-repeat: no-repeat;
+      background-position: center center;
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 22px;
+      border-radius: 3px;
+      height: 22px;
+      text-align: center;
+      z-index: 1;
+    }
+    .chara_part_icon_poiter {
+      cursor: pointer;
+    }
+    
+    .chara_part_close {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 22px;
+      border-radius: 3px;
+      height: 22px;
+      background: rgba(0, 0, 0, 0);
+      text-align: center;
+      cursor: pointer;
+      z-index: 1;
+    }
+    .chara_part_close:hover {
+      font-weight: bold;
+      background: rgba(0, 0, 0, 0.1);
+      font-size: 120%;
+    }
+  .chara_part_header {
+    padding-right: 22px;
+  }
+    .chara_part_title {
+      padding-right: 5px;
+      text-align: right;
+      display: inline-block;
+      width: 86px;
+      vertical-align: bottom;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .chara_part_select {
+      height: 22px;
+      padding: 0;
+      border-radius: 5px;
+      width: 114px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+    }
+  .chara_part_button {
+    padding-left: 14px;
+    padding-right: 22px;
+    text-align: right;
+    border-top: 1px solid rgba(99,99,99,0.5);
+    border-bottom: 1px solid rgba(99,99,99,0.5);
+  }
+    .chara_part_button button {
+      font-size: 12px;
+    }
+  .chara_part_content {
+    position: relative;
+  }
+  .chara_part_content.disable div {
+    opacity: 0.3;
+  }
+    .chara_part_content input {
+      width: 18px;
+      height: 18px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+    .chara_part_disable_wrapper {
+      z-index: 100000000;
+      left: 0;
+      top: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+    .chara_part_content.disable .chara_part_disable_wrapper {
+      display: block;
+    }
