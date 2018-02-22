@@ -12,7 +12,7 @@
 ; プラグイン「キャラクターパーツマネージャ」を読み込む
 [plugin name=chara_part_manager]
 
-; 上で定義したマクロ[chara_clone]を使ってクローンを生み出す
+; 上で定義したマクロ[yuko_clone]を使ってクローンを生み出す
 [yuko_clone name=yuko   jname=ゆうこ]
 [yuko_clone name=haruka jname=はるか]
 [yuko_clone name=aya    jname=あや  ]

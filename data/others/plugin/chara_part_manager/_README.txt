@@ -44,6 +44,7 @@
 ◇ ファイル構成 ◇
 
 chara_part_manager
+ ├ chara_part_manager.css
  ├ chara_part_manager.js
  ├ init.ks
  ├ _SAMPLE.ks
