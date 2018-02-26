@@ -1,7 +1,10 @@
 
+[plugin name=scenario_viewer]
+;[jump storage=scene1.ks]
+[jump target=start]
 
-
-
+[jump storage="../others/plugin/scenario_viewer           /_SAMPLE.ks"]
+[jump storage="../others/plugin/chara_part_inserter       /_SAMPLE.ks"]
 [jump storage="../others/plugin/chara_part_manager        /_SAMPLE.ks"]
 [jump target=start]
 [jump storage="../others/plugin/popopo                    /_SAMPLE.ks"]

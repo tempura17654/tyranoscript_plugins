@@ -10,7 +10,7 @@
 [call target=define_yuko_clone]
 
 ; プラグイン「キャラクターパーツマネージャ」を読み込む
-[plugin name=chara_part_manager]
+[plugin name=chara_part_inserter]
 
 ; 上で定義したマクロ[yuko_clone]を使ってクローンを生み出す
 [yuko_clone name=yuko   jname=ゆうこ]
@@ -21,7 +21,7 @@
 
 *loop
 
-ゆうこ第１クローン「ゆうこ」を表示
+ゆうこ第１クローン「ゆうこ」を表示[p]
 [chara_show name=yuko time=300 width=470][p]
 
 ゆうこ第２クローン「はるか」を表示

@@ -10,7 +10,7 @@
 [call target=define_yuko_clone]
 
 ; プラグイン「キャラクターパーツマネージャ」を読み込む
-[plugin name=chara_part_manager]
+[plugin name=scenario_viewer]
 
 ; 上で定義したマクロ[yuko_clone]を使ってクローンを生み出す
 [yuko_clone name=yuko   jname=ゆうこ]

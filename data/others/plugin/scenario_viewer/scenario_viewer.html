@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content=" user-scalable=no" />  
+    <link href="./scenario_viewer.css" rel="stylesheet" type="text/css"/>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body onselectstart="return false" onContextmenu="return false" ontouchmove="event.preventDefault()">
+    <!-- viewer start -->
+    
+    <script src="./data/others/plugin/scenario_viewer/libs/ace.js"></script>
+    <script src="./data/others/plugin/scenario_viewer/libs/mode-javascript.js"></script>
+    <script src="./data/others/plugin/scenario_viewer/libs/mode-kag.js"></script>
+    
+    <input id="input_saveas" class="invisible" nwsaveas="" type="file"></input>
+    
+    <table id="viewer_table" border="0">
+      <!--
+      <tr class="menubar">
+        <td id="header_area" colspan="2">▼ティラノスクリプト動作チェッカー
+        </td>
+      </tr>
+      <tr class="menubar">
+        <td>▼ゲームウィンドウ</th>
+        <td>▼シナリオエディタ</th>
+      </tr>
+      -->
+      <tr class="mainline">
+        <td id="tyrano_base_area"></td>
+        <td id="editor_area">
+          <div id="editor_command_area">
+              <div class="editor_command" id="command_create">開く</div>
+              <div class="editor_command" id="command_new">新規作成</div>
+              <div class="editor_command" id="command_saveas">名前を付けて保存</div>
+              <div class="editor_command" id="command_save">上書き保存</div>
+              <div class="editor_command" id="command_rewind">先頭から実行</div>
+          </div>
+          <div id="editor_tab_area"><ul></ul></div>
+          <div id="editor_text_area"></div>
+        </td>
+      </tr>
+      <!--
+      <tr class="menubar">
+        <td id="footer_area" colspan="2"></td>
+      </tr>
+      -->
+    </table>
+    <!-- viewer end -->
+  </body>
+</html>

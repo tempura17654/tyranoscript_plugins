@@ -23,5 +23,14 @@ var loadText = function (text_str) {
         storage: TEXT_ID
     });
 };
+var loadTextOld = $.loadText;
+$.loadText = function (filename, callback) {
+    if (filename === "./data/scenario/" + TEXT_ID) {
+        callback(getText());
+    }
+    else {
+        loadTextOld.apply($, arguments);
+    }
+};
 loadText(getText());
 [endscript stop=true]

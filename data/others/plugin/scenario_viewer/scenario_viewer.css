@@ -1,0 +1,146 @@
+.invisible {
+  position: fixed;
+  left: 100%;
+  top: 100%;
+  visibility: hidden;
+}
+
+/* ビューアテーブル
+***********************************************************/
+/* 初期化 */
+#viewer_table,
+#viewer_table li,
+#viewer_table tr,
+#viewer_table td {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.ace_line_current {
+  position: absolute;
+  background: #1D6783;
+  z-index: 3;
+}
+.td_glip {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 10px;
+  position: absolute;
+  cursor: col-resize;
+  z-index: 1000;
+}
+/* table */
+#viewer_table {
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAArUlEQVR42u3RsQ0AIAwDwbRAD2L/RTNDOhcn/QDWudY+gd33AytYsGDBggULFixYsGDBggULFixYsGDBggULFixYsGDBggULFixYsGDBggULFixYsGDBggULFixYsGDBggULFixYA6zMWZkXwoIFCxYsWLBgwYIFCxYsWLBgwYIFCxYsWLBgwYIFCxYsWLBgwYIFCxYsWLBgwYIFCxYsWLBgwYIFCxYsWLBgwRrUwIyhimLQbqYAAAAASUVORK5CYII=');
+  background: black;
+  position: absolute;
+  color: white;
+  font-size: 15px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-width: 0;
+}
+  /* tr */
+  #viewer_table tr {
+    height: auto;
+    vertical-align: top;
+  }
+  /* td */
+  #viewer_table td {
+  }
+  /* メニューバー */
+  #viewer_table .menubar td {
+    background: #333;
+    height: 24px;
+  }
+  /* メイン画面 */
+  #viewer_table .mainline td {
+  }
+  /* エディタエリア */
+  #editor_area {
+    width: 400px;
+    background-color: #1D1F21;
+    color: #C5C8C6;
+  }
+    /* エディタテキストエリア */
+    #editor_text_area {
+    }
+    /* コマンドエリア */
+    #editor_command_area {
+      height: 20px;
+      background: black;
+    }
+      .editor_command {
+          cursor: default;
+          display: inline-block;
+      }
+      .editor_command:hover {
+        background: gray;
+      }
+    /* タブエリア */
+    #editor_tab_area {
+      height: 28px;
+      background: black;
+      border-bottom: 8px solid #25282c;
+    }
+      /* タブ */
+      #editor_tab_area ul,
+      #editor_tab_area li {
+        height: 100%;
+        cursor: default;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      #editor_tab_area li {
+        position: relative;
+        display: inline-block;
+        padding-top: 4px;
+        padding-left: 10px;
+        padding-right: 24px;
+        padding-bottom: 4px;
+      }
+      /* アクティブなタブ */
+      #editor_tab_area .active {
+        border-left: 3px solid #1D6783;
+        background: #25282c;
+        color: #FFFFFF;
+      }
+      /* アクティブではないタブ */
+      #editor_tab_area .hidden {
+        border-left: 3px solid #25282c;
+        background: none;
+        color: #CCCCCC;
+      }
+        /* タブを閉じるボタン */
+        #editor_tab_area .editor_tab_close {
+          position: absolute;
+          display: inline-block;
+          width: 16px;
+          height: 18px;
+          top: 2px;
+          right: 4px;
+          line-height: 16px;
+          text-align: center;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+        /* タブを閉じるボタンにマウスを乗せたとき */
+        #editor_tab_area .editor_tab_close:hover {
+          background: red;
+        }
+        /* アクティブではないタブにある、タブを閉じるボタン */
+        #editor_tab_area .hidden .editor_tab_close {
+          display: none;
+        }
+  /* ゲーム画面エリア */
+  #tyrano_base_area {
+    display: block;
+  };
