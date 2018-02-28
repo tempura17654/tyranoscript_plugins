@@ -1,4 +1,5 @@
 
+[jump storage="../others/plugin/html2canvas_update        /_SAMPLE.ks"]
 [plugin name=scenario_viewer]
 ;[jump storage=scene1.ks]
 [jump target=start]
