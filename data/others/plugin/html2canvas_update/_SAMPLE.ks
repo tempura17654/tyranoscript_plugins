@@ -29,7 +29,7 @@
 kanim中…kanimがサムネイルに反映されるかテストしてください。
 [keyframe name=hoge]
 [frame p=0% x=0]
-[frame p=100% x=300 y=-0 rotate=180deg scale=0.5]
+[frame p=100% x=600 y=-200 rotate=180deg scale=0.5]
 [endkeyframe]
 [kanim name=akane keyframe=hoge time=1000 count=1]
 [p][stop_kanim name=akane]
