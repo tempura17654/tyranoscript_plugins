@@ -305,4 +305,14 @@ TYRANO.kag.tag.r.start = function() {
     },5);
 };
 
+// ティラノビルダーV170の場合[p][l]の改造が必要
+if (mp.builder) {
+    var version = parseInt(mp.builder);
+    if (version <= 170) {
+        TYRANO.kag.ftag.showNextImg=function(){if(this.kag.stat.flag_glyph=="false"){$(".img_next").remove();var jtext=this.kag.getMessageInnerLayer();jtext.find("p").append("<img class='img_next' src='./tyrano/images/system/nextpage.gif' />")}else{$(".glyph_image").show()}};
+        TYRANO.kag.ftag.master_tag.l={kag:TYRANO.kag,cw:true,start:function(){var that=this;this.kag.ftag.showNextImg();if(this.kag.stat.is_skip==true){this.kag.ftag.nextOrder()}else if(this.kag.stat.is_auto==true){this.kag.stat.is_wait_auto=true;var auto_speed=that.kag.config.autoSpeed;if(that.kag.config.autoSpeedWithText!="0"){var cnt_text=this.kag.stat.current_message_str.length;auto_speed=parseInt(auto_speed)+(parseInt(that.kag.config.autoSpeedWithText)*cnt_text)}setTimeout(function(){if(that.kag.stat.is_wait_auto==true){if(that.kag.tmp.is_vo_play==true){that.kag.tmp.is_vo_play_wait=true}else{that.kag.ftag.nextOrder()}}},auto_speed)}}};
+        TYRANO.kag.ftag.master_tag.p={kag:TYRANO.kag,cw:true,start:function(){var that=this;this.kag.stat.flag_ref_page=true;this.kag.ftag.showNextImg();if(this.kag.stat.is_skip==true){this.kag.ftag.nextOrder()}else if(this.kag.stat.is_auto==true){this.kag.stat.is_wait_auto=true;var auto_speed=that.kag.config.autoSpeed;if(that.kag.config.autoSpeedWithText!="0"){var cnt_text=this.kag.stat.current_message_str.length;auto_speed=parseInt(auto_speed)+(parseInt(that.kag.config.autoSpeedWithText)*cnt_text)}setTimeout(function(){if(that.kag.stat.is_wait_auto==true){if(that.kag.tmp.is_vo_play==true){that.kag.tmp.is_vo_play_wait=true}else{that.kag.ftag.nextOrder()}}},auto_speed)}}};
+    }
+}
+
 }(window.jQuery, window.TYRANO, window.TYRANO.kag.stat.mp));
