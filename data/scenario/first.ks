@@ -1,3 +1,4 @@
+[jump storage="../others/plugin/tempura_camera            /_SAMPLE.ks"]
 [jump storage="koneta/loadmask.ks"]
 [jump storage="../others/plugin/jquery_a3d_update         /_SAMPLE.ks"]
 [jump storage=scene1.ks]
