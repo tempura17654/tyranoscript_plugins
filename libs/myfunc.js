@@ -276,6 +276,7 @@ $(function(){
   editor.getSession().setTabSize(4);
   editor.container.style.lineHeight = 1.6;
   editor.renderer.updateFontSize();
+  editor.$blockScrolling = 99999999;
   
   // syntax highlight
   var KAGMode = ace.require("ace/mode/kag").Mode;
@@ -351,9 +352,16 @@ $(function(){
   if (storage_url) {
     $.get(storage_url + "?" + Math.floor(Math.random()*1E7), function (text) {
       editor.setValue(text);
-      for (var i = 0; i < 999; i++) {
+      setTimeout(function(){
         editor.gotoLine(0);
-      }
+        var alert = function () {
+          $(window).on("beforeunload", function () {
+            return "シナリオを編集しましたが、ページを離れてもよろしいですか？";
+          });
+          editor.getSession().off("change", alert);
+        };
+        editor.on("change", alert);
+      },1);
       setTimeout(function() {
         reset();
       }, 100);
