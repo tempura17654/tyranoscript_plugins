@@ -1,6 +1,12 @@
 (function ($, TYRANO, mp) {
 
+// 多重読み込みの禁止
+if (typeof TYRANO.kag.stat.tcamera_layer !== "undefined") {
+    return;
+}
+
 //# stat領域に変数定義
+TYRANO.kag.stat.tcamera_layer  = {};
 TYRANO.kag.stat.tcamera_memory = {
     "x": 0,
     "y": 0,
@@ -11,7 +17,6 @@ TYRANO.kag.stat.tcamera_memory = {
     "name_z": "theZ",
     "zoom": 1
 };
-TYRANO.kag.stat.tcamera_layer  = {};
 
 //# ローカル変数定義
 var tcamera_index      = 0,
@@ -153,10 +158,10 @@ var calcCamera = function (pm) {
         if (i < 0) {
             target_zoom = Math.min(pm.zoom * pos_obj.zoom, ZOOM_MAX);
             target_z = pos_obj.z - DIF_Z_RATE / target_zoom;
-            pm.x = target_x / target_zoom;
-            pm.y = target_y / target_zoom;
+            pm.x = parseInt(target_x / target_zoom);
+            pm.y = parseInt(target_y / target_zoom);
             pm.z = String(pm.z).replace("theZ", "("+target_z+")");
-            pm.z = eval(target_z);
+            pm.z = parseInt(eval(target_z));
             continue;
         }
         // 0以上ならパラメータ作成
@@ -166,7 +171,7 @@ var calcCamera = function (pm) {
                 "layer": key,
                 "wait": "false",
                 "ease_type": pm.ease_type,
-                "time": String(TYRANO.kag.stat.is_skip === true ? SKIP_TIME : pm.time),
+                "time": String((TYRANO.kag.stat.is_skip === true && SKIP_TIME > -1) ? SKIP_TIME : pm.time),
             };
             // 計算
             dif_z      = pos_obj.z - pm.z;           // レイヤーとカメラのz距離
@@ -416,6 +421,7 @@ else {
     $(window).on("keydown", function (e) {
         if (e.keyCode === 67) {
             j_event.toggle();
+            makeTag(getMemory());
         }
     });
     j_span2.on("click", function (e) {
@@ -436,13 +442,16 @@ else {
     j_event.on("onwheel" in document ? "wheel" : "onmousewheel" in document ? "mousewheel" : "DOMMouseScroll", function (e) {
         var delta = e.originalEvent.deltaY ? -(e.originalEvent.deltaY) : e.originalEvent.wheelDelta ? e.originalEvent.wheelDelta : -(e.originalEvent.detail);
         camera = $.extend({}, getMemory());
-        opt.x = camera.x;
-        opt.y = camera.y;
-        opt.z = camera.z;
+        opt.x = parseInt(camera.x || 0);
+        opt.y = parseInt(camera.y || 0);
+        opt.z = parseInt(camera.z || 0);
+        opt.rotate = parseInt(camera.rotate || 0);
         if (delta < 0){
             opt.z = parseInt(opt.z - 5);
+            if (-5 < opt.z && opt.z < 0) opt.z = 0;
         } else {
             opt.z = parseInt(opt.z + 5);
+            if (0 < opt.z && opt.z < 5) opt.z = 0;
         }
         makeTag(opt);
         newtag.tcamera.start($.extend({}, newtag.tcamera.pm, opt));
@@ -476,9 +485,13 @@ else {
             opt.x = parseInt(camera.x || 0) + dx;
             opt.y = parseInt(camera.y || 0) + dy;
             opt.z = parseInt(camera.z || 0);
+            opt.rotate = parseInt(camera.rotate || 0);
         }
         else if (cameraMode === 2) {
             dy *= sign;
+            opt.x = parseInt(camera.x || 0);
+            opt.y = parseInt(camera.y || 0);
+            opt.z = parseInt(camera.z || 0);
             opt.rotate = parseInt(camera.rotate || 0) + parseInt(dy / 2);
         }
         makeTag(opt);
