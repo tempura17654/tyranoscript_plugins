@@ -1,37 +1,47 @@
 (function ($, TYRANO, mp) {
 
-// stat領域に変数定義
-TYRANO.kag.stat.tcamera_memory = {"x": 0, "y": 0, "z": 0, "rotate": 0, "zoom": 1};
+//# stat領域に変数定義
+TYRANO.kag.stat.tcamera_memory = {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "rotate": 0,
+    "name_x": "theCX",
+    "name_y": "theCY",
+    "name_z": "theZ",
+    "zoom": 1
+};
 TYRANO.kag.stat.tcamera_layer  = {};
 
-// ローカル変数定義
-var tcamera_laynames   = mp.layer.split(","),
-    tcamera_index      = 0,
+//# ローカル変数定義
+var tcamera_index      = 0,
     tcamera_loop       = true,
-    tcamera_count      = tcamera_laynames.length,
     tcamera_param      = {},
     i,
     key,
     newtag = {},
-    SC_WIDTH   = parseInt(TYRANO.kag.config.scWidth),
-    SC_HEIGHT  = parseInt(TYRANO.kag.config.scHeight),
-    DEF_TIME   = String(mp.deftime || 1000),
-    SKIP_TIME  = String(mp.skiptime || 0),
-    BASE_LAYER = mp.base || "base",
-    ZOOM_MAX   = 8,
-    DIF_Z_RATE = 100,
-    DIF_Z_MIN  = parseInt(DIF_Z_RATE / ZOOM_MAX),
+    LAYER_NAMES = mp.layer.split(","),
+    LAYER_COUNT = LAYER_NAMES.length,
+    SC_WIDTH    = parseInt(TYRANO.kag.config.scWidth),
+    SC_HEIGHT   = parseInt(TYRANO.kag.config.scHeight),
+    DEF_WAIT    = String(mp.defwait || "true"),
+    DEF_EASE    = String(mp.defease || "ease"),
+    DEF_TIME    = String(mp.deftime || 1000),
+    SKIP_TIME   = String(mp.skiptime || 0),
+    ZOOM_MAX    = 8,
+    DIF_Z_RATE  = 100,
+    DIF_Z_MIN   = parseInt(DIF_Z_RATE / ZOOM_MAX),
     getMemory = function () {
         return TYRANO.kag.stat.tcamera_memory;
     },
     getLayer = function () {
         return TYRANO.kag.stat.tcamera_layer;
-    }
+    },
     getLayerName = function (num) {
-        return tcamera_laynames[num];
+        return LAYER_NAMES[num];
     },
     getLayerNameJ = function (j_layer) {
-        var ret, i, list = j_layer.get(0).className.split(/\s+/);
+        var ret = "null", i, list = j_layer.get(0).className.split(/\s+/);
         for (i = 0; i < list.length; i++) {
             if (list[i].indexOf("_fore") > -1 && list[i].indexOf("layer_") < 0) {
                 ret = list[i].replace("_fore", "");
@@ -42,7 +52,7 @@ var tcamera_laynames   = mp.layer.split(","),
     },
     initLayers = function () {
         var lay_obj = getLayer();
-        for (i = 0; i < tcamera_count; i++) {
+        for (i = 0; i < LAYER_COUNT; i++) {
            key = getLayerName(i);
            lay_obj[key] = {
               "x": 0,
@@ -57,27 +67,44 @@ var tcamera_laynames   = mp.layer.split(","),
 //# パラメータ自動計算
 var calcCamera = function (pm) {
     var i, key, val, dif_z, pos_obj, cam_obj, zoom,
-    j_chara, j_parent, target_x, target_zoom, chara_left, chara_width, chara_layer;
+        j_chara, j_parent, target_x, target_y, target_z, target_zoom,
+        chara_x, chara_y, chara_cx, chara_cy, chara_w, chara_h, chara_layer;
     
-    // pmについて、数値型に変換できるプロパティはすべて数値型にする
-    for (key in pm) {
-        val = parseFloat(pm[key]);
-        if (! isNaN(val)) {
-            pm[key] = val;
-        }
+    // 数値型への変換
+    val = parseFloat(pm.z);
+    if (!isNaN(val)) pm.z = val;
+    val = parseFloat(pm.rotate);
+    if (!isNaN(val)) pm.rotate = val;
+    if (pm.name === "") {
+        val = parseFloat(pm.x);
+        if (!isNaN(val)) pm.x = val;
+        val = parseFloat(pm.y);
+        if (!isNaN(val)) pm.y = val;
     }
-    
-    // pm.zは絶対必要
+    // pm.zは絶対必要。未指定なら前回の記憶から持ってくる
     if (pm.z === "") {
         pm.z = getMemory().z;
     }
     
     // name指定があれば
     if (pm.name !== "") {
-        // pm.zoomは絶対必要
+        // pm.zoom、pm.x、pm.yは絶対必要。未指定なら前回の記憶から持ってくる
         if (pm.zoom === "") {
             pm.zoom = getMemory().zoom;
         }
+        if (pm.x === "") {
+            pm.x = getMemory().name_x;
+        }
+        if (pm.y === "") {
+            pm.y = getMemory().name_y;
+        }
+        if (pm.z === "") {
+            pm.z = getMemory().name_z;
+        }
+        // 記憶処理
+        getMemory().name_x = pm.x;
+        getMemory().name_y = pm.y;
+        getMemory().name_z = pm.z;
         // キャラクターのjQueryオブジェクトを取得
         j_chara = pm.chara;
         // 親レイヤーのjQueryオブジェクトを取得
@@ -88,25 +115,48 @@ var calcCamera = function (pm) {
         }
         // 親レイヤーの名前を取得
         chara_layer = getLayerNameJ(j_parent);
+        if (chara_layer === "null") {
+            console.error("エラー：キャラクター「"+pm.name+"」がいるレイヤーを特定できませんでした。");
+        }
         //console.log(chara_layer);
         // widthとleftを元に目標xを決定する
-        chara_width = j_chara.width() || 0;
-        chara_left  = parseInt(j_chara.css("left")) || 0;
-        target_x    = chara_left + chara_width / 2 - SC_WIDTH / 2;
+        chara_w = j_chara.width() || 0;
+        chara_h = j_chara.height() || 0;
+        chara_x = parseInt(j_chara.css("left")) || 0;
+        chara_y = j_chara.css("top");
+        if (chara_y === "auto") {
+            chara_y = SC_HEIGHT - chara_h - (parseInt(j_chara.css("bottom") || 0));
+        }
+        else {
+            chara_y = parseInt(chara_y) || 0;
+        }
+        chara_x -= SC_WIDTH  / 2;
+        chara_y -= SC_HEIGHT / 2;
+        chara_cx = chara_x + chara_w / 2;
+        chara_cy = chara_y + chara_h / 2;
+        chara_y  *= -1;
+        chara_cy *= -1;
+        pm.x = String(pm.x).replace("theX", "("+chara_x+")").replace("theW", "("+chara_w+")").replace("theCX", "("+chara_cx+")");
+        pm.y = String(pm.y).replace("theY", "("+chara_y+")").replace("theH", "("+chara_h+")").replace("theCY", "("+chara_cy+")");
+        target_x = eval(pm.x);
+        target_y = eval(pm.y);
     }
     
     // レイヤーの数だけループ…するのだが
     i = (pm.name !== "") ? -1 : 0; // name指定がある場合は-1からスタート
-    for (; i < tcamera_count; i++) {
+    for (; i < LAYER_COUNT; i++) {
         // -1の場合はキャラレイヤーを参照
         key = i < 0 ? chara_layer : getLayerName(i);
         // レイヤーのposを参照
         pos_obj = getLayer()[key];
         // -1の場合はpmを補正する
         if (i < 0) {
-            target_zoom = Math.min(pm.zoom, ZOOM_MAX);
+            target_zoom = Math.min(pm.zoom * pos_obj.zoom, ZOOM_MAX);
+            target_z = pos_obj.z - DIF_Z_RATE / target_zoom;
             pm.x = target_x / target_zoom;
-            pm.z = pos_obj.z - DIF_Z_RATE / target_zoom;
+            pm.y = target_y / target_zoom;
+            pm.z = String(pm.z).replace("theZ", "("+target_z+")");
+            pm.z = eval(target_z);
             continue;
         }
         // 0以上ならパラメータ作成
@@ -120,14 +170,14 @@ var calcCamera = function (pm) {
             };
             // 計算
             dif_z      = pos_obj.z - pm.z;           // レイヤーとカメラのz距離
-            is_visible = dif_z > 0;                  // カメラより前にある物だけ見える(未使用)
+            //is_visible = dif_z > 0;                // カメラより前にある物だけ見える(未使用)
             dif_z      = Math.max(dif_z, DIF_Z_MIN); // z距離に最低値を保証する
             zoom       = DIF_Z_RATE / dif_z;         // 拡大率はz距離に反比例する
             // パラメータを設定していく
             if (pm.x !== "") cam_obj.x = String(pm.x * zoom);
             if (pm.y !== "") cam_obj.y = String(pm.y * zoom);
             if (pm.rotate !== "") cam_obj.rotate = String(pm.rotate);
-            cam_obj.zoom = String(zoom * pos_obj.zoom);
+            cam_obj.zoom = String(Math.min(zoom * pos_obj.zoom, ZOOM_MAX));
             //console.log(cam_obj);
             tcamera_param[key] = cam_obj;
         }
@@ -137,29 +187,31 @@ var calcCamera = function (pm) {
 //# 深度設定
 newtag.tcamera_setting = {
     pm: {
+        x: "",
+        y: "",
         z: "",
         zoom: ""
     },
     start: function (pm) {
-        var zs, zooms, i, val, key;
-        if (pm.z !== "") {
-            zs = pm.z.split(",");
-            for (i = 0; i < zs.length; i++) {
-                if (zs[i] !== "") {
-                    key = getLayerName(i);
-                    val = parseInt(zs[i]);
-                    getLayer()[key].z = val;
+        var i, j, vals, key, keys = Object.keys(this.pm),
+            lay_key, lay_obj = getLayer();
+        
+        // 配列keysをループ
+        for (i = 0; i < keys.length; i++) {
+            key = keys[i];
+            // そのパラメータが指定されていれば
+            if (pm[key] !== "" && typeof pm[key] === "string") {
+                // カンマで分割して配列にする。その配列をループ
+                vals = pm[key].split(",");
+                for (j = 0; j < LAYER_COUNT && j < vals.length; j++) {
+                    // 指定されていれば
+                    if (vals[j] !== "") {
+                        // そのレイヤ設定を上書きする
+                        lay_key = getLayerName(j);
+                        lay_obj[lay_key][key] = parseFloat(vals[j]);
+                    }
                 }
-            }
-        }
-        if (pm.zoom !== "") {
-            zooms = pm.zoom.split(",");
-            for (i = 0; i < zooms.length; i++) {
-                if (zooms[i] !== "") {
-                    key = getLayerName(i);
-                    val = parseFloat(zooms[i]);
-                    getLayer()[key].zoom = val;
-                }
+                
             }
         }
         this.kag.ftag.nextOrder();
@@ -193,9 +245,11 @@ newtag.tcamera = {
         "z": "",
         "rotate": "",
         "name": "",
+        "name_x": "",
+        "name_y": "",
         "zoom": "",
-        "wait": "true",
-        "ease_type": "ease",
+        "wait": DEF_WAIT,
+        "ease_type": DEF_EASE,
         "time": DEF_TIME,
     },
     start: function (pm) {
@@ -205,6 +259,9 @@ newtag.tcamera = {
         if (pm.name !== "" && ! pm.chara) {
             // そのキャラのjQueryオブジェクトを取得してpm.charaに格納する
             pm.chara = $("." + pm.name).eq(0);
+            if (pm.chara.size() == 0) {
+                console.error("エラー：キャラクター「"+pm.name+"」が見つけられませんでした。");
+            }
             // もしそのキャラが<img>要素であり、かつ、画像の読み込みが終わっていないならば
             if (pm.chara.get(0).tagName === "IMG" && ! pm.chara.get(0).complete) {
                 // 画像の読み込みが終わったときにもう一度この関数をやり直す
@@ -234,7 +291,7 @@ newtag.tcamera = {
         cam_obj = tcamera_param[key];
         // インデックス増加、ループするかどうかを判定
         tcamera_index++;
-        tcamera_loop = tcamera_index < tcamera_count;
+        tcamera_loop = tcamera_index < LAYER_COUNT;
         
         //【特殊】クイック処理ならば
         if (pm.quick) {
@@ -318,6 +375,7 @@ var quickMoveCamera = function (pm) {
         });
         that.kag.stat.current_camera_layer = pm.layer;
     }
+    that.kag.stat.current_camera[pm.layer] = to_camera;
 };
 
 //# マネージャ
