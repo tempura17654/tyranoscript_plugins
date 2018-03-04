@@ -26,6 +26,9 @@ if (MODE_PART_SET) {
             var set_obj = {};
             for (var key in pm) {
                 if (key !== "name" && key !== "set" && key !== "cond") {
+                    if (key === "TAG_TEXT") {
+                        pm[key] = pm[key].replace(/□/g, " ");
+                    }
                     set_obj[key] = pm[key];
                 }
             }
@@ -132,7 +135,7 @@ var getTagStr = function (chara_name) {
         // セット指定があるならここで足す
         var set_name = j_form.find("#chara_part_set_select").val();
         var set_obj  = getCharaPartSet()[chara_name][set_name];
-        var is_set   = set_name !== "★未指定" && j_form.find("input[data-part='表情セット']").prop("checked");
+        var is_set   = set_name !== "★未指定" && j_form.find("input[data-part='表情セット']").prop("checked") && !set_obj.TAG_TEXT;
         if (is_set) {
             tag_str += " set=" + set_name;
         }
