@@ -10,7 +10,7 @@
 
 
 ; プラグイン「キャラクターパーツマネージャ」を読み込む
-[plugin name=chara_part_manager autochange=true onlyexist=true]
+[plugin name=chara_part_manager autochange=true onlyexist=true partset=true]
 
 
 ; 独自マクロ[yuko_clone]定義
@@ -20,6 +20,11 @@
 [yuko_clone name=yuko   jname=ゆうこ]
 [yuko_clone name=haruka jname=はるか]
 [yuko_clone name=aya    jname=あや  ]
+
+;【NEW!!】ゆうこに表情セットを登録
+[chara_layer_set set=うげげ name=yuko head=青ざめ eye=普通3 face=困り(口開き)]
+[chara_layer_set set=わーい name=yuko head=普通 eye=閉じ2 face=怒り(口開き)]
+[chara_layer_set set=は？   name=yuko head=普通 eye=だる3 face=困り(口開き)]
 
 
 #
@@ -32,6 +37,11 @@
 #yuko
 こんにちは。ゆうこだよ[p]
 パーツマネージャから自由にパーツを変えてみてね。[p]
+「表情セット」機能を使うことで、複数のパーツをまとめて変更することもできるよ。[p]
+[chara_part name=yuko set=うげげ]
+うげげ！[p]
+[chara_part name=yuko set=わーい body_front=ゴスロリ body_back=ゴスロリ]
+わーい！[p]
 
 [chara_show name=haruka time=300 width=470]
 #haruka

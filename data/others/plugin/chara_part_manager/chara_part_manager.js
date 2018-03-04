@@ -1,5 +1,57 @@
 (function ($, TYRANO, mp) {
 
+TYRANO.kag.stat.chara_part_set = {};
+var MODE_PART_SET = mp.partset === "true";
+var ONLY_PART_SET = mp.onlypartset === "true";
+var getCharaPartSet = function () {
+    return TYRANO.kag.stat.chara_part_set;
+};
+var getNewSet = function () {
+    return {
+        "★未指定": {
+        }
+    };
+};
+if (MODE_PART_SET) {
+    //# [chara_layer_set] 追加
+    TYRANO.kag.ftag.master_tag.chara_layer_set = 
+    TYRANO.kag.tag.chara_layer_set = {
+        kag: TYRANO.kag,
+        pm: {},
+        start: function (pm) {
+            if (! getCharaPartSet()[pm.name]) {
+                getCharaPartSet()[pm.name] = getNewSet();
+            }
+            var set_obj_paernt = getCharaPartSet()[pm.name];
+            var set_obj = {};
+            for (var key in pm) {
+                if (key !== "name" && key !== "set" && key !== "cond") {
+                    set_obj[key] = pm[key];
+                }
+            }
+            set_obj_paernt[pm.set] = set_obj;
+            this.kag.ftag.nextOrder();
+        }
+    };
+    //# [chara_part] 処理追加
+    var chara_part__ORIGIN = TYRANO.kag.ftag.master_tag.chara_part.start;
+    TYRANO.kag.ftag.master_tag.chara_part.start = function (pm) {
+        if (pm.set) {
+            var set_obj = getCharaPartSet()[pm.name][pm.set];
+            for (var key in set_obj) {
+                if (! pm[key]) {
+                    pm[key] = set_obj[key];
+                }
+            }
+        }
+        chara_part__ORIGIN.call(this, pm);
+    }
+}
+// パーツセット機能のみならここで帰る
+if (ONLY_PART_SET) {
+    return;
+}
+
 if ($(".chara_part_form").length > 0) {
     $(".chara_part_form").remove();
 }
@@ -77,12 +129,24 @@ var getTagStr = function (chara_name) {
     var chara_obj = TYRANO.kag.stat.charas[chara_name];
     var tag_str = "[chara_part name=" + chara_name;
     if (typeof chara_obj === "object") {
+        // セット指定があるならここで足す
+        var set_name = j_form.find("#chara_part_set_select").val();
+        var set_obj  = getCharaPartSet()[chara_name][set_name];
+        var is_set   = set_name !== "★未指定" && j_form.find("input[data-part='表情セット']").prop("checked");
+        if (is_set) {
+            tag_str += " set=" + set_name;
+        }
         var chara_layer = chara_obj._layer || {};
         for (var key in chara_layer) {
+            // チェックが入ってる？
             if (j_form.find("input[data-part='" + key + "']").prop("checked")) {
                 var part_obj = chara_layer[key];
                 var value = part_obj.current_part_id;
-                tag_str += " " + key + "=" + value;
+                // セット指定がないか、
+                // あるいはセット指定があってもそのセット内容と異なるパラメータならば足す
+                if (! is_set || set_obj[key] !== value) {
+                    tag_str += " " + key + "=" + value;
+                }
             }
         }
     }
@@ -171,18 +235,50 @@ var createForm = function () {
             var copy_timer = -1;
             j_form.content().find("select").extendSelect().on("change", function () {
                 var j_this = $(this);
+                // パーツの名前
                 var key = j_this.attr("name");
                 var value = j_this.val();
                 var opt = {};
                 opt.name = chara_name;
                 opt.time = "0";
-                opt[key] = value;
-                nextOrderPost++;
-                TYRANO.kag.ftag.startTag("chara_part", opt);
-                clearTimeout(copy_timer);
-                copy_timer = setTimeout(function () {
-                    execCopy(getTagStr(chara_name));
-                }, 50);
+                if (key === "表情セット") {
+                    if (value === "★初期化") {
+                        nextOrderPost++;
+                        TYRANO.kag.ftag.startTag("chara_part_reset", opt);
+                        clearTimeout(copy_timer);
+                        copy_timer = setTimeout(function () {
+                            execCopy("[chara_part_reset name="+chara_name+"]");
+                        }, 50);
+                    }
+                    else {
+                        var set_obj = getCharaPartSet()[chara_name][value];
+                        for (key in set_obj) {
+                            if (key !== "TAG_TEXT") {
+                                opt[key] = set_obj[key];
+                            }
+                        }
+                        nextOrderPost++;
+                        TYRANO.kag.ftag.startTag("chara_part", opt);
+                        clearTimeout(copy_timer);
+                        copy_timer = setTimeout(function () {
+                            if (set_obj.TAG_TEXT) {
+                                execCopy(set_obj.TAG_TEXT);
+                            }
+                            else {
+                                execCopy(getTagStr(chara_name));
+                            }
+                        }, 50);
+                    }
+                }
+                else {
+                    opt[key] = value;
+                    nextOrderPost++;
+                    TYRANO.kag.ftag.startTag("chara_part", opt);
+                    clearTimeout(copy_timer);
+                    copy_timer = setTimeout(function () {
+                        execCopy(getTagStr(chara_name));
+                    }, 50);
+                }
             });
             // <input>拡張
             j_form.content().find("input[type='checkbox']").extendCheckbox().on("change", function (e) {
@@ -291,6 +387,26 @@ var getContentHtml = function (chara_name) {
             html_select += '</div>';
             html_all += html_select;
         }
+        
+        var set = getCharaPartSet()[chara_name];
+        if (set) {
+            html_select = '';
+            html_select += '<div>';
+            html_select += '<span class="chara_part_title">表情セット</span>';   
+            html_select += '<select class="chara_part_select" id="chara_part_set_select" name="表情セット">';
+            i = 0;
+            for (key in set) {
+                selected = false ? "selected" : "";
+                html = '<option data-index="' + i + '" value="' + key + '" ' + selected + '>' + (i >= 1 ? (i - 1) + ':' : '') + key + '</option>';
+                html_select += html;
+                i++;
+            }
+            checked = (checkedObject[chara_name] && checkedObject[chara_name]["表情セット"]) ? ' checked="checked"' : "";
+            html_select += '</select><input type="checkbox" ' + checked + ' data-chara="' + chara_name + '" data-part="表情セット"></input>';
+            html_select += '</div>';
+            html_all += html_select;
+        }
+        
         html_all += '<div class="chara_part_disable_wrapper"></div>';
         j_form.content().removeClass("disable");
         if (!isExistChara(chara_name)) {
@@ -420,12 +536,20 @@ appendFunc(TYRANO.kag.ftag.master_tag.chara_part, "start", function (pm) {
             var a = j_form.content().find("select[name='" + key + "']");
             a.val(current_id);
         }
+        
+    }
+    // セット指定があるなら…
+    if (MODE_PART_SET && pm.set) {
+        j_form.find("#chara_part_set_select").val(pm.set);
     }
 });
 
 //# [chara_new] 処理追加
 appendFunc(TYRANO.kag.ftag.master_tag.chara_new, "start", function (pm) {
     j_form.updateHeader();
+    if (MODE_PART_SET && !getCharaPartSet()[pm.name]) {
+        getCharaPartSet()[pm.name] = getNewSet();
+    }
 });
 
 //# [chara_delete] 処理追加
