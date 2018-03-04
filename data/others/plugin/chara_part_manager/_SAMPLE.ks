@@ -2,15 +2,19 @@
 [bg storage=room.jpg time=0]
 [position width=920 height=161 top=451 left=20]
 [position page=fore margint=45 marginl=10 marginr=20 marginb=10 vertical=false opacity=180 color=0x000000]
-[ptext name=chara_name_area layer=message0 color=0xFFFFFF size=26 x=30 y=381 bold=bold]
+[ptext name=chara_name_area layer=message0 color=0xFFFFFF size=26 x=30 y=461 bold=bold]
 [chara_config ptext=chara_name_area]
 [chara_config talk_focus=brightness]
+[button name=role_button role=quicksave graphic=button/qsave.png enterimg=button/qsave2.png x=770 y=470]
+[button name=role_button role=quickload graphic=button/qload.png enterimg=button/qload2.png x=850 y=470]
 
-; 独自マクロ[yuko_close]定義
-[call target=define_yuko_clone]
 
 ; プラグイン「キャラクターパーツマネージャ」を読み込む
-[plugin name=chara_part_manager]
+[plugin name=chara_part_manager autochange=true onlyexist=true]
+
+
+; 独自マクロ[yuko_clone]定義
+[call target=define_yuko_clone]
 
 ; 上で定義したマクロ[yuko_clone]を使ってクローンを生み出す
 [yuko_clone name=yuko   jname=ゆうこ]
@@ -18,20 +22,45 @@
 [yuko_clone name=aya    jname=あや  ]
 
 
+#
+テストを開始します。[p]
+
 
 *loop
 
-ゆうこ第１クローン「ゆうこ」を表示
-[chara_show name=yuko time=300 width=470][p]
+[chara_show name=yuko time=300 width=470]
+#yuko
+こんにちは。ゆうこだよ[p]
+パーツマネージャから自由にパーツを変えてみてね。[p]
 
-ゆうこ第２クローン「はるか」を表示
-[chara_show name=haruka time=300 width=470][p]
+[chara_show name=haruka time=300 width=470]
+#haruka
+こんにちは。はるかだよ。[p]
+パーツマネージャから自由にパーツを変えてみてね。[p]
 
-ゆうこ第３クローン「あや」を表示
-[chara_show name=aya time=300 width=470][p]
+[chara_show name=aya time=300 width=470]
+#aya
+こんにちは。あやだよ。[p]
+パーツマネージャから自由にパーツを変えてみてね。[p]
 
-全員消す
-[chara_hide_all time=300][p]
+#yuko
+3人は多いなあ～。[p]
+
+#aya
+みんな同じ顔だしね。[p]
+じゃあ、はるかを消すよ。[p]
+
+#haruka
+そんなあ～。[p]
+[chara_hide name=haruka]
+
+#aya
+消したよ。[p]
+全員消すよ。[p]
+[chara_hide_all time=300]
+
+#
+全員消えました。[p]
 
 [jump target=loop]
 

@@ -13,6 +13,9 @@ var j_form;             // フォームのjQueryオブジェクト
 var checkedObject = {}; // チェックボックスのpropを格納しておく
 var nextOrderPost = 0;  // nextOrderの猶予
 
+var MODE_EXIST_ONLY  = mp.onlyexist === "true";
+var MODE_AUTO_CHANGE = mp.autochange === "true";
+
 //# execCopy
 // クリップボードにコピー
 var execCopy = function (string) {
@@ -139,11 +142,16 @@ var createForm = function () {
         return j_form.header().find("select").eq(0).val();
     };
     
+    //## j_form.setHeaderChara
+    j_form.setHeaderChara = function (name) {
+        return j_form.header().find("select").eq(0).val(name).trigger("change");
+    };
+    
     //## j_form.updateHeader
-    j_form.updateHeader = function () {
+    j_form.updateHeader = function (existChara, noExistChara, isEmpty) {
         j_form.header().empty();
         // HTMLをセット
-        j_form.header(getHeaderHtml());
+        j_form.header(getHeaderHtml(existChara, noExistChara, isEmpty));
         // <select>拡張
         j_form.header().find("select").extendSelect().on("change", function () {
             j_form.updateContent();
@@ -232,8 +240,20 @@ var createForm = function () {
 
 //# getHeaderHtml
 // フォームのヘッダ用HTML文字列を作って返す
-var getHeaderHtml = function () {
+var getHeaderHtml = function (existChara, noExistChara, isEmpty) {
     var charas = Object.keys(TYRANO.kag.stat.charas);
+    // 存在するキャラだけ含める場合
+    if (MODE_EXIST_ONLY) {
+        var tmp = [];
+        if (! isEmpty) {
+            for (var i = 0; i < charas.length; i++) {
+                if ((charas[i] === existChara || $("." + charas[i]).size() > 0) && charas[i] !== noExistChara) {
+                    tmp.push(charas[i]);
+                }
+            }
+        }
+        charas = tmp;
+    }
     var html_select = "";
     html_select += '<span class="chara_part_title">キャラクター</span>';
     html_select += '<select class="chara_part_select"><option value=""></option>';
@@ -376,6 +396,19 @@ var appendFunc = function (parentObject, propertyName, newFunction) {
     };
 };
 
+appendFunc(TYRANO.kag.menu, "loadGameData", function (pm) {
+    j_form.updateHeader();
+});
+
+if (MODE_AUTO_CHANGE) {
+    //# [chara_ptext] 処理追加
+    appendFunc(TYRANO.kag.ftag.master_tag.chara_ptext, "start", function (pm) {
+        if (pm.name) {
+            j_form.setHeaderChara(pm.name);
+        }
+    });
+}
+
 //# [chara_part] 処理追加
 appendFunc(TYRANO.kag.ftag.master_tag.chara_part, "start", function (pm) {
     var chara_obj = TYRANO.kag.stat.charas[pm.name];
@@ -402,6 +435,21 @@ appendFunc(TYRANO.kag.ftag.master_tag.chara_delete, "start", function (pm) {
 
 //# [chara_show] 処理追加
 appendFunc(TYRANO.kag.ftag.master_tag.chara_show, "start", function (pm) {
+    if (MODE_EXIST_ONLY) {
+        var tmp = j_form.getHeaderChara();
+        j_form.updateHeader(pm.name, null, null);
+        if (MODE_AUTO_CHANGE) {
+            j_form.setHeaderChara(pm.name);
+        }
+        else {
+            j_form.setHeaderChara(tmp);
+        }
+    }
+    else {
+        if (MODE_AUTO_CHANGE) {
+            j_form.setHeaderChara(pm.name);
+        }
+    }
     if (pm.name === j_form.getHeaderChara()) {
         j_form.content().removeClass("disable");
     }
@@ -409,6 +457,11 @@ appendFunc(TYRANO.kag.ftag.master_tag.chara_show, "start", function (pm) {
 
 //# [chara_hide] 処理追加
 appendFunc(TYRANO.kag.ftag.master_tag.chara_hide, "start", function (pm) {
+    if (MODE_EXIST_ONLY) {
+        var tmp = j_form.getHeaderChara();
+        j_form.updateHeader(null, pm.name, null);
+        j_form.setHeaderChara(tmp);
+    }
     if (pm.name === j_form.getHeaderChara()) {
         j_form.content().addClass("disable");
     }
@@ -416,6 +469,9 @@ appendFunc(TYRANO.kag.ftag.master_tag.chara_hide, "start", function (pm) {
 
 //# [chara_hide_all] 処理追加
 appendFunc(TYRANO.kag.ftag.master_tag.chara_hide_all, "start", function (pm) {
+    if (MODE_EXIST_ONLY) {
+        j_form.updateHeader(null, null, true);
+    }
     j_form.content().addClass("disable");
 });
 
