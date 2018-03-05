@@ -1,4 +1,3 @@
-*loop
 [call target=setting]
 
 wait=falseでぐーるぐる（プラグイン読み込み前）[l]
@@ -9,8 +8,7 @@ wait=falseでぐーるぐる（プラグイン読み込み前）[l]
 
 wait=falseでぐーるぐる（プラグイン読み込み後）[l]
 [call target=guruguru]
-[jump target=loop]
-
+[s]
 
 *guruguru
 [camera x=-200 y= 200 wait=false][l]
@@ -31,6 +29,4 @@ wait=falseでぐーるぐる（プラグイン読み込み後）[l]
 [clearfix]
 [button name=role_button role=quicksave graphic=button/qsave.png enterimg=button/qsave2.png x=770 y=470]
 [button name=role_button role=quickload graphic=button/qload.png enterimg=button/qload2.png x=850 y=470]
-[loadjs storage=../../tyrano/libs/jquery.a3d.js]
-[loadjs storage=../../tyrano/plugins/kag/kag.tag_camera.js]
 [return]
