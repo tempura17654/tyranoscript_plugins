@@ -28,8 +28,11 @@ TYRANO.kag.ftag.master_tag.camera.start = function (pm) {
         if(pm.zoom!="") to_camera.scale = pm.zoom;
         if(pm.rotate!="") to_camera.rotate = pm.rotate+"deg";
         
+        var flag_current = true;
         
         if(pm.from_x != "0" || pm.from_y!="0" || pm.from_zoom!="1" || pm.from_rotate!="0" ){
+            
+            flag_current = false;
             
             this.kag.stat.current_camera[pm.layer] = {
                 x : parseInt(pm.from_x)*-1 +"px",
@@ -47,6 +50,7 @@ TYRANO.kag.ftag.master_tag.camera.start = function (pm) {
             frames : {
 
                 "0%" : {
+                    flag_current: flag_current,
                     trans : this.kag.stat.current_camera[pm.layer]
                 },
                 "100%" : {
@@ -127,6 +131,7 @@ TYRANO.kag.ftag.master_tag.reset_camera.start = function(pm) {
             frames : {
 
                 "0%" : {
+                    flag_current: true,
                     trans : this.kag.stat.current_camera[pm.layer]
                 },
                 "100%" : {

@@ -143,6 +143,10 @@
                     }
                 }
                 
+                if (keyframe[percentage].flag_current) {
+                    frame_text = $(this).css("transform");
+                }
+                
                 master_text += head_text + frame_text+ "; "+style_text+"　} ";
           
                 last_frame_text = frame_text;
