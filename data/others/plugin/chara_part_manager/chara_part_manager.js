@@ -133,11 +133,14 @@ var getTagStr = function (chara_name) {
     var tag_str = "[chara_part name=" + chara_name;
     if (typeof chara_obj === "object") {
         // セット指定があるならここで足す
-        var set_name = j_form.find("#chara_part_set_select").val();
-        var set_obj  = getCharaPartSet()[chara_name][set_name];
-        var is_set   = set_name !== "★未指定" && j_form.find("input[data-part='表情セット']").prop("checked") && !set_obj.TAG_TEXT;
-        if (is_set) {
-            tag_str += " set=" + set_name;
+        var is_set = false;
+        if (MODE_PART_SET) {
+            var set_name = j_form.find("#chara_part_set_select").val();
+            var set_obj  = getCharaPartSet()[chara_name][set_name];
+            is_set = set_name !== "★未指定" && j_form.find("input[data-part='表情セット']").prop("checked") && !set_obj.TAG_TEXT;
+            if (is_set) {
+                tag_str += " set=" + set_name;
+            }
         }
         var chara_layer = chara_obj._layer || {};
         for (var key in chara_layer) {
