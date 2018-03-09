@@ -8,7 +8,7 @@
 
 
 ; プラグインを読み込む。マネージャを有効に。使うレイヤはbase,0,1,2。デフォルトの移動時間は500ミリ秒。
-[plugin name=tempura_camera manager=true layer=base,0,1,2 deftime=500]
+[plugin name=tempura_camera2 manager=true layer=base,0,1,2 deftime=500 newline=true]
 
 
 
@@ -29,6 +29,35 @@
 [tcamera x=-100][p]
 カメラのy座標を100に。
 [tcamera y=100][p]
+
+
+
+Ver2で「相対指定」もできるようにしました。[p]
+カメラのx座標を今の位置から+30。
+[tcamera x="+=30"][p]
+カメラのz座標を今の位置から-30。
+[tcamera z="-=30"][p]
+
+
+
+また、Ver2で「スクリーン操作」もできるようにしました。[p]
+スクリーンの拡大率を0.5に。
+[tcamera sczoom=0.5][p]
+スクリーンの拡大率を2に。
+[tcamera sczoom=2][p]
+スクリーンのx座標を-100に。
+[tcamera scx=-100][p]
+スクリーンのy座標を-50に。
+[tcamera scy=-50][p]
+
+
+
+「カメラ操作」との違いがわかっていただけるでしょうか。[p]
+カメラ位置とスクリーン位置を初期化。
+[tcamera_init][p]
+
+
+
 
 
 
@@ -67,9 +96,10 @@
 #mascot:happy
 カメラマネージャ機能もあるよ！[p]
 #mascot:default
-キーボードの「C」でカメラマネージャのオン・オフが切り替えられる！[r]
-オン状態になると画面が青枠で囲まれて、ゲームが進まなくなるよ。[p]
-青枠が出ている状態で画面中央をマウスドラッグするとカメラが動く。[p]
+キーボードの「C」でカメラ制御モードのオン・オフが切り替えられる！[p]
+Ver2ではキーボードの「V」でスクリーン制御モードも選べるようになったよ！[p]
+オン状態になると画面が色枠で囲まれて、ゲームが進まなくなるよ。[p]
+色枠が出ている状態で画面中央をマウスドラッグするとカメラが動く。[p]
 画面端をマウスドラッグするとカメラが回転する。[r]
 マウスホイールでz座標操作もできる。[p]
 ［リセット］をクリックでカメラのリセット、[r]
@@ -108,5 +138,5 @@
 [chara_face name=mascot storage=chara/mascot/happy.png face=happy]
 [chara_new  name=akane  storage=chara/akane/normal.png jname=あかね]
 [chara_face name=akane  storage=chara/akane/happy.png face=happy]
-[delay speed=10]
+[delay speed=1]
 [return]

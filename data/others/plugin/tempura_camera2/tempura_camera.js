@@ -6,12 +6,17 @@ if (typeof TYRANO.kag.stat.tcamera_layer !== "undefined") {
 }
 
 //# stat領域に変数定義
+// それぞれのレイヤーのx,y,z,zoom設定を格納
 TYRANO.kag.stat.tcamera_layer  = {};
+// 前回の[tcamera]の記憶
 TYRANO.kag.stat.tcamera_memory = {
     "x": 0,
     "y": 0,
     "z": 0,
     "rotate": 0,
+    "scx": 0,
+    "scy": 0,
+    "sczoom": 1,
     "name_x": "theCX",
     "name_y": "theCY",
     "name_z": "theZ",
@@ -33,18 +38,23 @@ var tcamera_index      = 0,
     DEF_EASE    = String(mp.defease || "ease"),
     DEF_TIME    = String(mp.deftime || 1000),
     SKIP_TIME   = String(mp.skiptime || 0),
+    NEW_LINE    = mp.newline === "true",
     ZOOM_MAX    = 8,
     DIF_Z_RATE  = 100,
     DIF_Z_MIN   = parseInt(DIF_Z_RATE / ZOOM_MAX),
+    // stat.tcamera_memoryを返すだけ
     getMemory = function () {
         return TYRANO.kag.stat.tcamera_memory;
     },
+    // stat.tcamera_layerを返すだけ
     getLayer = function () {
         return TYRANO.kag.stat.tcamera_layer;
     },
+    // 数値をレイヤーネーム(base,0,1,…)に変換
     getLayerName = function (num) {
         return LAYER_NAMES[num];
     },
+    // レイヤーのjQueryオブジェクトを受け取ってレイヤーネームを返す
     getLayerNameJ = function (j_layer) {
         var ret = "null", i, list = j_layer.get(0).className.split(/\s+/);
         for (i = 0; i < list.length; i++) {
@@ -55,6 +65,7 @@ var tcamera_index      = 0,
         }
         return ret;
     },
+    // stat.tcamera_layerを初期化する
     initLayers = function () {
         var lay_obj = getLayer();
         for (i = 0; i < LAYER_COUNT; i++) {
@@ -66,46 +77,54 @@ var tcamera_index      = 0,
               "zoom": 1,
            };
         }
+    },
+    myParse = function (obj, key, key2) {
+        var is_str;
+        if (! key2) key2 = key;
+        if (obj[key] === "") {
+            obj[key] = getMemory()[key2];
+        }
+        else {
+            is_str = typeof obj[key] === "string";
+            if (is_str) {
+                if (obj[key].indexOf("the") > -1) ;
+                else if (obj[key].substr(0, 2) === "-=") {
+                    obj[key] = getMemory()[key2] - parseFloat(obj[key].substr(2));
+                }
+                else if (obj[key].substr(0, 2) === "+=") {
+                    obj[key] = getMemory()[key2] + parseFloat(obj[key].substr(2));
+                }
+                else obj[key] = parseFloat(obj[key]);
+            }
+        }
     };
+    // 初期化処理を一発呼び出しておこう
     initLayers();
 
 //# パラメータ自動計算
 var calcCamera = function (pm) {
-    var i, key, val, dif_z, pos_obj, cam_obj, zoom,
+    var i, key, key2, val, dif_z, pos_obj, cam_obj, zoom, zoom2,
         j_chara, j_parent, target_x, target_y, target_z, target_zoom,
         chara_x, chara_y, chara_cx, chara_cy, chara_w, chara_h, chara_layer;
     
     // 数値型への変換
-    val = parseFloat(pm.z);
-    if (!isNaN(val)) pm.z = val;
-    val = parseFloat(pm.rotate);
-    if (!isNaN(val)) pm.rotate = val;
+    myParse(pm, "scx");
+    myParse(pm, "scy");
+    myParse(pm, "sczoom");
+    
+    // name指定がなければ
     if (pm.name === "") {
-        val = parseFloat(pm.x);
-        if (!isNaN(val)) pm.x = val;
-        val = parseFloat(pm.y);
-        if (!isNaN(val)) pm.y = val;
-    }
-    // pm.zは絶対必要。未指定なら前回の記憶から持ってくる
-    if (pm.z === "") {
-        pm.z = getMemory().z;
+        myParse(pm, "x");
+        myParse(pm, "y");
+        myParse(pm, "z");
     }
     
     // name指定があれば
-    if (pm.name !== "") {
-        // pm.zoom、pm.x、pm.yは絶対必要。未指定なら前回の記憶から持ってくる
-        if (pm.zoom === "") {
-            pm.zoom = getMemory().zoom;
-        }
-        if (pm.x === "") {
-            pm.x = getMemory().name_x;
-        }
-        if (pm.y === "") {
-            pm.y = getMemory().name_y;
-        }
-        if (pm.z === "") {
-            pm.z = getMemory().name_z;
-        }
+    else {
+        myParse(pm, "zoom");
+        myParse(pm, "x", "name_x");
+        myParse(pm, "y", "name_y");
+        myParse(pm, "z", "name_z");
         // 記憶処理
         getMemory().name_x = pm.x;
         getMemory().name_y = pm.y;
@@ -123,8 +142,7 @@ var calcCamera = function (pm) {
         if (chara_layer === "null") {
             console.error("エラー：キャラクター「"+pm.name+"」がいるレイヤーを特定できませんでした。");
         }
-        //console.log(chara_layer);
-        // widthとleftを元に目標xを決定する
+        // widthとleftを元に目標x,目標yを決定する
         chara_w = j_chara.width() || 0;
         chara_h = j_chara.height() || 0;
         chara_x = parseInt(j_chara.css("left")) || 0;
@@ -145,47 +163,50 @@ var calcCamera = function (pm) {
         pm.y = String(pm.y).replace("theY", "("+chara_y+")").replace("theH", "("+chara_h+")").replace("theCY", "("+chara_cy+")");
         target_x = eval(pm.x);
         target_y = eval(pm.y);
+        // 目標x,目標yの決定ここまで
+        // 目標zoomのを決定する
+        key = chara_layer;
+        pos_obj = getLayer()[key];
+        target_zoom = Math.min(pm.zoom * pos_obj.zoom, ZOOM_MAX);
+        target_z = pos_obj.z - DIF_Z_RATE / target_zoom;
+        // 決定した目標x,目標y,目標zoomからpm.x,pm.y,pm.zを逆算する
+        pm.x = parseInt(target_x / target_zoom);
+        pm.y = parseInt(target_y / target_zoom);
+        pm.z = String(pm.z).replace("theZ", "("+target_z+")");
+        pm.z = parseInt(eval(target_z));
     }
     
-    // レイヤーの数だけループ…するのだが
-    i = (pm.name !== "") ? -1 : 0; // name指定がある場合は-1からスタート
-    for (; i < LAYER_COUNT; i++) {
-        // -1の場合はキャラレイヤーを参照
-        key = i < 0 ? chara_layer : getLayerName(i);
+    // レイヤーの数だけループ
+    for (i = 0; i < LAYER_COUNT; i++) {
+        // レイヤーネームを取得
+        key = getLayerName(i);
         // レイヤーのposを参照
         pos_obj = getLayer()[key];
-        // -1の場合はpmを補正する
-        if (i < 0) {
-            target_zoom = Math.min(pm.zoom * pos_obj.zoom, ZOOM_MAX);
-            target_z = pos_obj.z - DIF_Z_RATE / target_zoom;
-            pm.x = parseInt(target_x / target_zoom);
-            pm.y = parseInt(target_y / target_zoom);
-            pm.z = String(pm.z).replace("theZ", "("+target_z+")");
-            pm.z = parseInt(eval(target_z));
-            continue;
+        // 新規オブジェクト
+        cam_obj = {
+            "layer": key,
+            "wait": "false",
+            "ease_type": pm.ease_type,
+            "time": String((TYRANO.kag.stat.is_skip === true && SKIP_TIME > -1) ? SKIP_TIME : pm.time),
+        };
+        // 計算
+        dif_z = pos_obj.z - pm.z;                        // レイヤーとカメラのz距離
+        //is_visible = dif_z > 0;                        // カメラより前にある物だけ見える(未使用)
+        dif_z = Math.max(dif_z, DIF_Z_MIN);              // z距離に最低値を保証する
+        zoom  = DIF_Z_RATE / dif_z;                      // 拡大率はz距離に反比例する
+        zoom2 = Math.min(zoom * pos_obj.zoom, ZOOM_MAX); // pos_obj.zoomを掛けたVerも用意する
+        // パラメータを設定していく
+        cam_obj.x      = pm.x * zoom;
+        cam_obj.y      = pm.y * zoom;
+        cam_obj.rotate = pm.rotate;
+        cam_obj.zoom   = pm.sczoom * zoom2;
+        if (pm.scx) cam_obj.x += pm.scx / zoom2;
+        if (pm.scy) cam_obj.y += pm.scy / zoom2;
+        // なんとなく文字列にしておく
+        for (key2 in cam_obj) {
+            cam_obj[key2] = String(cam_obj[key2]);
         }
-        // 0以上ならパラメータ作成
-        else {
-            // 新規オブジェクト
-            cam_obj = {
-                "layer": key,
-                "wait": "false",
-                "ease_type": pm.ease_type,
-                "time": String((TYRANO.kag.stat.is_skip === true && SKIP_TIME > -1) ? SKIP_TIME : pm.time),
-            };
-            // 計算
-            dif_z      = pos_obj.z - pm.z;           // レイヤーとカメラのz距離
-            //is_visible = dif_z > 0;                // カメラより前にある物だけ見える(未使用)
-            dif_z      = Math.max(dif_z, DIF_Z_MIN); // z距離に最低値を保証する
-            zoom       = DIF_Z_RATE / dif_z;         // 拡大率はz距離に反比例する
-            // パラメータを設定していく
-            if (pm.x !== "") cam_obj.x = String(pm.x * zoom);
-            if (pm.y !== "") cam_obj.y = String(pm.y * zoom);
-            if (pm.rotate !== "") cam_obj.rotate = String(pm.rotate);
-            cam_obj.zoom = String(Math.min(zoom * pos_obj.zoom, ZOOM_MAX));
-            //console.log(cam_obj);
-            tcamera_param[key] = cam_obj;
-        }
+        tcamera_param[key] = cam_obj;
     }
 };
 
@@ -216,7 +237,6 @@ newtag.tcamera_setting = {
                         lay_obj[lay_key][key] = parseFloat(vals[j]);
                     }
                 }
-                
             }
         }
         this.kag.ftag.nextOrder();
@@ -237,6 +257,9 @@ newtag.tcamera_init = {
         pm.x = "0";
         pm.y = "0";
         pm.z = "0";
+        pm.scx = "0";
+        pm.scy = "0";
+        pm.sczoom = "1";
         pm.rotate = "0";
         this.kag.ftag.startTag("tcamera", pm);
     },
@@ -248,10 +271,11 @@ newtag.tcamera = {
         "x": "",
         "y": "",
         "z": "",
+        "scx": "",
+        "scy": "",
+        "sczoom": "",
         "rotate": "",
         "name": "",
-        "name_x": "",
-        "name_y": "",
         "zoom": "",
         "wait": DEF_WAIT,
         "ease_type": DEF_EASE,
@@ -283,7 +307,7 @@ newtag.tcamera = {
             // カメラ位置を覚えておく
             memory = getMemory();
             for (key in memory) {
-                if (pm[key] !== "") {
+                if (pm[key] !== "" && typeof pm[key] !== "undefined") {
                     memory[key] = pm[key];
                 }
             }
@@ -324,7 +348,6 @@ newtag.tcamera = {
                 cam_obj.wait = pm.wait;
             }
             // 正規の[camera]に処理を投げる
-            //console.log(cam_obj);
             this.kag.ftag.startTag("camera", cam_obj);
         }
     }
@@ -392,6 +415,7 @@ if (mp.manager !== "true") {
 else {
     var enableAutoCopy = document.execCommand("copy"),
         isOnSpan = false,
+        isAbsolute = false,
         cameraMode = 0,
         startX = -1,
         startY = -1,
@@ -409,7 +433,15 @@ else {
         j_copy = $("<div style=\"position: fixed; left: -100%;\"></div>"),
         j_event = $("<div id=\"tcamera_manager\" style=\"cursor: move; z-index: 100000010; position: absolute; width: "+SC_WIDTH+"px; height: "+SC_HEIGHT+"px; box-sizing: border-box; border: 5px solid blue; display: none;\"></div>"),
         makeTag = function (opt) {
-            j_span3.text("[tcamera x=" + opt.x + " y=" + opt.y + " z=" + opt.z + " rotate=" + opt.rotate + "]");
+            var tag, arr, i, key;
+            tag = "[tcamera";
+            arr = ["x", "y", "z", "rotate", "scx", "scy", "sczoom"];
+            for (i = 0; i < arr.length; i++) {
+                key = arr[i];
+                tag += " " + key + "=" + opt[key];
+            }
+            tag += "]";
+            j_span3.text(tag);
             if (enableAutoCopy) j_span3.trigger("click");
         };
         
@@ -419,43 +451,82 @@ else {
     j_copy.append(j_pre);
     $("body").append(j_copy);
     $(window).on("keydown", function (e) {
-        if (e.keyCode === 67) {
-            j_event.toggle();
-            makeTag(getMemory());
+        switch (e.keyCode) {
+        case 67:
+            if (isAbsolute === false) {
+                isAbsolute = null;
+                j_event.hide();
+            }
+            else {
+                isAbsolute = false;
+                j_span1.text("カメラ制御モード");
+                j_span.css("background", "blue");
+                j_event.css("border-color", "blue");
+                j_event.show();
+                makeTag(getMemory());
+            }
+            break;
+        case 86:
+            if (isAbsolute === true) {
+                isAbsolute = null;
+                j_event.hide();
+            }
+            else {
+                isAbsolute = true;
+                j_span1.text("スクリーン制御モード");
+                j_span.css("background", "#CC8800");
+                j_event.css("border-color", "#CC8800");
+                j_event.show();
+                makeTag(getMemory());
+            }
+            break;
         }
     });
     j_span2.on("click", function (e) {
-        opt.x = 0;
-        opt.y = 0;
-        opt.z = 0;
+        if (isAbsolute) {
+            opt.scx = 0;
+            opt.scy = 0;
+            opt.sczoom = 1;
+        }
+        else {
+            opt.x = 0;
+            opt.y = 0;
+            opt.z = 0;
+        }
         opt.rotate = 0;
-        makeTag(opt);
+        makeTag($.extend({}, getMemory(), opt));
         newtag.tcamera.start($.extend({}, newtag.tcamera.pm, opt));
         e.stopPropagation();
     });
     j_span3.on("click", function (e) {
-        j_pre.get(0).textContent = j_span3.text();
+        var newline = NEW_LINE ? "\n\n" : "";
+        j_pre.get(0).textContent = j_span3.text() + newline;
         document.getSelection().selectAllChildren(j_copy.get(0));
         document.execCommand("copy");
         e.stopPropagation();
     });
     j_event.on("onwheel" in document ? "wheel" : "onmousewheel" in document ? "mousewheel" : "DOMMouseScroll", function (e) {
+        e.stopPropagation();
+        if (cameraMode) return;
         var delta = e.originalEvent.deltaY ? -(e.originalEvent.deltaY) : e.originalEvent.wheelDelta ? e.originalEvent.wheelDelta : -(e.originalEvent.detail);
-        camera = $.extend({}, getMemory());
-        opt.x = parseInt(camera.x || 0);
-        opt.y = parseInt(camera.y || 0);
-        opt.z = parseInt(camera.z || 0);
-        opt.rotate = parseInt(camera.rotate || 0);
+        var z = isAbsolute ? "sczoom" : "z";
+        var v = isAbsolute ? 0.1 : 5;
+        opt = $.extend(opt, getMemory());
         if (delta < 0){
-            opt.z = parseInt(opt.z - 5);
-            if (-5 < opt.z && opt.z < 0) opt.z = 0;
+            opt[z] = opt[z] - v - 0.01;
+            if (-v < opt[z] && opt[z] < 0) opt[z] = 0;
         } else {
-            opt.z = parseInt(opt.z + 5);
-            if (0 < opt.z && opt.z < 5) opt.z = 0;
+            opt[z] = opt[z] + v + 0.01;
+            if (0 < opt[z] && opt[z] < v) opt[z] = 0;
+        }
+        if (true) {
+            var s = opt[z] > 0 ? 1 : -1;
+            v = Math.abs(opt[z]);
+            v = Math.round(v * 10) / 10 * s;
+            opt[z] = v;
         }
         makeTag(opt);
         newtag.tcamera.start($.extend({}, newtag.tcamera.pm, opt));
-        e.stopPropagation();
     });
     j_side = j_left.add(j_right);
     j_side.on("mousedown", function (e) {
@@ -469,7 +540,11 @@ else {
     });
     j_event.on("mousedown", function (e) {
         if (isOnSpan) return;
-        cameraMode = 1;
+        switch (e.button) {
+        default:
+            cameraMode = 1;
+            break;
+        }
         j_side.hide();
         startX = e.pageX;
         startY = e.pageY;
@@ -480,21 +555,34 @@ else {
         if (! cameraMode) return;
         var dx  = e.pageX - startX,
             dy  = e.pageY - startY;
-        if (cameraMode === 1) {
+        switch (cameraMode) {
+        case 1:
             dx *= -1;
-            opt.x = parseInt(camera.x || 0) + dx;
-            opt.y = parseInt(camera.y || 0) + dy;
-            opt.z = parseInt(camera.z || 0);
+            if (isAbsolute) {
+                opt.scx = parseInt(camera.scx || 0) + dx;
+                opt.scy = parseInt(camera.scy || 0) + dy;
+                opt.x = parseInt(camera.x || 0);
+                opt.y = parseInt(camera.y || 0);
+                opt.z = parseInt(camera.z || 0);
+            }
+            else {
+                opt.scx = parseInt(camera.scx || 0);
+                opt.scy = parseInt(camera.scy || 0);
+                opt.x = parseInt(camera.x || 0) + dx;
+                opt.y = parseInt(camera.y || 0) + dy;
+                opt.z = parseInt(camera.z || 0);
+            }
             opt.rotate = parseInt(camera.rotate || 0);
-        }
-        else if (cameraMode === 2) {
+            break;
+        case 2:
             dy *= sign;
             opt.x = parseInt(camera.x || 0);
             opt.y = parseInt(camera.y || 0);
             opt.z = parseInt(camera.z || 0);
             opt.rotate = parseInt(camera.rotate || 0) + parseInt(dy / 2);
+            break;
         }
-        makeTag(opt);
+        makeTag($.extend({}, getMemory(), opt));
         newtag.tcamera.start($.extend({}, newtag.tcamera.pm, opt));
         e.stopPropagation();
     });
