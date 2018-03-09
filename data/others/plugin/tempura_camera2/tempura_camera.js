@@ -196,8 +196,8 @@ var calcCamera = function (pm) {
         zoom  = DIF_Z_RATE / dif_z;                      // 拡大率はz距離に反比例する
         zoom2 = Math.min(zoom * pos_obj.zoom, ZOOM_MAX); // pos_obj.zoomを掛けたVerも用意する
         // パラメータを設定していく
-        cam_obj.x      = pm.x * zoom;
-        cam_obj.y      = pm.y * zoom;
+        cam_obj.x      = pm.x * zoom / pos_obj.zoom;
+        cam_obj.y      = pm.y * zoom / pos_obj.zoom;
         cam_obj.rotate = pm.rotate;
         cam_obj.zoom   = pm.sczoom * zoom2;
         if (pm.scx) cam_obj.x += pm.scx / zoom2;
