@@ -1,5 +1,6 @@
-[jump storage="../others/plugin/tempura_camera2           /_SAMPLE.ks"]
+[jump storage="koneta/characapture.ks"]
 [jump storage="../others/plugin/chara_part_manager        /_SAMPLE.ks"]
+[jump storage="../others/plugin/tempura_camera2           /_SAMPLE.ks"]
 [jump storage="../others/plugin/camera_trans              /_SAMPLE.ks"]
 [jump storage="../others/plugin/tempura_camera            /_SAMPLE.ks"]
 [jump storage="koneta/loadmask.ks"]
