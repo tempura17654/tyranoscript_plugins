@@ -205,8 +205,8 @@ TYRANO.kag.ruby.createRubyTag = {
         }
         this.kag.ruby.convertConf(conf, true);
         return ''
-        + '<span class="ruby_str'  + this.kag.stat.ruby_no + '" style="display:inline-block;position:relative;white-space:nowrap;line-height:' + conf.line_height + '; width:' + conf.str_width + '; font-size:' + conf.str_size + ';left:' + conf.str_x + ';">' + str
-        + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;white-space:nowrap; width:' + conf.ruby_width + ';top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';font-size:' + conf.ruby_size + '; ">' + text
+        + '<span class="ruby_str'  + this.kag.stat.ruby_no + '" style="display:inline-block;position:relative;white-space:nowrap;text-indent:0;line-height:' + conf.line_height + '; width:' + conf.str_width + '; font-size:' + conf.str_size + ';left:' + conf.str_x + ';">' + str
+        + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;white-space:nowrap;text-indent:0;width:' + conf.ruby_width + ';top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';font-size:' + conf.ruby_size + '; ">' + text
         + '</span></span>';
     },
     // B) 均等割り付け
@@ -254,8 +254,8 @@ TYRANO.kag.ruby.createRubyTag = {
             conf.ruby_x /= 2;
             this.kag.ruby.convertConf(conf, false);
             return ''
-            + '<span class="ruby_str'  + this.kag.stat.ruby_no + '" style="display:inline-block;position:relative;white-space:nowrap;line-height:' + conf.line_height + '; width:' + conf.str_width + '; font-size:' + conf.str_size + ';">' + str
-            + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;white-space:nowrap;letter-spacing:' + conf.letter_spacing + ';width:100%;font-size:' + conf.ruby_size + '; top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';">' + text
+            + '<span class="ruby_str'  + this.kag.stat.ruby_no + '" style="display:inline-block;position:relative;white-space:nowrap;text-indent:0;line-height:' + conf.line_height + '; width:' + conf.str_width + '; font-size:' + conf.str_size + ';">' + str
+            + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;white-space:nowrap;text-indent:0;letter-spacing:' + conf.letter_spacing + ';width:100%;font-size:' + conf.ruby_size + '; top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';">' + text
             + '</span></span>';
         }
     },
@@ -264,16 +264,16 @@ TYRANO.kag.ruby.createRubyTag = {
         conf.str_width = conf.ruby_width;
         this.kag.ruby.convertConf(conf, true);
         return ''
-        + '<span class="ruby_str'  + this.kag.stat.ruby_no + '" style="display:inline-block;position:relative;white-space:nowrap;line-height:' + conf.line_height + '; width:' + conf.str_width + '; letter-spacing:' + conf.letter_spacing + '; font-size:' + conf.str_size + ';">' + str
-        + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;width:100%;white-space:nowrap;letter-spacing:0; font-size:' + conf.ruby_size + '; top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';">' + text
+        + '<span class="ruby_str'  + this.kag.stat.ruby_no + '" style="display:inline-block;position:relative;white-space:nowrap;text-indent:0;line-height:' + conf.line_height + '; width:' + conf.str_width + '; letter-spacing:' + conf.letter_spacing + '; font-size:' + conf.str_size + ';">' + str
+        + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;width:100%;white-space:nowrap;text-indent:0;letter-spacing:0; font-size:' + conf.ruby_size + '; top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';">' + text
         + '</span></span>';
     },
     // D) ルビ変形
     justifyTransform: function (conf, str, text) {
         this.kag.ruby.convertConf(conf, false);
         return ''
-        + '<span class="ruby_str'  + this.kag.stat.ruby_no + '" style="display:inline-block;position:relative;white-space:nowrap;line-height:' + conf.line_height + '; width:' + conf.str_width + '; font-size:' + conf.str_size + ';">' + str
-        + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;white-space:nowrap;transform-origin:left top;transform:scaleX(' + conf.ruby_scale + ');letter-spacing:' + conf.letter_spacing + ';width:100%;font-size:' + conf.ruby_size + '; top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';">' + text
+        + '<span class="ruby_str'  + this.kag.stat.ruby_no + '" style="display:inline-block;position:relative;white-space:nowrap;text-indent:0;line-height:' + conf.line_height + '; width:' + conf.str_width + '; font-size:' + conf.str_size + ';">' + str
+        + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;white-space:nowrap;text-indent:0;transform-origin:left top;transform:scaleX(' + conf.ruby_scale + ');letter-spacing:' + conf.letter_spacing + ';width:100%;font-size:' + conf.ruby_size + '; top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';">' + text
         + '</span></span>';
     },
     // E) ルビと本文が一対一対応
@@ -283,8 +283,8 @@ TYRANO.kag.ruby.createRubyTag = {
         conf.letter_spacing = (conf.str_size * len + conf.ruby_size - conf.ruby_width) / len;
         this.kag.ruby.convertConf(conf, false);
         return ''
-        + '<span class="ruby_str'  + this.kag.stat.ruby_no + '" style="display:inline-block;position:relative;white-space:nowrap;line-height:' + conf.line_height + '; width:' + conf.str_width + '; font-size:' + conf.str_size + ';">' + str
-        + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;white-space:nowrap;letter-spacing:' + conf.letter_spacing + ';width:100%;font-size:' + conf.ruby_size + '; top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';">' + text
+        + '<span class="ruby_str'  + this.kag.stat.ruby_no + '" style="display:inline-block;position:relative;white-space:nowrap;text-indent:0;line-height:' + conf.line_height + '; width:' + conf.str_width + '; font-size:' + conf.str_size + ';">' + str
+        + '<span class="ruby_text' + this.kag.stat.ruby_no + '" style="position:absolute;white-space:nowrap;text-indent:0;letter-spacing:' + conf.letter_spacing + ';width:100%;font-size:' + conf.ruby_size + '; top:' + conf.ruby_y + '; left:' + conf.ruby_x + ';">' + text
         + '</span></span>';
     },
 };
