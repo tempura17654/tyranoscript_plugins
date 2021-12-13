@@ -7,8 +7,8 @@
 [$hide layer_d=message]
 
 ; name=akane で画像を出す
-[image name=akane layer=0 x=0   y=0 storage=http://tempura.html.xdomain.jp/tyranoscript/data/fgimage/chara/akane/normal.png]
-[image            layer=0 x=450 y=0 storage=http://tempura.html.xdomain.jp/tyranoscript/data/fgimage/chara/akane/normal.png]
+[image name=akane layer=0 x=0   y=0 storage=https://tempura17654.github.io/tyranoscript_plugins/data/fgimage/chara/akane/normal.png]
+[image            layer=0 x=450 y=0 storage=https://tempura17654.github.io/tyranoscript_plugins/data/fgimage/chara/akane/normal.png]
 
 [l]
 
@@ -33,7 +33,7 @@
 [l]
 
 ; name=akane で画像を出す
-[image name=akane layer=0 x=0   y=0 storage=http://tempura.html.xdomain.jp/tyranoscript/data/fgimage/chara/akane/normal.png]
+[image name=akane layer=0 x=0   y=0 storage=https://tempura17654.github.io/tyranoscript_plugins/data/fgimage/chara/akane/normal.png]
 
 [l]
 
@@ -53,7 +53,7 @@
 [l]
 
 ; akaneオブジェクトのsrc属性を変更
-[$attr name=akane src=http://tempura.html.xdomain.jp/tyranoscript/data/fgimage/chara/akane/angry.png]
+[$attr name=akane src=https://tempura17654.github.io/tyranoscript_plugins/data/fgimage/chara/akane/angry.png]
 
 [l]
 

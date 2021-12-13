@@ -33,7 +33,7 @@ TYRANO.base.fitBaseSize(W, H);
 
 *title
 [layopt layer=message0 visible=false]
-[bg_wipe method=image i_name=spiral storage=http://tempura.html.xdomain.jp/tyranoscript/data/bgimage/b_rouka.png time=800]
+[bg_wipe method=image i_name=spiral storage=https://tempura17654.github.io/tyranoscript_plugins/data/bgimage/b_rouka.png time=800]
 [pushglink text=はじめから target=start]
 [pushglink text=つづきから target=continue]
 [showglink]
@@ -51,8 +51,8 @@ TYRANO.base.fitBaseSize(W, H);
 *start
 [glink_after]
 [makewindow]
-[playbgm storage=http://tempura.html.xdomain.jp/tyranoscript/data/bgm/b_music.ogg]
-[bg_wipe method=custom c_name=myWipe storage=http://tempura.html.xdomain.jp/tyranoscript/data/bgimage/b_room.png time=800]
+[playbgm storage=https://tempura17654.github.io/tyranoscript_plugins/data/bgm/b_music.ogg]
+[bg_wipe method=custom c_name=myWipe storage=https://tempura17654.github.io/tyranoscript_plugins/data/bgimage/b_room.png time=800]
 [showwindow]
 #
 俺の名前は鈴木太郎。[p]
@@ -63,7 +63,7 @@ TYRANO.base.fitBaseSize(W, H);
 #【鈴木】
 「……帰るか」[p]
 
-[playse storage=http://tempura.html.xdomain.jp/tyranoscript/data/sound/sound.ogg]
+[playse storage=https://tempura17654.github.io/tyranoscript_plugins/data/sound/sound.ogg]
 
 #
 喰らった肩透かしに若干苛立ちを覚えながら、俺は帰り支度を整える。[p]
@@ -73,7 +73,7 @@ TYRANO.base.fitBaseSize(W, H);
 ――そのときだった。[p]
 
 [layopt layer=0 visible=true]
-[image  layer=0 name=akane x=460 y=30 storage=http://tempura.html.xdomain.jp/tyranoscript/data/fgimage/chara/akane/b_akane_black.png]
+[image  layer=0 name=akane x=460 y=30 storage=https://tempura17654.github.io/tyranoscript_plugins/data/fgimage/chara/akane/b_akane_black.png]
 [quake_ex hmax=100 time=1300 wait=false]
 
 #【？？？】
@@ -83,7 +83,7 @@ TYRANO.base.fitBaseSize(W, H);
 「誰だっ！！」[p]
 #
 
-[image  layer=0 name=akane x=460 y=30 time=700 storage=http://tempura.html.xdomain.jp/tyranoscript/data/fgimage/chara/akane/b_akane.png]
+[image  layer=0 name=akane x=460 y=30 time=700 storage=https://tempura17654.github.io/tyranoscript_plugins/data/fgimage/chara/akane/b_akane.png]
 
 #【女】
 「こんにちは」[p]
@@ -147,7 +147,7 @@ TYRANO.base.fitBaseSize(W, H);
 #
 あかねはこくりと[ruby text=うなず]頷くと、説明を始めた。[p]
 
-[playbgm storage=http://tempura.html.xdomain.jp/tyranoscript/data/bgm/b_music2.ogg]
+[playbgm storage=https://tempura17654.github.io/tyranoscript_plugins/data/bgm/b_music2.ogg]
 
 #【あかね】
 「このプラグインは、ティラノスクリプトのセーブ画面・ロード画面・コンフィグ画面・バックログ画面の四画面について、機能とデザインを変更し――」[p]
@@ -174,6 +174,6 @@ TYRANO.base.fitBaseSize(W, H);
 ありがとよ、と言って俺は教室を出た。[p]
 [freeimage layer=0 time=800]
 [hidewindow]
-[bg_wipe direction=left grad_width=1 storage=http://tempura.html.xdomain.jp/tyranoscript/data/bgimage/b_rouka.png time=800]
+[bg_wipe direction=left grad_width=1 storage=https://tempura17654.github.io/tyranoscript_plugins/data/bgimage/b_rouka.png time=800]
 [showwindow]
 サンプルシナリオはここまでです。[s]

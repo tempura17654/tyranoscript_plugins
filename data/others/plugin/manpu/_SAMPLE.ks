@@ -3,8 +3,8 @@
 
 [layopt layer=message0 visible=false]
 [layopt layer=0 visible=true]
-[chara_new name=akane storage=http://tempura.html.xdomain.jp/tyranoscript/data/fgimage/chara/akane/normal.png jname=あかね]
-[bg storage=http://tempura.html.xdomain.jp/tyranoscript/data/bgimage/room.jpg time=0]
+[chara_new name=akane storage=https://tempura17654.github.io/tyranoscript_plugins/data/fgimage/chara/akane/normal.png jname=あかね]
+[bg storage=https://tempura17654.github.io/tyranoscript_plugins/data/bgimage/room.jpg time=0]
 [chara_show name=akane time=0]
 
 [l][manpu name=akane type=ase]

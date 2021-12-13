@@ -1,4 +1,4 @@
-window.URL1 = "http://tempura.html.xdomain.jp/tyranoscript/";
+window.URL1 = "https://tempura17654.github.io/tyranoscript_plugins/";
 window.URL2 = "http://tempura.php.xdomain.jp/tyrano_editor/";
 
 // encodeLimit() -> String hash

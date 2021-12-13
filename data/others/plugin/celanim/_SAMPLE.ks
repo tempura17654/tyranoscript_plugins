@@ -5,7 +5,7 @@
 	[layopt layer="2" visible="true"]
 	[position layer="message0" page="fore" left="0" top="520" width="960" height="120" opacity="200" marginl="20" margint="10" marginr="20" opacity="100"]
 	[deffont size="36"][resetfont]
-	[bg storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/bg.png" time="0"]
+	[bg storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/bg.png" time="0"]
 	[nowait]
 	
 	
@@ -31,7 +31,7 @@
 		; [define_celanim]での定義は一度行うだけで十分なので、
 		; あとは必要に応じて[celanim]を使おう。
 	
-		[define_celanim anim="A" storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/rixu1/00.png" cel_width="64" cel_height="64"]
+		[define_celanim anim="A" storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/rixu1/00.png" cel_width="64" cel_height="64"]
 		[celanim        anim="A" layer="0" x="100" y="100"]
 		
 		１．もっともシンプルな例。
@@ -53,8 +53,8 @@
 		; 素材画像を構成する横のコマ数×縦のコマ数を指定する方法(anim="C")がある。
 		; 指定しやすいほうで指定しよう。
 	
-		[define_celanim anim="B" storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/rixu1/00.png" cel_width="64" cel_height="64"]
-		[define_celanim anim="C" storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/rixu1/00.png" cel_xnum="8"   cel_ynum="8"   ]
+		[define_celanim anim="B" storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/rixu1/00.png" cel_width="64" cel_height="64"]
+		[define_celanim anim="C" storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/rixu1/00.png" cel_xnum="8"   cel_ynum="8"   ]
 		[celanim        anim="B" layer="0" x="100" y="100"]
 		[celanim        anim="C" layer="0" x="200" y="100"]
 		
@@ -131,7 +131,7 @@
 		; 実は[celanim]に指定可能なパラメータはすべて[define_celanim]においても使用できる。
 		; そうした場合、「そのanimを[celanim]で再生したときの初期値」にあたる内容を記録することができる。
 		
-		[define_celanim anim="D" storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/rixu1/00.png" cel_width="64" cel_height="64" layer="0" x="100" y="100" count="3" fps="60"]
+		[define_celanim anim="D" storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/rixu1/00.png" cel_width="64" cel_height="64" layer="0" x="100" y="100" count="3" fps="60"]
 		[celanim anim="D"]
 		[celanim anim="D" x="200"]
 		[celanim anim="D" x="300" count="5"]
@@ -160,16 +160,16 @@
 		; これで定義時の初期値を変更することができる。
 		
 		[default_define_celanim cel_width="64" cel_height="64" fps="60"]
-		[define_celanim anim="E" storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/rixu1/01.png"]
-		[define_celanim anim="F" storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/rixu1/02.png"]
-		[define_celanim anim="G" storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/rixu1/03.png"]
+		[define_celanim anim="E" storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/rixu1/01.png"]
+		[define_celanim anim="F" storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/rixu1/02.png"]
+		[define_celanim anim="G" storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/rixu1/03.png"]
 		[celanim anim="E" layer="0" x="100" y="100"]
 		[celanim anim="F" layer="0" x="200" y="100"]
 		[celanim anim="G" layer="0" x="300" y="100"]
 		
 		; reset="true"でリセット
 		[default_define_celanim reset="true"]
-		[define_celanim anim="H" storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/rixu1/04.png" cel_xnum="8" cel_ynum="8"]
+		[define_celanim anim="H" storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/rixu1/04.png" cel_xnum="8" cel_ynum="8"]
 		[celanim anim="H" layer="0" x="400" y="100"]
 		
 		６．初期値指定の例②
@@ -219,15 +219,15 @@
 	
 	;■９．
 
-		[define_celanim anim="a00 " storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/archer/loop-a.png" cel_width="144" cel_height="144" count="infinite" ]
-		[define_celanim anim="a01 " storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/archer/loop-b.png" cel_width="144" cel_height="144" count="infinite" ]
-		[define_celanim anim="a02 " storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/archer/a.png"      cel_width="144" cel_height="144" nextanim="a00"   ]
-		[define_celanim anim="a03 " storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/archer/b.png"      cel_width="144" cel_height="144" nextanim="a00"   ]
-		[define_celanim anim="a04 " storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/archer/c-1.png"    cel_width="144" cel_height="144" nextanim="a04a"  ]
-		[define_celanim anim="a04a" storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/archer/c-2.png"    cel_width="144" cel_height="144" nextanim="a00"   ]
-		[define_celanim anim="a05 " storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/archer/e.png"      cel_width="144" cel_height="144" nextanim="a00"   ]
-		[define_celanim anim="a06 " storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/archer/win.png"    cel_width="144" cel_height="144" autodel="false"  ]
-		[define_celanim anim="a07 " storage="http://tempura.html.xdomain.jp/tyranoscript/data/image/anime/archer/lose.png"   cel_width="144" cel_height="144" autodel="false"  ]
+		[define_celanim anim="a00 " storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/archer/loop-a.png" cel_width="144" cel_height="144" count="infinite" ]
+		[define_celanim anim="a01 " storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/archer/loop-b.png" cel_width="144" cel_height="144" count="infinite" ]
+		[define_celanim anim="a02 " storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/archer/a.png"      cel_width="144" cel_height="144" nextanim="a00"   ]
+		[define_celanim anim="a03 " storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/archer/b.png"      cel_width="144" cel_height="144" nextanim="a00"   ]
+		[define_celanim anim="a04 " storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/archer/c-1.png"    cel_width="144" cel_height="144" nextanim="a04a"  ]
+		[define_celanim anim="a04a" storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/archer/c-2.png"    cel_width="144" cel_height="144" nextanim="a00"   ]
+		[define_celanim anim="a05 " storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/archer/e.png"      cel_width="144" cel_height="144" nextanim="a00"   ]
+		[define_celanim anim="a06 " storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/archer/win.png"    cel_width="144" cel_height="144" autodel="false"  ]
+		[define_celanim anim="a07 " storage="https://tempura17654.github.io/tyranoscript_plugins/data/image/anime/archer/lose.png"   cel_width="144" cel_height="144" autodel="false"  ]
 		
 		[celanim     name="a" anim="a01" centering="true"]
 		
